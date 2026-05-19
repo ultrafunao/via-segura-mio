@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     :root {
       --color-background-primary: #ffffff;
@@ -87,24 +88,46 @@
 <div class="phone">
 
   <!-- LOGIN -->
-  <div class="screen" id="screen-login">
-    <div class="topbar">
-      <i class="ti ti-lock" style="font-size:18px;color:#FAC775"></i>
-      <span class="topbar-title">Autenticación Requerida</span>
-    </div>
-    <div class="content" style="display:flex;flex-direction:column;justify-content:center">
-      <div class="card" style="text-align:center;padding:24px 16px">
-        <i class="ti ti-shield-lock" style="font-size:48px;color:#185FA5;margin-bottom:12px"></i>
-        <div style="font-size:16px;font-weight:500;margin-bottom:6px">Ingreso a Vía Segura</div>
-        <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:20px">Debes iniciar sesión para crear reportes.</div>
-        <input type="email" class="form-input" id="login-email" placeholder="Correo electrónico" style="margin-bottom:10px">
-        <input type="password" class="form-input" id="login-pass" placeholder="Contraseña" style="margin-bottom:20px">
-        <button class="submit-btn" onclick="doLogin()">Iniciar Sesión</button>
-        <button onclick="goScreen('dashboard')" style="background:transparent;border:none;color:var(--color-text-secondary);margin-top:15px;font-size:12px;cursor:pointer;width:100%;padding:10px">Volver al Dashboard</button>
+<div class="screen" id="screen-login">
+  <div class="topbar">
+    <i class="ti ti-lock" style="font-size:18px;color:#FAC775"></i>
+    <span class="topbar-title">Autenticación Requerida</span>
+  </div>
+  <div class="content" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="card" style="text-align:center;padding:24px 16px">
+      <i class="ti ti-shield-lock" style="font-size:48px;color:#185FA5;margin-bottom:12px"></i>
+      <div style="font-size:16px;font-weight:500;margin-bottom:6px">Ingreso a Vía Segura</div>
+      <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:20px">Inicia sesión para crear reportes.</div>
+      
+      <!-- Botón Google -->
+      <div id="g_id_onload"
+        data-client_id="363836812726-gt4lsqip9iijbqc34br4aqaiqnsn7dfh.apps.googleusercontent.com"
+        data-callback="handleGoogleLogin"
+        data-auto_prompt="false">
       </div>
+      <div class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="continue_with"
+        data-shape="rectangular"
+        data-logo_alignment="left"
+        data-width="280">
+      </div>
+
+      <div style="margin:16px 0;display:flex;align-items:center;gap:8px">
+        <div style="flex:1;height:0.5px;background:var(--color-border-secondary)"></div>
+        <span style="font-size:11px;color:var(--color-text-tertiary)">o</span>
+        <div style="flex:1;height:0.5px;background:var(--color-border-secondary)"></div>
+      </div>
+
+      <input type="email" class="form-input" id="login-email" placeholder="Correo electrónico" style="margin-bottom:10px">
+      <input type="password" class="form-input" id="login-pass" placeholder="Contraseña" style="margin-bottom:20px">
+      <button class="submit-btn" onclick="doLogin()">Iniciar Sesión</button>
+      <button onclick="goScreen('dashboard')" style="background:transparent;border:none;color:var(--color-text-secondary);margin-top:15px;font-size:12px;cursor:pointer;width:100%;padding:10px">Volver al Dashboard</button>
     </div>
   </div>
-
+</div>
   <!-- DASHBOARD -->
   <div class="screen active" id="screen-dashboard">
     <div class="topbar">
@@ -368,6 +391,16 @@ function getLocation() {
   }
 }
 
+function handleGoogleLogin(response) {
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  const email = payload.email;
+  const name = payload.name;
+  localStorage.setItem('currentUser', email);
+  localStorage.setItem('userName', name);
+  updateUserStatus();
+  goScreen('dashboard');
+}
+
 // Calcular estadísticas
 function updateStats(reports) {
   const now = new Date();
@@ -450,8 +483,10 @@ function doLogout() {
 function updateUserStatus() {
   const el = document.getElementById('user-status');
   if (!el) return;
-  if (localStorage.getItem('currentUser')) {
-    el.textContent = 'Cerrar sesión';
+  const user = localStorage.getItem('currentUser');
+  const name = localStorage.getItem('userName');
+  if (user) {
+    el.textContent = name ? `${name.split(' ')[0]} · Salir` : 'Cerrar sesión';
     el.onclick = doLogout;
   } else {
     el.textContent = 'Ingresar';
