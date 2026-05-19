@@ -15,7 +15,7 @@
     "@capacitor/core": "^8.3.4",
     "@capacitor/geolocation": "^8.2.0",
     "@capacitor/local-notifications": "^8.2.0",
-    "@codetrix-studio/capacitor-google-auth": "^3.4.0-rc.4"
+    "@capgo/capacitor-social-login": "^8.3.22"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.3.4"

@@ -3,10 +3,10 @@
   "appName": "Vía Segura",
   "webDir": "www",
   "plugins": {
-    "GoogleAuth": {
-      "scopes": ["profile", "email"],
-      "serverClientId": "478950048529-g6kmun97hdncp4k3pmriej6n5tn99u4u.apps.googleusercontent.com",
-      "forceCodeForRefreshToken": true
+    "SocialLogin": {
+      "google": {
+        "webClientId": "363836812726-gt4lsqip9iijbqc34br4aqaiqnsn7dfh.apps.googleusercontent.com"
+      }
     }
   }
 }
