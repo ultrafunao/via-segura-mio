@@ -355,6 +355,13 @@
         <div style="margin-top:6px">Proyecto de seguridad vial desarrollado para monitorear incidentes en la Av. Pastrana.</div>
       </div>
     </div>
+    <div class="card" id="admin-card" style="display:none">
+      <div class="section-head">Panel Administrador</div>
+      <button onclick="window.open('https://via-segura-mio.vercel.app/admin.html','_blank')"
+        style="width:100%;padding:10px;border-radius:8px;border:1px solid #185FA5;background:#E6F1FB;color:#0C447C;font-size:12px;cursor:pointer;margin-top:6px">
+        <i class="ti ti-shield-lock"></i> Ir al panel admin
+      </button>
+    </div>
   </div>
   <div class="nav-tab">
     <button class="nav-btn" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
@@ -444,6 +451,7 @@ async function handleGoogleLogin(response) {
     if (!res.ok) { alert(data.error); return; }
     localStorage.setItem('currentUser', data.email);
     localStorage.setItem('userName', data.name);
+    localStorage.setItem('userRole', data.role || 'user');
     updateUserStatus();
     goScreen('dashboard');
   } catch {
@@ -527,6 +535,7 @@ async function doLogin() {
     if (!res.ok) { alert(data.error); return; }
     localStorage.setItem('currentUser', data.email);
     localStorage.setItem('userName', data.name);
+    localStorage.setItem('userRole', data.role || 'user');
     updateUserStatus();
     goScreen('dashboard');
   } catch {
@@ -537,6 +546,7 @@ async function doLogin() {
 function doLogout() {
   localStorage.removeItem('currentUser');
   localStorage.removeItem('userName');
+  localStorage.removeItem('userRole');
   updateUserStatus();
 }
 
@@ -545,6 +555,11 @@ function updateUserStatus() {
   if (!el) return;
   const user = localStorage.getItem('currentUser');
   const name = localStorage.getItem('userName');
+  const role = localStorage.getItem('userRole');
+
+  const adminCard = document.getElementById('admin-card');
+  if (adminCard) adminCard.style.display = (role === 'admin') ? 'block' : 'none';
+
   if (user) {
     el.textContent = name ? `${name.split(' ')[0]} · Salir` : 'Cerrar sesión';
     el.onclick = doLogout;

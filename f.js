@@ -184,7 +184,7 @@ app.post('/api/auth/login', async (req, res) => {
     const user = result.rows[0];
     const valid = await bcrypt.compare(password, user.password_hash);
     if (!valid) return res.status(401).json({ error: 'Correo o contraseña incorrectos' });
-    res.json({ id: user.id, email: user.email, name: user.name });
+    res.json({ id: user.id, email: user.email, name: user.name, role: user.role });
   } catch (err) {
     res.status(500).json({ error: 'Error interno' });
   }
@@ -195,14 +195,14 @@ app.post('/api/auth/google', async (req, res) => {
   const { email, name } = req.body;
   if (!email) return res.status(400).json({ error: 'Email requerido' });
   try {
-    let result = await pool.query('SELECT id, email, name FROM users WHERE email = $1', [email]);
+    let result = await pool.query('SELECT id, email, name, role FROM users WHERE email = $1', [email]);
     if (result.rows.length === 0) {
       result = await pool.query(
-        'INSERT INTO users(email, name, provider) VALUES($1,$2,$3) RETURNING id, email, name',
-        [email, name, 'google']
-      );
-    }
-    res.json(result.rows[0]);
+      'INSERT INTO users(email, name, provider) VALUES($1,$2,$3) RETURNING id, email, name, role',
+      [email, name, 'google']
+    );
+  }
+  res.json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: 'Error interno' });
   }
