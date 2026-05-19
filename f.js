@@ -97,7 +97,6 @@ app.post('/api/reports', async (req, res) => {
 // Login admin
 app.post('/api/admin/login', (req, res) => {
   const { username, password } = req.body;
-  console.log('USER:', username, process.env.ADMIN_USER, '| PASS:', password, process.env.ADMIN_PASS);
   if (username === ADMIN_USER && password === ADMIN_PASS) {
     const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '8h' });
     res.json({ token });
