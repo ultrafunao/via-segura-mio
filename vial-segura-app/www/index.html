@@ -507,7 +507,7 @@ async function doGoogleLoginNative() {
     const { SocialLogin } = window.Capacitor.Plugins;
     await SocialLogin.initialize({ google: { webClientId: '363836812726-gt4lsqip9iijbqc34br4aqaiqnsn7dfh.apps.googleusercontent.com' } });
     const result = await SocialLogin.login({ provider: 'google', options: {} });
-    const { email, name } = result.profile;
+    const { email, name } = result.result.profile;
     const res = await fetch('https://via-segura-mio.vercel.app/api/auth/google', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
