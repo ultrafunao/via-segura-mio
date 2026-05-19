@@ -582,6 +582,10 @@ function initMap() {
       gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' }
     }).addTo(window.mapDesktop);
   }
+
+  setTimeout(() => {
+    if (window.mapDesktop) window.mapDesktop.invalidateSize();
+  }, 500);
 }
 
 // Actualizar mapa de calor con reportes reales
