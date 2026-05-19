@@ -140,4 +140,19 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
+app.get('/api/cleanup', async (req, res) => {
+  const secret = req.headers['x-cleanup-secret'];
+  if (secret !== process.env.CLEANUP_SECRET) {
+    return res.status(401).json({ error: 'No autorizado' });
+  }
+  try {
+    const result = await pool.query(
+      "DELETE FROM reports WHERE created_at < NOW() - INTERVAL '72 hours'"
+    );
+    res.json({ deleted: result.rowCount });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = app;

@@ -483,7 +483,14 @@ function updateSim() {
 }
 
 // Inicializar
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  if (window.Capacitor && window.Capacitor.isNativePlatform()) {
+    const { LocalNotifications } = window.Capacitor.Plugins;
+    const perm = await LocalNotifications.checkPermissions();
+    if (perm.display !== 'granted') {
+      await LocalNotifications.requestPermissions();
+    }
+  }
   initMap();
   getLocation();
   updateUserStatus();
@@ -497,7 +504,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (newCount > prevCount && prevCount > 0) {
     if (window.Capacitor && window.Capacitor.isNativePlatform()) {
       const { LocalNotifications } = window.Capacitor.Plugins;
-      await LocalNotifications.requestPermissions();
       await LocalNotifications.schedule({ notifications: [{
         id: Math.floor(Math.random() * 100000),
         title: '⚠ Vía Segura',
