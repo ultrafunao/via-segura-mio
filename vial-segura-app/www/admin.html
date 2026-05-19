@@ -77,6 +77,22 @@
       <h3>Todos los reportes</h3>
       <button class="del-all-btn" onclick="deleteAll()"><i class="ti ti-trash"></i> Eliminar todos</button>
     </div>
+    <div style="padding:12px 16px;display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid #2a2a4a">
+      <select id="filter-tipo" onchange="applyFilters()" style="padding:6px 10px;border-radius:8px;border:1px solid #2a2a4a;background:#0f0f1a;color:#fff;font-size:12px">
+        <option value="">Todos los tipos</option>
+        <option value="Cruce ilegal">Cruce ilegal</option>
+        <option value="Casi-accidente">Casi-accidente</option>
+        <option value="Peatón en riesgo">Peatón en riesgo</option>
+        <option value="Otro">Otro</option>
+      </select>
+      <select id="filter-fecha" onchange="applyFilters()" style="padding:6px 10px;border-radius:8px;border:1px solid #2a2a4a;background:#0f0f1a;color:#fff;font-size:12px">
+        <option value="">Todas las fechas</option>
+        <option value="hoy">Hoy</option>
+        <option value="semana">Esta semana</option>
+        <option value="mes">Este mes</option>
+      </select>
+      <button onclick="clearFilters()" style="padding:6px 12px;border-radius:8px;border:1px solid #2a2a4a;background:transparent;color:#71717a;font-size:12px;cursor:pointer">Limpiar filtros</button>
+    </div>
     <div id="table-body"></div>
   </div>
 </div>
@@ -133,24 +149,12 @@ async function loadReports() {
     document.getElementById('a-total').textContent = reports.length;
     document.getElementById('a-hoy').textContent = hoy.length;
     document.getElementById('a-semana').textContent = semana.length;
+    allReports = reports;
     const body = document.getElementById('table-body');
     if (reports.length === 0) {
       body.innerHTML = '<div class="empty">No hay reportes.</div>'; return;
     }
-    body.innerHTML = `<table>
-      <thead><tr>
-        <th>Tipo</th><th>Vehículo</th><th>Coordenadas</th><th>Fecha</th><th></th>
-      </tr></thead>
-      <tbody>${reports.map(r => `
-        <tr>
-          <td><span class="badge">${r.title||'—'}</span></td>
-          <td style="color:#a1a1aa">${r.sub||'—'}</td>
-          <td style="color:#71717a;font-size:11px">${r.lat&&r.lng?r.lat.toFixed(4)+', '+r.lng.toFixed(4):'Sin coords'}</td>
-          <td style="color:#71717a;font-size:11px">${new Date(r.created_at).toLocaleString('es-CO')}</td>
-          <td><button class="del-btn" onclick="deleteReport(${r.id})"><i class="ti ti-trash"></i></button></td>
-        </tr>
-      `).join('')}</tbody>
-    </table>`;
+    renderTable(reports);
   } catch {
     document.getElementById('table-body').innerHTML = '<div class="empty">Error cargando reportes.</div>';
   }
@@ -172,6 +176,47 @@ async function deleteAll() {
     headers: { 'Authorization': 'Bearer ' + token }
   });
   loadReports();
+}
+
+let allReports = [];
+
+function applyFilters() {
+  const tipo = document.getElementById('filter-tipo').value;
+  const fecha = document.getElementById('filter-fecha').value;
+  const now = new Date();
+  let filtered = allReports;
+  if (tipo) filtered = filtered.filter(r => r.title && r.title.includes(tipo));
+  if (fecha === 'hoy') filtered = filtered.filter(r => new Date(r.created_at).toDateString() === now.toDateString());
+  if (fecha === 'semana') filtered = filtered.filter(r => (now - new Date(r.created_at)) < 7*24*60*60*1000);
+  if (fecha === 'mes') filtered = filtered.filter(r => (now - new Date(r.created_at)) < 30*24*60*60*1000);
+  renderTable(filtered);
+}
+
+function clearFilters() {
+  document.getElementById('filter-tipo').value = '';
+  document.getElementById('filter-fecha').value = '';
+  renderTable(allReports);
+}
+
+function renderTable(reports) {
+  const body = document.getElementById('table-body');
+  if (reports.length === 0) {
+    body.innerHTML = '<div class="empty">No hay reportes con esos filtros.</div>'; return;
+  }
+  body.innerHTML = `<table>
+    <thead><tr>
+      <th>Tipo</th><th>Vehículo</th><th>Coordenadas</th><th>Fecha</th><th></th>
+    </tr></thead>
+    <tbody>${reports.map(r => `
+      <tr>
+        <td><span class="badge">${r.title||'—'}</span></td>
+        <td style="color:#a1a1aa">${r.sub||'—'}</td>
+        <td style="color:#71717a;font-size:11px">${r.lat&&r.lng?r.lat.toFixed(4)+', '+r.lng.toFixed(4):'Sin coords'}</td>
+        <td style="color:#71717a;font-size:11px">${new Date(r.created_at).toLocaleString('es-CO')}</td>
+        <td><button class="del-btn" onclick="deleteReport(${r.id})"><i class="ti ti-trash"></i></button></td>
+      </tr>
+    `).join('')}</tbody>
+  </table>`;
 }
 
 // Auto-login si ya tiene token
