@@ -8,9 +8,13 @@ import ee.forgr.capacitor.social.login.SocialLoginPlugin;
 import ee.forgr.capacitor.social.login.ModifiedMainActivityForSocialLoginPlugin;
 import android.content.Intent;
 import android.util.Log;
-import java.util.List;
 
 public class MainActivity extends BridgeActivity implements ModifiedMainActivityForSocialLoginPlugin {
+
+  @Override
+  public void IHaveModifiedTheMainActivityForTheUseWithSocialLoginPlugin() {
+    // requerido por la interfaz
+  }
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -27,7 +31,7 @@ public class MainActivity extends BridgeActivity implements ModifiedMainActivity
         Log.i("Google Activity Result", "SocialLogin plugin instance is not SocialLoginPlugin");
         return;
       }
-      ((SocialLoginPlugin) plugin).handleGoogleLoginIntent(requestCode, resultCode, data);
+      ((SocialLoginPlugin) plugin).handleGoogleLoginIntent(requestCode, data);
     }
   }
 }
