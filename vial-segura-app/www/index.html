@@ -564,49 +564,50 @@ let userLat = null, userLng = null;
 
 // Inicializar mapa de calor
 function initMap() {
-  // Mapa mobile
-  map = L.map('heatmap').setView([2.9273, -75.2819], 15);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap'
-  }).addTo(map);
-  heatLayer = L.heatLayer([], {
-    radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8,
-    gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' }
-  }).addTo(map);
+  const isDesktop = window.innerWidth >= 768;
 
-  // Mapa desktop — esperar a que el contenedor tenga dimensiones reales
+  if (!isDesktop) {
+    // Solo mobile
+    map = L.map('heatmap').setView([2.9273, -75.2819], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+    heatLayer = L.heatLayer([], {
+      radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8,
+      gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' }
+    }).addTo(map);
+    return;
+  }
+
+  // Desktop: inicializar solo el mapa derecho
   const desktopEl = document.getElementById('heatmap-desktop');
   if (!desktopEl) return;
 
-  function initDesktopMap() {
-    if (window.mapDesktop) return; // ya inicializado
+  // Crear mapa SIN heatLayer todavía
+  window.mapDesktop = L.map('heatmap-desktop', {
+    zoomControl: true,
+    attributionControl: false
+  }).setView([2.9273, -75.2819], 13);
 
-    const rect = desktopEl.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) return; // aún sin dimensiones
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(window.mapDesktop);
 
-    window.mapDesktop = L.map('heatmap-desktop', {
-      zoomControl: true,
-      attributionControl: false
-    }).setView([2.9273, -75.2819], 13);
+  // Agregar heatLayer SOLO después de que el mapa tenga dimensiones reales
+  window.mapDesktop.whenReady(() => {
+    setTimeout(() => {
+      window.mapDesktop.invalidateSize();
+      window.heatLayerDesktop = L.heatLayer([], {
+        radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8,
+        gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' }
+      }).addTo(window.mapDesktop);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
-    }).addTo(window.mapDesktop);
-
-    window.heatLayerDesktop = L.heatLayer([], {
-      radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8,
-      gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' }
-    }).addTo(window.mapDesktop);
-
-    setTimeout(() => window.mapDesktop.invalidateSize(), 100);
-    observer.disconnect(); // ya no necesitamos observar
-  }
-
-  const observer = new ResizeObserver(initDesktopMap);
-  observer.observe(desktopEl);
-
-  // También intentar inmediatamente por si ya tiene dimensiones
-  initDesktopMap();
+      // Si ya hay datos cargados, aplicarlos
+      if (window._pendingHeatPoints) {
+        window.heatLayerDesktop.setLatLngs(window._pendingHeatPoints);
+      }
+    }, 200);
+  });
 }
 
 // Actualizar mapa de calor con reportes reales
@@ -614,10 +615,17 @@ function updateHeatmap(reports) {
   const points = reports
     .filter(r => r.lat && r.lng)
     .map(r => [parseFloat(r.lat), parseFloat(r.lng), 1.0]);
-  heatLayer.setLatLngs(points);
-  if (window.heatLayerDesktop) window.heatLayerDesktop.setLatLngs(points);
 
-  // Reportes en panel derecho desktop
+  // Mobile
+  if (heatLayer) heatLayer.setLatLngs(points);
+
+  // Desktop — guardar puntos por si el layer aún no está listo
+  window._pendingHeatPoints = points;
+  if (window.heatLayerDesktop) {
+    window.heatLayerDesktop.setLatLngs(points);
+  }
+
+  // Panel derecho desktop
   const dr = document.getElementById('desktop-reports');
   if (dr) {
     dr.innerHTML = reports.slice(0,5).map(r => `
@@ -1010,6 +1018,16 @@ function loadPrefs() {
   const interval = parseInt(localStorage.getItem('refreshInterval') || '30000');
   setInterval2(interval);
   document.getElementById('interval-' + interval)?.classList.add('act');
+}
+
+function selType(btn) {
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+
+function selChip(el, group) {
+  document.querySelectorAll(`.chip[onclick*="'${group}'"]`).forEach(c => c.classList.remove('act'));
+  el.classList.add('act');
 }
 
 </script>
