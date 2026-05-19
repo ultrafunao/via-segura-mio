@@ -84,10 +84,10 @@ app.get('/api/reports', async (req, res) => {
 
 app.post('/api/reports', async (req, res) => {
   try {
-    const { title, sub, time, icon, color, bg, lat, lng } = req.body;
+    const { title, sub, time, icon, color, bg, lat, lng, user_email } = req.body;
     const result = await pool.query(
-      'INSERT INTO reports(title, sub, time, icon, color, bg, lat, lng) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
-      [title, sub, time, icon, color, bg, lat, lng]
+      'INSERT INTO reports(title, sub, time, icon, color, bg, lat, lng, user_email) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *',
+      [title, sub, time, icon, color, bg, lat, lng, user_email || null]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {

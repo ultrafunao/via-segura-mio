@@ -581,7 +581,8 @@ async function submitReport() {
     title: typeText, sub: `${vehText} · Reporte Ciudadano`,
     time: 'Reciente', icon: 'ti-alert-triangle',
     color: '#E24B4A', bg: '#FCEBEB',
-    lat: userLat, lng: userLng
+    lat: userLat, lng: userLng,
+    user_email: localStorage.getItem('currentUser')
   };
   try {
     const res = await fetch(API_URL, {
