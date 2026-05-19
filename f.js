@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
 
 const app = express();
@@ -152,6 +153,58 @@ app.get('/api/cleanup', async (req, res) => {
     res.json({ deleted: result.rowCount });
   } catch (e) {
     res.status(500).json({ error: e.message });
+  }
+});
+
+// Registro con email
+app.post('/api/auth/register', async (req, res) => {
+  const { email, password, name } = req.body;
+  if (!email || !password) return res.status(400).json({ error: 'Email y contraseña requeridos' });
+  try {
+    const exists = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+    if (exists.rows.length > 0) return res.status(409).json({ error: 'Este correo ya está registrado' });
+    const hash = await bcrypt.hash(password, 10);
+    const result = await pool.query(
+      'INSERT INTO users(email, password_hash, name, provider) VALUES($1,$2,$3,$4) RETURNING id, email, name',
+      [email, hash, name || email.split('@')[0], 'email']
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: 'Error interno' });
+  }
+});
+
+// Login con email
+app.post('/api/auth/login', async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) return res.status(400).json({ error: 'Email y contraseña requeridos' });
+  try {
+    const result = await pool.query('SELECT * FROM users WHERE email = $1 AND provider = $2', [email, 'email']);
+    if (result.rows.length === 0) return res.status(401).json({ error: 'Correo o contraseña incorrectos' });
+    const user = result.rows[0];
+    const valid = await bcrypt.compare(password, user.password_hash);
+    if (!valid) return res.status(401).json({ error: 'Correo o contraseña incorrectos' });
+    res.json({ id: user.id, email: user.email, name: user.name });
+  } catch (err) {
+    res.status(500).json({ error: 'Error interno' });
+  }
+});
+
+// Login/registro con Google
+app.post('/api/auth/google', async (req, res) => {
+  const { email, name } = req.body;
+  if (!email) return res.status(400).json({ error: 'Email requerido' });
+  try {
+    let result = await pool.query('SELECT id, email, name FROM users WHERE email = $1', [email]);
+    if (result.rows.length === 0) {
+      result = await pool.query(
+        'INSERT INTO users(email, name, provider) VALUES($1,$2,$3) RETURNING id, email, name',
+        [email, name, 'google']
+      );
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: 'Error interno' });
   }
 });
 
