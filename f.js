@@ -5,6 +5,14 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
 
+const rateLimit = require('express-rate-limit');
+
+const adminLoginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 10,
+  message: { error: 'Demasiados intentos. Espera 15 minutos.' }
+});
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -96,7 +104,7 @@ app.post('/api/reports', async (req, res) => {
 });
 
 // Login admin
-app.post('/api/admin/login', (req, res) => {
+app.post('/api/admin/login', adminLoginLimiter, (req, res) => {
   const { username, password } = req.body;
   if (username === ADMIN_USER && password === ADMIN_PASS) {
     const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '8h' });
