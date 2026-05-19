@@ -151,7 +151,7 @@
       <button class="nav-btn act" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
       <button class="nav-btn" onclick="goScreen('reporte')"><i class="ti ti-alert-circle"></i>Reportar</button>
       <button class="nav-btn" onclick="goScreen('simulador')"><i class="ti ti-chart-bar"></i>Simulador</button>
-      <button class="nav-btn"><i class="ti ti-settings"></i>Config</button>
+      <button class="nav-btn" onclick="goScreen('config')"><i class="ti ti-settings"></i>Config</button>
     </div>
   </div>
 
@@ -209,7 +209,7 @@
       <button class="nav-btn" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
       <button class="nav-btn act"><i class="ti ti-alert-circle"></i>Reportar</button>
       <button class="nav-btn" onclick="goScreen('simulador')"><i class="ti ti-chart-bar"></i>Simulador</button>
-      <button class="nav-btn"><i class="ti ti-settings"></i>Config</button>
+      <button class="nav-btn" onclick="goScreen('config')"><i class="ti ti-settings"></i>Config</button>
     </div>
   </div>
 
@@ -269,8 +269,55 @@
       <button class="nav-btn" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
       <button class="nav-btn" onclick="goScreen('reporte')"><i class="ti ti-alert-circle"></i>Reportar</button>
       <button class="nav-btn act"><i class="ti ti-chart-bar"></i>Simulador</button>
-      <button class="nav-btn"><i class="ti ti-settings"></i>Config</button>
+      <button class="nav-btn" onclick="goScreen('config')"><i class="ti ti-settings"></i>Config</button>
     </div>
+  </div>
+  
+  <div class="screen" id="screen-config">
+  <div class="topbar">
+    <i class="ti ti-settings" style="font-size:18px;color:#FAC775"></i>
+    <span class="topbar-title">Configuración</span>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="section-head">Apariencia</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+        <button class="type-btn" id="theme-light" onclick="setTheme('light')"><i class="ti ti-sun"></i> Claro</button>
+        <button class="type-btn" id="theme-dark" onclick="setTheme('dark')"><i class="ti ti-moon"></i> Oscuro</button>
+        <button class="type-btn" id="theme-system" onclick="setTheme('system')"><i class="ti ti-device-mobile"></i> Seguir sistema</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-head">Notificaciones</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0">
+        <span style="font-size:12px;color:var(--color-text-secondary)">Alertas de nuevos reportes</span>
+        <input type="checkbox" id="notif-toggle" onchange="toggleNotif(this)" style="width:18px;height:18px;cursor:pointer">
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-head">Intervalo de actualización</div>
+      <div class="chip-row" style="margin-top:6px">
+        <span class="chip" id="interval-30" onclick="setInterval2(30000)">30 seg</span>
+        <span class="chip" id="interval-60" onclick="setInterval2(60000)">1 min</span>
+        <span class="chip" id="interval-300" onclick="setInterval2(300000)">5 min</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-head">Acerca de</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.8">
+        <div><b>Vía Segura USCO</b> v1.0.0</div>
+        <div>Universidad Surcolombiana</div>
+        <div>Neiva, Huila — 2026</div>
+        <div style="margin-top:6px">Proyecto de seguridad vial desarrollado para monitorear incidentes en la Av. Pastrana.</div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-tab">
+    <button class="nav-btn" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
+    <button class="nav-btn" onclick="goScreen('reporte')"><i class="ti ti-alert-circle"></i>Reportar</button>
+    <button class="nav-btn" onclick="goScreen('simulador')"><i class="ti ti-chart-bar"></i>Simulador</button>
+    <button class="nav-btn act"><i class="ti ti-settings"></i>Config</button>
+  </div>
   </div>
 
 </div>
@@ -495,26 +542,89 @@ document.addEventListener('DOMContentLoaded', async () => {
   getLocation();
   updateUserStatus();
   renderReports();
-  setInterval(async () => {
+  loadPrefs();
+});
+
+// Tema
+function setTheme(mode) {
+  localStorage.setItem('theme', mode);
+  applyTheme(mode);
+  document.querySelectorAll('[id^="theme-"]').forEach(b => b.classList.remove('sel'));
+  document.getElementById('theme-' + mode).classList.add('sel');
+}
+
+function applyTheme(mode) {
+  if (mode === 'system') {
+    mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  const root = document.documentElement;
+  if (mode === 'dark') {
+    root.style.setProperty('--color-background-primary', '#18181b');
+    root.style.setProperty('--color-background-secondary', '#09090b');
+    root.style.setProperty('--color-border-tertiary', '#27272a');
+    root.style.setProperty('--color-text-primary', '#fafafa');
+    root.style.setProperty('--color-text-secondary', '#a1a1aa');
+    root.style.setProperty('--color-text-tertiary', '#71717a');
+  } else {
+    root.style.setProperty('--color-background-primary', '#ffffff');
+    root.style.setProperty('--color-background-secondary', '#f4f4f5');
+    root.style.setProperty('--color-border-tertiary', '#f4f4f5');
+    root.style.setProperty('--color-text-primary', '#18181b');
+    root.style.setProperty('--color-text-secondary', '#71717a');
+    root.style.setProperty('--color-text-tertiary', '#a1a1aa');
+  }
+}
+
+// Notificaciones
+function toggleNotif(el) {
+  localStorage.setItem('notifEnabled', el.checked);
+}
+
+// Intervalo
+let refreshInterval;
+function setInterval2(ms) {
+  localStorage.setItem('refreshInterval', ms);
+  clearInterval(refreshInterval);
+  refreshInterval = setInterval(doRefresh, ms);
+  document.querySelectorAll('[id^="interval-"]').forEach(b => b.classList.remove('act'));
+  document.getElementById('interval-' + ms).classList.add('act');
+}
+
+async function doRefresh() {
+  const notifEnabled = localStorage.getItem('notifEnabled') !== 'false';
   const prevCount = parseInt(localStorage.getItem('lastReportCount') || '0');
   const res = await fetch(API_URL);
   const data = await res.json();
   const newCount = data.length;
   await renderReports();
-  if (newCount > prevCount && prevCount > 0) {
+  if (notifEnabled && newCount > prevCount && prevCount > 0) {
     if (window.Capacitor && window.Capacitor.isNativePlatform()) {
       const { LocalNotifications } = window.Capacitor.Plugins;
       await LocalNotifications.schedule({ notifications: [{
         id: Math.floor(Math.random() * 100000),
         title: '⚠ Vía Segura',
-        body: `Nuevo reporte en la zona USCO`,
+        body: 'Nuevo reporte en la zona USCO',
         schedule: { at: new Date(Date.now() + 100) }
       }]});
     }
   }
   localStorage.setItem('lastReportCount', newCount);
-}, 30000);
-});
+}
+
+// Cargar preferencias guardadas
+function loadPrefs() {
+  const theme = localStorage.getItem('theme') || 'system';
+  applyTheme(theme);
+  document.getElementById('theme-' + theme)?.classList.add('sel');
+
+  const notif = localStorage.getItem('notifEnabled') !== 'false';
+  document.getElementById('notif-toggle').checked = notif;
+
+  const interval = parseInt(localStorage.getItem('refreshInterval') || '30000');
+  setInterval2(interval);
+  document.getElementById('interval-' + interval)?.classList.add('act');
+}
+
 </script>
 </body>
 </html>
