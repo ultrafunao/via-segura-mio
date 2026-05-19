@@ -426,7 +426,7 @@ function initMap() {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap'
   }).addTo(map);
-  heatLayer = L.heatLayer([], { radius: 35, blur: 25, maxZoom: 17,
+  heatLayer = L.heatLayer([], { radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8,
     gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' }
   }).addTo(map);
 }
@@ -435,7 +435,7 @@ function initMap() {
 function updateHeatmap(reports) {
   const points = reports
     .filter(r => r.lat && r.lng)
-    .map(r => [parseFloat(r.lat), parseFloat(r.lng), 1.0]);
+    .map(r => [parseFloat(r.lat), parseFloat(r.lng), 3.0]);
   heatLayer.setLatLngs(points);
 }
 
