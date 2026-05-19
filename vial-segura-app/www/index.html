@@ -435,7 +435,7 @@ function initMap() {
 function updateHeatmap(reports) {
   const points = reports
     .filter(r => r.lat && r.lng)
-    .map(r => [parseFloat(r.lat), parseFloat(r.lng), 3.0]);
+    .map(r => [parseFloat(r.lat), parseFloat(r.lng), 1.0]);
   heatLayer.setLatLngs(points);
 }
 
