@@ -564,28 +564,49 @@ let userLat = null, userLng = null;
 
 // Inicializar mapa de calor
 function initMap() {
+  // Mapa mobile
   map = L.map('heatmap').setView([2.9273, -75.2819], 15);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap'
   }).addTo(map);
-  heatLayer = L.heatLayer([], { radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8,
+  heatLayer = L.heatLayer([], {
+    radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8,
     gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' }
   }).addTo(map);
 
-  // Mapa desktop
-  if (document.getElementById('heatmap-desktop')) {
-    window.mapDesktop = L.map('heatmap-desktop').setView([2.9273, -75.2819], 13);
+  // Mapa desktop — esperar a que el contenedor tenga dimensiones reales
+  const desktopEl = document.getElementById('heatmap-desktop');
+  if (!desktopEl) return;
+
+  function initDesktopMap() {
+    if (window.mapDesktop) return; // ya inicializado
+
+    const rect = desktopEl.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return; // aún sin dimensiones
+
+    window.mapDesktop = L.map('heatmap-desktop', {
+      zoomControl: true,
+      attributionControl: false
+    }).setView([2.9273, -75.2819], 13);
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
     }).addTo(window.mapDesktop);
-    window.heatLayerDesktop = L.heatLayer([], { radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8,
+
+    window.heatLayerDesktop = L.heatLayer([], {
+      radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8,
       gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' }
     }).addTo(window.mapDesktop);
+
+    setTimeout(() => window.mapDesktop.invalidateSize(), 100);
+    observer.disconnect(); // ya no necesitamos observar
   }
 
-  setTimeout(() => {
-    if (window.mapDesktop) window.mapDesktop.invalidateSize();
-  }, 500);
+  const observer = new ResizeObserver(initDesktopMap);
+  observer.observe(desktopEl);
+
+  // También intentar inmediatamente por si ya tiene dimensiones
+  initDesktopMap();
 }
 
 // Actualizar mapa de calor con reportes reales
