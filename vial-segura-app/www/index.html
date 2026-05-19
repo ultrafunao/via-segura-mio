@@ -488,7 +488,23 @@ document.addEventListener('DOMContentLoaded', () => {
   getLocation();
   updateUserStatus();
   renderReports();
-  setInterval(renderReports, 30000);
+  setInterval(async () => {
+  const prevCount = parseInt(localStorage.getItem('lastReportCount') || '0');
+  await renderReports();
+  const newCount = parseInt(document.getElementById('stat-total').textContent);
+  if (newCount > prevCount && prevCount > 0) {
+    if (window.Capacitor && window.Capacitor.isNativePlatform()) {
+      const { LocalNotifications } = window.Capacitor.Plugins;
+      await LocalNotifications.schedule({ notifications: [{
+        id: Date.now(),
+        title: '⚠ Vía Segura',
+        body: `Nuevo reporte en la zona USCO`,
+        schedule: { at: new Date(Date.now() + 100) }
+      }]});
+    }
+  }
+  localStorage.setItem('lastReportCount', newCount);
+}, 30000);
 });
 </script>
 </body>
