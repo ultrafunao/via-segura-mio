@@ -596,13 +596,15 @@ function renderTable(reports) {
   }
   body.innerHTML = `<table>
     <thead><tr>
-      <th>Tipo</th><th>Vehículo</th><th>Usuario</th><th>Coordenadas</th><th>Fecha</th><th></th>
+      <th>Tipo</th><th>Vehículo</th><th>Usuario</th><th>Descripción</th><th>Foto</th><th>Coordenadas</th><th>Fecha</th><th></th>
     </tr></thead>
     <tbody>${reports.map(r => `
       <tr id="row-${r.id}">
         <td><span class="badge">${r.title||'—'}</span></td>
         <td style="color:#a1a1aa">${r.sub||'—'}</td>
         <td style="color:#a1a1aa;font-size:11px">${r.user_email||'—'}</td>
+        <td style="color:#71717a;font-size:11px;max-width:150px">${r.descripcion||'—'}</td>
+        <td>${r.foto_url ? `<a href="${r.foto_url}" target="_blank"><img src="${r.foto_url}" style="width:48px;height:48px;object-fit:cover;border-radius:6px"></a>` : '—'}</td>
         <td style="color:#71717a;font-size:11px">${r.lat&&r.lng?r.lat.toFixed(4)+', '+r.lng.toFixed(4):'Sin coords'}</td>
         <td style="color:#71717a;font-size:11px">${new Date(r.created_at).toLocaleString('es-CO')}</td>
         <td><button class="del-btn" onclick="deleteReport(${r.id}, document.getElementById('row-${r.id}'))"><i class="ti ti-trash"></i></button></td>

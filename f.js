@@ -7,6 +7,24 @@ const { Pool } = require('pg');
 
 const rateLimit = require('express-rate-limit');
 
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB máximo
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) cb(null, true);
+    else cb(new Error('Solo se permiten imágenes'), false);
+  }
+});
+
 const adminLoginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
   max: 10,
@@ -100,6 +118,22 @@ app.post('/api/reports', async (req, res) => {
     res.status(201).json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.post('/api/upload', upload.single('foto'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No se recibió imagen' });
+    const b64 = Buffer.from(req.file.buffer).toString('base64');
+    const dataURI = `data:${req.file.mimetype};base64,${b64}`;
+    const result = await cloudinary.uploader.upload(dataURI, {
+      folder: 'via-segura',
+      transformation: [{ width: 800, quality: 'auto', fetch_format: 'auto' }]
+    });
+    res.json({ url: result.secure_url });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error subiendo imagen' });
   }
 });
 

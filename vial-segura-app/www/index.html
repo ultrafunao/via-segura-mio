@@ -862,9 +862,24 @@
       </button>
     </div>
     <div class="card">
-      <label class="form-label">Descripción breve (opcional)</label>
-      <textarea class="form-input" id="desc-input" rows="2" placeholder="Ej: Moto cruzó el separador a alta velocidad..."></textarea>
-    </div>
+  <label class="form-label">Descripción breve (opcional)</label>
+  <textarea class="form-input" id="desc-input" rows="2" 
+    placeholder="Ej: Moto cruzó el separador a alta velocidad..."></textarea>
+  
+  <label class="form-label">Foto (opcional)</label>
+  <input type="file" id="foto-input" accept="image/*" capture="environment"
+    style="display:none" onchange="previewFoto(this)">
+  <button onclick="document.getElementById('foto-input').click()"
+    style="width:100%;padding:10px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:12px;cursor:pointer;color:var(--color-text-secondary);margin-top:6px">
+    <i class="ti ti-camera"></i> Adjuntar foto
+  </button>
+  <div id="foto-preview" style="margin-top:8px;display:none">
+    <img id="foto-img" style="width:100%;border-radius:8px;max-height:200px;object-fit:cover">
+    <button onclick="removeFoto()" style="width:100%;padding:6px;border-radius:8px;border:1px solid #E24B4A;background:transparent;color:#E24B4A;font-size:11px;cursor:pointer;margin-top:4px">
+      <i class="ti ti-x"></i> Quitar foto
+    </button>
+  </div>
+</div>
     <button class="submit-btn ripple-container" id="report-btn" onclick="submitReport()"><i class="ti ti-send"></i> Enviar reporte</button>
   </div>
   <div class="nav-tab">
@@ -1241,6 +1256,37 @@ function updateStats(reports) {
   }
 }
 
+let fotoUrl = null;
+
+function previewFoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('foto-img').src = e.target.result;
+    document.getElementById('foto-preview').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeFoto() {
+  document.getElementById('foto-input').value = '';
+  document.getElementById('foto-preview').style.display = 'none';
+  fotoUrl = null;
+}
+
+async function uploadFoto() {
+  const input = document.getElementById('foto-input');
+  if (!input.files[0]) return null;
+  const formData = new FormData();
+  formData.append('foto', input.files[0]);
+  const res = await fetch('https://via-segura-mio.vercel.app/api/upload', {
+    method: 'POST', body: formData
+  });
+  const data = await res.json();
+  return data.url || null;
+}
+
 async function renderReports() {
   const container = document.getElementById('reports-container');
   try {
@@ -1341,26 +1387,51 @@ function updateUserStatus() {
 async function submitReport() {
   if (!localStorage.getItem('currentUser')) { goScreen('login'); return; }
   if (!userLat || !userLng) { showToast('Primero obtén tu ubicación', '📍'); return; }
+
   const btn = document.getElementById('report-btn');
+  btn.classList.add('loading');
+  btn.innerHTML = '<div class="spinner"></div> Subiendo...';
+
+  // Subir foto si existe
+  fotoUrl = await uploadFoto();
+
   const typeBtn = document.querySelector('.type-btn.sel');
   const vehBtn = document.querySelector('.chip-row .chip.act[onclick*="veh"]');
   const typeText = typeBtn ? typeBtn.innerText.trim() : 'Reporte general';
   const vehText = vehBtn ? vehBtn.innerText.trim() : 'Vehículo';
-  const report = { title:typeText, sub:`${vehText} · Reporte Ciudadano`, time:'Reciente', icon:'ti-alert-triangle', color:'#E24B4A', bg:'#FCEBEB', lat:userLat, lng:userLng, user_email:localStorage.getItem('currentUser') };
-  btn.classList.add('loading'); btn.innerHTML = '<div class="spinner"></div> Enviando...';
+  const descripcion = document.getElementById('desc-input').value;
+
+  const report = {
+    title: typeText, sub: `${vehText} · Reporte Ciudadano`,
+    time: 'Reciente', icon: 'ti-alert-triangle',
+    color: '#E24B4A', bg: '#FCEBEB',
+    lat: userLat, lng: userLng,
+    user_email: localStorage.getItem('currentUser'),
+    foto_url: fotoUrl,
+    descripcion: descripcion || null
+  };
+
+  btn.innerHTML = '<div class="spinner"></div> Enviando...';
+
   try {
-    const res = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(report) });
+    const res = await fetch(API_URL, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(report)
+    });
     if (!res.ok) throw new Error();
     btn.classList.remove('loading'); btn.classList.add('success');
     btn.innerHTML = '<i class="ti ti-check"></i> ¡Enviado!';
     showToast('Reporte enviado', '✓');
     document.getElementById('desc-input').value = '';
+    removeFoto();
     setTimeout(() => {
-      btn.classList.remove('success'); btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
+      btn.classList.remove('success');
+      btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
       renderReports(); goScreen('dashboard');
     }, 1200);
   } catch {
-    btn.classList.remove('loading'); btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
+    btn.classList.remove('loading');
+    btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
     showToast('Error enviando reporte', '❌');
   }
 }
