@@ -1393,35 +1393,23 @@ async function submitReport() {
   if (!localStorage.getItem('currentUser')) { goScreen('login'); return; }
   if (!userLat || !userLng) { showToast('Primero obtén tu ubicación', '📍'); return; }
 
-const isOtro = document.querySelector('.type-btn.sel')?.innerText.includes('Otro');
-if (isOtro && !document.getElementById('desc-input').value.trim()) {
-  showToast('La descripción es obligatoria para este tipo', '⚠️');
-  return;
-}
+  const isOtro = document.querySelector('.type-btn.sel')?.innerText.includes('Otro');
+  if (isOtro && !document.getElementById('desc-input').value.trim()) {
+    showToast('La descripción es obligatoria para este tipo', '⚠️');
+    return;
+  }
 
-const typeBtn = document.querySelector('.type-btn.sel');
-const tipoTexto = typeBtn ? typeBtn.innerText.trim() : 'Reporte general';
-// Pequeña confirmación visual — no alert(), sino un toast con delay
-let confirmado = false;
-showToast(`¿Confirmar reporte: ${tipoTexto.split('\n')[1] || tipoTexto}?`, '📍', 99999);
-await new Promise(resolve => {
-  const toast = document.getElementById('toast');
-  const btnConfirm = document.createElement('button');
-  btnConfirm.textContent = 'Confirmar';
-  btnConfirm.style.cssText = 'margin-left:10px;padding:4px 10px;border-radius:20px;border:none;background:#5DCAA5;color:#fff;font-size:11px;cursor:pointer';
-  btnConfirm.onclick = () => { confirmado = true; toast.classList.remove('show'); resolve(); };
-  toast.appendChild(btnConfirm);
-});
-if (!confirmado) return;
+  const typeBtn = document.querySelector('.type-btn.sel');
+  const tipoTexto = typeBtn ? typeBtn.innerText.trim() : 'Reporte general';
+
+  if (!confirm(`¿Confirmar reporte: ${tipoTexto.split('\n').pop().trim()}?`)) return;
 
   const btn = document.getElementById('report-btn');
   btn.classList.add('loading');
   btn.innerHTML = '<div class="spinner"></div> Subiendo...';
 
-  // Subir foto si existe
   fotoUrl = await uploadFoto();
 
-  const typeBtn = document.querySelector('.type-btn.sel');
   const vehBtn = document.querySelector('.chip-row .chip.act[onclick*="veh"]');
   const typeText = typeBtn ? typeBtn.innerText.trim() : 'Reporte general';
   const vehText = vehBtn ? vehBtn.innerText.trim() : 'Vehículo';
@@ -1453,19 +1441,21 @@ if (!confirmado) return;
     setTimeout(() => {
       btn.classList.remove('success');
       btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
-      renderReports(); goScreen('dashboard');
+      renderReports();
+      goScreen('dashboard');
       setTimeout(() => {
-  if (map && userLat && userLng) {
-    map.setView([userLat, userLng], 17, { animate: true });
-    L.marker([userLat, userLng], {
-      icon: L.divIcon({
-        html: '<div style="background:#E24B4A;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3)"></div>',
-        iconSize: [14, 14], iconAnchor: [7, 7]
-      })
-    }).addTo(map).bindPopup('Tu reporte').openPopup();
-    setTimeout(() => map.setZoom(15), 3000);
-  }
-}, 1300);
+        if (map && userLat && userLng) {
+          map.setView([userLat, userLng], 17, { animate: true });
+          L.marker([userLat, userLng], {
+            icon: L.divIcon({
+              html: '<div style="background:#E24B4A;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3)"></div>',
+              iconSize: [14, 14], iconAnchor: [7, 7]
+            })
+          }).addTo(map).bindPopup('Tu reporte').openPopup();
+          setTimeout(() => map.setZoom(15), 3000);
+        }
+      }, 1300);
+    }, 1200);
   } catch {
     btn.classList.remove('loading');
     btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
