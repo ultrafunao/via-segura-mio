@@ -980,7 +980,7 @@
     <div class="card" style="background:linear-gradient(135deg,#1a1a2e,#16213e);border-color:#2a2a4a">
       <div class="card-title" style="color:#5DCAA5"><i class="ti ti-crystal-ball"></i> Proyección — próximos 7 días</div>
       <div id="sim-proyeccion" style="display:flex;flex-direction:column;gap:8px;margin-top:6px"></div>
-      <div style="margin-top:10px;font-size:10px;color:#71717a">Estimación basada en el promedio del periodo seleccionado.</div>
+      <div style="margin-top:10px;font-size:10px;color:#71717a">⚠ Proyección estadística basada en datos históricos del periodo seleccionado. No constituye una predicción exacta.</div>
     </div>
 
   </div>
@@ -1399,6 +1399,21 @@ if (isOtro && !document.getElementById('desc-input').value.trim()) {
   return;
 }
 
+const typeBtn = document.querySelector('.type-btn.sel');
+const tipoTexto = typeBtn ? typeBtn.innerText.trim() : 'Reporte general';
+// Pequeña confirmación visual — no alert(), sino un toast con delay
+let confirmado = false;
+showToast(`¿Confirmar reporte: ${tipoTexto.split('\n')[1] || tipoTexto}?`, '📍', 99999);
+await new Promise(resolve => {
+  const toast = document.getElementById('toast');
+  const btnConfirm = document.createElement('button');
+  btnConfirm.textContent = 'Confirmar';
+  btnConfirm.style.cssText = 'margin-left:10px;padding:4px 10px;border-radius:20px;border:none;background:#5DCAA5;color:#fff;font-size:11px;cursor:pointer';
+  btnConfirm.onclick = () => { confirmado = true; toast.classList.remove('show'); resolve(); };
+  toast.appendChild(btnConfirm);
+});
+if (!confirmado) return;
+
   const btn = document.getElementById('report-btn');
   btn.classList.add('loading');
   btn.innerHTML = '<div class="spinner"></div> Subiendo...';
@@ -1439,7 +1454,18 @@ if (isOtro && !document.getElementById('desc-input').value.trim()) {
       btn.classList.remove('success');
       btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
       renderReports(); goScreen('dashboard');
-    }, 1200);
+      setTimeout(() => {
+  if (map && userLat && userLng) {
+    map.setView([userLat, userLng], 17, { animate: true });
+    L.marker([userLat, userLng], {
+      icon: L.divIcon({
+        html: '<div style="background:#E24B4A;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3)"></div>',
+        iconSize: [14, 14], iconAnchor: [7, 7]
+      })
+    }).addTo(map).bindPopup('Tu reporte').openPopup();
+    setTimeout(() => map.setZoom(15), 3000);
+  }
+}, 1300);
   } catch {
     btn.classList.remove('loading');
     btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
