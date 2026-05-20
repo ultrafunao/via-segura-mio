@@ -1063,7 +1063,6 @@
 </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 const API_URL = 'https://via-segura-mio.vercel.app/api/reports';
 let map, heatLayer;
@@ -1327,6 +1326,16 @@ function updateUserStatus() {
     if (user) { profileName.textContent = name||'Usuario'; profileEmail.textContent = user; profileBtn.style.display='block'; }
     else { profileName.textContent='—'; profileEmail.textContent='No has iniciado sesión'; profileBtn.style.display='none'; }
   }
+  const sbStatus = document.getElementById('sb-user-status');
+    if (sbStatus) {
+      if (user) {
+        sbStatus.textContent = name ? `${name.split(' ')[0]} ›` : 'Mi perfil ›';
+        sbStatus.onclick = () => goScreen('config');
+      } else {
+        sbStatus.textContent = 'Ingresar →';
+        sbStatus.onclick = () => goScreen('login');
+      }
+    }
 }
 
 async function submitReport() {
