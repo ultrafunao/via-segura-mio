@@ -6,6 +6,8 @@
   <title>Vía Segura USCO</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="icon" type="image/png" href="/icon.png">
+  <link rel="apple-touch-icon" href="/icon.png">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -1364,7 +1366,8 @@ function updateUserStatus() {
   const name = localStorage.getItem('userName');
   const role = localStorage.getItem('userRole');
   const adminCard = document.getElementById('admin-card');
-  if (adminCard) adminCard.style.display = (role === 'admin') ? 'block' : 'none';
+  const isDesktop = window.innerWidth >= 768;
+  if (adminCard) adminCard.style.display = (role === 'admin' && isDesktop) ? 'block' : 'none';
   if (user) { el.textContent = name ? `${name.split(' ')[0]} ›` : 'Mi perfil ›'; el.onclick = () => goScreen('config'); }
   else { el.textContent = 'Ingresar'; el.onclick = () => goScreen('login'); }
   const profileName = document.getElementById('profile-name');
