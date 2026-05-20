@@ -1063,6 +1063,7 @@
 </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 const API_URL = 'https://via-segura-mio.vercel.app/api/reports';
 let map, heatLayer;
@@ -1140,12 +1141,11 @@ function updateHeatmap(reports) {
   if (heatLayer) heatLayer.setLatLngs(points);
   window._pendingHeatPoints = points;
   if (window.heatLayerDesktop) window.heatLayerDesktop.setLatLngs(points);
-
   const dr = document.getElementById('desktop-reports');
   if (dr) {
     dr.innerHTML = reports.slice(0,5).map((r,i) => `
       <div class="alert-card" style="animation:incidentSlide 0.4s var(--ease-out) ${i*0.07}s both">
-        <div style="width:28px;height:28px;border-radius:6px;background:${r.bg||'#FCEBEB'};display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.2s var(--ease-bounce)">
+        <div style="width:28px;height:28px;border-radius:6px;background:${r.bg||'#FCEBEB'};display:flex;align-items:center;justify-content:center;flex-shrink:0">
           <i class="ti ${r.icon||'ti-alert-triangle'}" style="color:${r.color||'#E24B4A'};font-size:13px"></i>
         </div>
         <div style="flex:1;min-width:0">
@@ -1162,11 +1162,10 @@ function getLocation() {
   const pulse = document.getElementById('loc-pulse');
   locText.textContent = 'Obteniendo ubicación...';
   if (pulse) pulse.style.background = 'var(--warn)';
-
   const onSuccess = (lat, lng) => {
     userLat = lat; userLng = lng;
     locText.textContent = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-    if (pulse) { pulse.style.background = 'var(--success)'; }
+    if (pulse) pulse.style.background = 'var(--success)';
     showToast('Ubicación obtenida', '📍');
   };
   const onError = () => {
@@ -1174,15 +1173,12 @@ function getLocation() {
     locText.textContent = 'Usando ubicación por defecto (USCO)';
     if (pulse) pulse.style.background = 'var(--warn)';
   };
-
   if (window.Capacitor && window.Capacitor.isNativePlatform()) {
     window.Capacitor.Plugins.Geolocation.getCurrentPosition()
-      .then(pos => onSuccess(pos.coords.latitude, pos.coords.longitude))
-      .catch(onError);
+      .then(pos => onSuccess(pos.coords.latitude, pos.coords.longitude)).catch(onError);
   } else {
     navigator.geolocation.getCurrentPosition(
-      pos => onSuccess(pos.coords.latitude, pos.coords.longitude),
-      onError
+      pos => onSuccess(pos.coords.latitude, pos.coords.longitude), onError
     );
   }
 }
@@ -1234,12 +1230,10 @@ function updateStats(reports) {
   const now = new Date();
   const hoy = reports.filter(r => new Date(r.created_at).toDateString() === now.toDateString());
   const semana = reports.filter(r => (now - new Date(r.created_at)) < 7*24*60*60*1000);
-
   animateCounter(document.getElementById('stat-hoy'), hoy.length);
   animateCounter(document.getElementById('stat-semana'), semana.length);
   animateCounter(document.getElementById('stat-total'), reports.length);
   document.getElementById('alert-badge').textContent = `⚠ ${hoy.length} alertas`;
-
   const horas = reports.map(r => new Date(r.created_at).getHours());
   if (horas.length > 0) {
     const freq = {}; horas.forEach(h => freq[h]=(freq[h]||0)+1);
@@ -1255,6 +1249,8 @@ async function renderReports() {
     if (!res.ok) throw new Error();
     const reports = await res.json();
     updateStats(reports); updateHeatmap(reports);
+    // Guardar globalmente para el simulador
+    window._allReports = reports;
     if (reports.length === 0) {
       container.innerHTML = `<div style="padding:10px;font-size:11px;text-align:center;color:var(--color-text-secondary)">No hay reportes aún.</div>`;
       return;
@@ -1270,7 +1266,7 @@ async function renderReports() {
       </div>
     `).join('');
   } catch {
-    container.innerHTML = `<div style="padding:10px;font-size:11px;text-align:center;color:#E24B4A;background:#FCEBEB;border-radius:8px;animation:cardEnter 0.4s var(--ease-out)">No se pudo conectar al servidor.</div>`;
+    container.innerHTML = `<div style="padding:10px;font-size:11px;text-align:center;color:#E24B4A;background:#FCEBEB;border-radius:8px">No se pudo conectar al servidor.</div>`;
   }
 }
 
@@ -1287,40 +1283,31 @@ async function doLogin() {
   const email = document.getElementById('login-email').value;
   const pass = document.getElementById('login-pass').value;
   if (!email || !pass) { showToast('Ingresa correo y contraseña', '⚠️'); return; }
-
-  btn.classList.add('loading');
-  btn.innerHTML = '<div class="spinner"></div>';
-
+  btn.classList.add('loading'); btn.innerHTML = '<div class="spinner"></div>';
   try {
     const res = await fetch('https://via-segura-mio.vercel.app/api/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email,password:pass}) });
     const data = await res.json();
     if (!res.ok) {
-      btn.classList.remove('loading');
-      btn.innerHTML = '<i class="ti ti-login"></i> Iniciar Sesión';
+      btn.classList.remove('loading'); btn.innerHTML = '<i class="ti ti-login"></i> Iniciar Sesión';
       showToast(data.error, '❌'); return;
     }
-    btn.classList.remove('loading');
-    btn.classList.add('success');
+    btn.classList.remove('loading'); btn.classList.add('success');
     btn.innerHTML = '<i class="ti ti-check"></i> ¡Sesión iniciada!';
     localStorage.setItem('currentUser', data.email); localStorage.setItem('userName', data.name); localStorage.setItem('userRole', data.role||'user');
     updateUserStatus();
     setTimeout(() => {
-      btn.classList.remove('success');
-      btn.innerHTML = '<i class="ti ti-login"></i> Iniciar Sesión';
-      goScreen('dashboard');
-      showToast(`Bienvenido, ${data.name?.split(' ')[0] || 'Usuario'}`, '👋');
+      btn.classList.remove('success'); btn.innerHTML = '<i class="ti ti-login"></i> Iniciar Sesión';
+      goScreen('dashboard'); showToast(`Bienvenido, ${data.name?.split(' ')[0] || 'Usuario'}`, '👋');
     }, 800);
   } catch {
-    btn.classList.remove('loading');
-    btn.innerHTML = '<i class="ti ti-login"></i> Iniciar Sesión';
+    btn.classList.remove('loading'); btn.innerHTML = '<i class="ti ti-login"></i> Iniciar Sesión';
     showToast('Error conectando al servidor', '❌');
   }
 }
 
 function doLogout() {
   localStorage.removeItem('currentUser'); localStorage.removeItem('userName'); localStorage.removeItem('userRole');
-  updateUserStatus();
-  showToast('Sesión cerrada', '👋');
+  updateUserStatus(); showToast('Sesión cerrada', '👋');
 }
 
 function updateUserStatus() {
@@ -1345,84 +1332,328 @@ function updateUserStatus() {
 async function submitReport() {
   if (!localStorage.getItem('currentUser')) { goScreen('login'); return; }
   if (!userLat || !userLng) { showToast('Primero obtén tu ubicación', '📍'); return; }
-
   const btn = document.getElementById('report-btn');
   const typeBtn = document.querySelector('.type-btn.sel');
   const vehBtn = document.querySelector('.chip-row .chip.act[onclick*="veh"]');
   const typeText = typeBtn ? typeBtn.innerText.trim() : 'Reporte general';
   const vehText = vehBtn ? vehBtn.innerText.trim() : 'Vehículo';
   const report = { title:typeText, sub:`${vehText} · Reporte Ciudadano`, time:'Reciente', icon:'ti-alert-triangle', color:'#E24B4A', bg:'#FCEBEB', lat:userLat, lng:userLng, user_email:localStorage.getItem('currentUser') };
-
-  btn.classList.add('loading');
-  btn.innerHTML = '<div class="spinner"></div> Enviando...';
-
+  btn.classList.add('loading'); btn.innerHTML = '<div class="spinner"></div> Enviando...';
   try {
     const res = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(report) });
     if (!res.ok) throw new Error();
-    btn.classList.remove('loading');
-    btn.classList.add('success');
+    btn.classList.remove('loading'); btn.classList.add('success');
     btn.innerHTML = '<i class="ti ti-check"></i> ¡Enviado!';
     showToast('Reporte enviado', '✓');
     document.getElementById('desc-input').value = '';
     setTimeout(() => {
-      btn.classList.remove('success');
-      btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
+      btn.classList.remove('success'); btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
       renderReports(); goScreen('dashboard');
     }, 1200);
   } catch {
-    btn.classList.remove('loading');
-    btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
+    btn.classList.remove('loading'); btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
     showToast('Error enviando reporte', '❌');
   }
 }
 
 function goScreen(id) {
   if (id === 'reporte' && !localStorage.getItem('currentUser')) { id = 'login'; }
-
   const current = document.querySelector('.screen.active');
   if (current && current.id !== 'screen-' + id) {
     current.classList.add('exit');
     setTimeout(() => current.classList.remove('exit'), 250);
   }
-
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
-
   if (id === 'reporte') getLocation();
   if (id === 'dashboard') setTimeout(() => map && map.invalidateSize(), 100);
-
+  if (id === 'simulador') initSimulador();
   document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('act'));
   const sb = document.getElementById('sb-' + id);
   if (sb) sb.classList.add('act');
-
-  // Update mobile nav buttons
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('act'));
 }
 
-function updateSim() {
-  const v = parseInt(document.getElementById('vel-slider').value);
-  document.getElementById('vel-val').textContent = v + ' km/h';
-  const prob = Math.min(95, Math.round(30 + (v/80)*65));
-  const dist = Math.round((v/3.6)*(v/3.6)/(2*7));
-  const reac = Math.max(0.1, (2.5-v/40)).toFixed(1);
-  const saved = Math.max(3, Math.round(14-(v/80)*10));
-  document.getElementById('sim-prob').textContent = prob + '%';
-  const bar = document.getElementById('sim-bar');
-  bar.style.width = prob + '%';
-  bar.style.background = prob>70?'#E24B4A':prob>45?'#EF9F27':'#639922';
-  document.getElementById('sim-dist').textContent = dist + ' m';
-  document.getElementById('sim-reac').textContent = reac + ' s';
-  document.getElementById('sim-time-ilegal').textContent = saved + ' s';
-  document.getElementById('sim-costo-tiempo').textContent = saved + ' s';
-  const msgEl = document.getElementById('sim-msg');
-  const msgWrap = msgEl.parentElement;
-  const msg = prob>70?'⚠ Riesgo alto: tiempo de reacción insuficiente':prob>45?'⚠ Riesgo medio: maniobra imprudente en zona escolar':'✓ Riesgo bajo a esta velocidad';
-  msgEl.textContent = msg;
-  msgWrap.style.background = prob>70?'#FCEBEB':prob>45?'#FAEEDA':'#EAF3DE';
-  msgWrap.style.borderColor = prob>70?'#F09595':prob>45?'#F0C080':'#90C060';
-  msgEl.style.color = prob>70?'#791F1F':prob>45?'#633806':'#27500A';
+// ════════════════════════════════════════════════
+//  SIMULADOR v2 — Análisis temporal con datos reales
+// ════════════════════════════════════════════════
+
+let simCharts = {};   // referencias a instancias Chart.js
+let simPeriod = 7;    // días a filtrar (0 = todo)
+
+const DIAS = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+const DIAS_FULL = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+// Horarios de clase USCO (horas donde hay entrada/salida masiva)
+const HORARIOS_USCO = [6, 8, 10, 12, 16, 18, 20];
+
+function setSimPeriod(days, chipEl) {
+  simPeriod = days;
+  document.querySelectorAll('#chip-7,#chip-30,#chip-0').forEach(c => c.classList.remove('act'));
+  chipEl.classList.add('act');
+  renderSimulador();
 }
 
+function filtrarPorPeriodo(reports) {
+  if (simPeriod === 0) return reports;
+  const cutoff = new Date(Date.now() - simPeriod * 24 * 60 * 60 * 1000);
+  return reports.filter(r => new Date(r.created_at) >= cutoff);
+}
+
+function getCSSVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function destroyChart(id) {
+  if (simCharts[id]) { simCharts[id].destroy(); delete simCharts[id]; }
+}
+
+function initSimulador() {
+  const reports = window._allReports;
+  if (!reports || reports.length === 0) {
+    // Intentar cargar si aún no hay datos
+    fetch(API_URL).then(r => r.json()).then(data => {
+      window._allReports = data;
+      renderSimulador();
+    }).catch(() => {
+      showToast('No se pudieron cargar datos', '❌');
+    });
+    return;
+  }
+  renderSimulador();
+}
+
+function renderSimulador() {
+  const all = window._allReports || [];
+  const reports = filtrarPorPeriodo(all);
+
+  if (reports.length === 0) {
+    ['chart-hora','chart-dia','chart-tendencia','chart-tipo'].forEach(id => {
+      destroyChart(id);
+      const canvas = document.getElementById(id);
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    });
+    document.getElementById('sim-stat-total').textContent = '0';
+    document.getElementById('sim-stat-pico').textContent = '—';
+    document.getElementById('sim-stat-dia').textContent = '—';
+    document.getElementById('sim-stat-tipo').textContent = '—';
+    showToast('Sin datos en este periodo', 'ℹ️');
+    return;
+  }
+
+  // ── 1. STATS RESUMEN ──────────────────────────
+  const horaFreq = Array(24).fill(0);
+  const diaFreq  = Array(7).fill(0);
+  const tipoFreq = {};
+
+  reports.forEach(r => {
+    const d = new Date(r.created_at);
+    horaFreq[d.getHours()]++;
+    diaFreq[d.getDay()]++;
+    const tipo = (r.title || 'Otro').split(' ').slice(0,2).join(' ');
+    tipoFreq[tipo] = (tipoFreq[tipo] || 0) + 1;
+  });
+
+  const horaPico    = horaFreq.indexOf(Math.max(...horaFreq));
+  const diaPico     = diaFreq.indexOf(Math.max(...diaFreq));
+  const tipoTop     = Object.entries(tipoFreq).sort((a,b)=>b[1]-a[1])[0];
+
+  animateCounter(document.getElementById('sim-stat-total'), reports.length);
+  document.getElementById('sim-stat-pico').textContent = `${horaPico}:00h`;
+  document.getElementById('sim-stat-dia').textContent  = DIAS[diaPico];
+  document.getElementById('sim-stat-tipo').textContent = tipoTop ? tipoTop[0] : '—';
+
+  const textColor   = getCSSVar('--color-text-secondary') || '#71717a';
+  const borderColor = getCSSVar('--color-border-secondary') || '#e4e4e7';
+
+  const chartDefaults = {
+    responsive: true,
+    animation: { duration: 700, easing: 'easeOutQuart' },
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: textColor, font: { size: 10 } }, grid: { color: borderColor } },
+      y: { ticks: { color: textColor, font: { size: 10 }, stepSize: 1 }, grid: { color: borderColor }, beginAtZero: true }
+    }
+  };
+
+  // ── 2. GRÁFICA POR HORA ───────────────────────
+  const horaLabels  = Array.from({length:24}, (_,i) => `${i}h`);
+  const horaColors  = horaFreq.map(v => v === Math.max(...horaFreq) ? '#E24B4A' : v > 0 ? '#185FA5' : '#e4e4e7');
+
+  destroyChart('hora');
+  simCharts['hora'] = new Chart(document.getElementById('chart-hora'), {
+    type: 'bar',
+    data: {
+      labels: horaLabels,
+      datasets: [{ data: horaFreq, backgroundColor: horaColors, borderRadius: 4, borderSkipped: false }]
+    },
+    options: {
+      ...chartDefaults,
+      plugins: { ...chartDefaults.plugins, tooltip: {
+        callbacks: { label: ctx => ` ${ctx.raw} reporte${ctx.raw!==1?'s':''}` }
+      }}
+    }
+  });
+
+  // Mensaje hora
+  const esHorarioUSCO = HORARIOS_USCO.some(h => Math.abs(h - horaPico) <= 1);
+  document.getElementById('sim-hora-insight').textContent = `Pico: ${horaPico}:00h`;
+  document.getElementById('sim-hora-msg').textContent = esHorarioUSCO
+    ? `⚠ La hora pico (${horaPico}:00h) coincide con horarios de entrada/salida de la USCO — esto sugiere que el flujo estudiantil aumenta el riesgo directamente.`
+    : `La hora de mayor actividad (${horaPico}:00h) no coincide directamente con horarios de clase, lo que puede indicar tráfico externo o horas de almuerzo.`;
+
+  // ── 3. GRÁFICA POR DÍA ───────────────────────
+  const diaColors = diaFreq.map(v => v === Math.max(...diaFreq) ? '#EF9F27' : v > 0 ? '#185FA5cc' : '#e4e4e7');
+
+  destroyChart('dia');
+  simCharts['dia'] = new Chart(document.getElementById('chart-dia'), {
+    type: 'bar',
+    data: {
+      labels: DIAS,
+      datasets: [{ data: diaFreq, backgroundColor: diaColors, borderRadius: 6, borderSkipped: false }]
+    },
+    options: {
+      ...chartDefaults,
+      plugins: { ...chartDefaults.plugins, tooltip: {
+        callbacks: { label: ctx => ` ${ctx.raw} reporte${ctx.raw!==1?'s':''}` }
+      }}
+    }
+  });
+
+  const esLaborable = diaPico >= 1 && diaPico <= 5;
+  document.getElementById('sim-dia-insight').textContent = DIAS_FULL[diaPico];
+  document.getElementById('sim-dia-msg').textContent = esLaborable
+    ? `El ${DIAS_FULL[diaPico]} es el día más peligroso (${diaFreq[diaPico]} reportes). Al ser día hábil, el volumen de estudiantes y vehículos es mayor.`
+    : `Los incidentes se concentran en ${DIAS_FULL[diaPico]}, un día no hábil. Esto sugiere un patrón de uso diferente — posiblemente eventos o menor vigilancia.`;
+
+  // ── 4. TENDENCIA ACUMULADA ────────────────────
+  // Agrupar por fecha
+  const porFecha = {};
+  reports.forEach(r => {
+    const fecha = new Date(r.created_at).toISOString().slice(0,10);
+    porFecha[fecha] = (porFecha[fecha] || 0) + 1;
+  });
+  const fechas = Object.keys(porFecha).sort();
+  let acumulado = 0;
+  const tendData = fechas.map(f => { acumulado += porFecha[f]; return acumulado; });
+
+  // Calcular tendencia lineal simple
+  const n = tendData.length;
+  let tendencia = 'estable';
+  if (n >= 3) {
+    const mitad = Math.floor(n / 2);
+    const promedioInicio = tendData.slice(0, mitad).reduce((a,b)=>a+b,0) / mitad;
+    const promedioFin    = tendData.slice(mitad).reduce((a,b)=>a+b,0) / (n - mitad);
+    const tasa = (promedioFin - promedioInicio) / promedioInicio;
+    tendencia = tasa > 0.15 ? 'creciente' : tasa < -0.15 ? 'decreciente' : 'estable';
+  }
+
+  destroyChart('tendencia');
+  simCharts['tendencia'] = new Chart(document.getElementById('chart-tendencia'), {
+    type: 'line',
+    data: {
+      labels: fechas.map(f => f.slice(5)), // MM-DD
+      datasets: [{
+        data: tendData,
+        borderColor: tendencia==='creciente' ? '#E24B4A' : tendencia==='decreciente' ? '#639922' : '#185FA5',
+        backgroundColor: tendencia==='creciente' ? 'rgba(226,75,74,0.08)' : tendencia==='decreciente' ? 'rgba(99,153,34,0.08)' : 'rgba(24,95,165,0.08)',
+        borderWidth: 2, fill: true, tension: 0.35,
+        pointBackgroundColor: '#fff', pointBorderWidth: 2, pointRadius: 3
+      }]
+    },
+    options: { ...chartDefaults }
+  });
+
+  const tendMsg = { creciente: '📈 La tendencia es creciente — los incidentes aumentan con el tiempo. Se recomienda intervención urgente en el punto.', decreciente: '📉 La tendencia es decreciente — los reportes están bajando. Las medidas de concientización podrían estar funcionando.', estable: '➡ La tendencia es estable — el número de incidentes se mantiene constante. Se requiere una intervención sostenida.' };
+  document.getElementById('sim-tend-msg').textContent = tendMsg[tendencia];
+
+  // ── 5. GRÁFICA POR TIPO (DONUT) ───────────────
+  const tipoLabels = Object.keys(tipoFreq);
+  const tipoData   = Object.values(tipoFreq);
+  const tipoPaleta = ['#185FA5','#E24B4A','#EF9F27','#639922','#9333ea','#06b6d4'];
+
+  destroyChart('tipo');
+  simCharts['tipo'] = new Chart(document.getElementById('chart-tipo'), {
+    type: 'doughnut',
+    data: {
+      labels: tipoLabels,
+      datasets: [{ data: tipoData, backgroundColor: tipoPaleta, borderWidth: 0, hoverOffset: 6 }]
+    },
+    options: {
+      responsive: false,
+      animation: { duration: 700 },
+      plugins: { legend: { display: false } },
+      cutout: '62%'
+    }
+  });
+
+  // Leyenda manual
+  document.getElementById('tipo-legend').innerHTML = tipoLabels.map((l,i) => `
+    <div style="display:flex;align-items:center;gap:6px">
+      <span style="width:10px;height:10px;border-radius:3px;background:${tipoPaleta[i]};flex-shrink:0;display:inline-block"></span>
+      <span style="color:var(--color-text-secondary)">${l}</span>
+      <span style="margin-left:auto;font-weight:500;color:var(--color-text-primary)">${tipoData[i]}</span>
+    </div>
+  `).join('');
+
+  // ── 6. CORRELACIÓN CON HORARIOS USCO ─────────
+  const bloques = [
+    { label:'Ingreso mañana', horas:[6,7,8],    icon:'ti-sunrise' },
+    { label:'Entre clases',   horas:[9,10,11],  icon:'ti-school' },
+    { label:'Hora almuerzo',  horas:[12,13],    icon:'ti-tools-kitchen-2' },
+    { label:'Tarde',          horas:[14,15,16], icon:'ti-clock' },
+    { label:'Salida tarde',   horas:[17,18,19], icon:'ti-sunset' },
+    { label:'Noche',          horas:[20,21,22], icon:'ti-moon' },
+  ];
+  const maxBloque = Math.max(...bloques.map(b => b.horas.reduce((s,h)=>s+horaFreq[h],0)));
+
+  document.getElementById('sim-correlacion').innerHTML = bloques.map(b => {
+    const count = b.horas.reduce((s,h) => s + horaFreq[h], 0);
+    const pct   = maxBloque > 0 ? Math.round((count / maxBloque) * 100) : 0;
+    const color = pct > 70 ? '#E24B4A' : pct > 40 ? '#EF9F27' : '#639922';
+    return `
+      <div style="display:flex;align-items:center;gap:8px">
+        <i class="ti ${b.icon}" style="font-size:14px;color:${color};flex-shrink:0;width:18px"></i>
+        <span style="font-size:11px;color:var(--color-text-secondary);min-width:110px">${b.label}</span>
+        <div style="flex:1;background:var(--color-background-secondary);border-radius:6px;height:8px;overflow:hidden">
+          <div style="width:${pct}%;height:100%;background:${color};border-radius:6px;transition:width 0.6s ease"></div>
+        </div>
+        <span style="font-size:11px;font-weight:500;color:var(--color-text-primary);min-width:20px;text-align:right">${count}</span>
+      </div>
+    `;
+  }).join('');
+
+  // ── 7. PROYECCIÓN 7 DÍAS ──────────────────────
+  const promedioXdia = reports.length / Math.max(simPeriod || fechas.length, 1);
+  const hoy = new Date();
+  const proyDias = Array.from({length:7}, (_,i) => {
+    const d = new Date(hoy); d.setDate(d.getDate() + i + 1);
+    const dow = d.getDay();
+    // Factor: días con más histórico tienen más peso
+    const factorDia = diaFreq[dow] / (Math.max(...diaFreq) || 1);
+    const estimado  = Math.round(promedioXdia * factorDia * 1.05 * 10) / 10;
+    return { fecha: d.toLocaleDateString('es-CO',{weekday:'short',day:'numeric',month:'short'}), dow, estimado };
+  });
+
+  document.getElementById('sim-proyeccion').innerHTML = proyDias.map(p => {
+    const color = p.estimado >= 3 ? '#E24B4A' : p.estimado >= 1.5 ? '#EF9F27' : '#639922';
+    const label = p.estimado >= 3 ? 'Alto riesgo' : p.estimado >= 1.5 ? 'Riesgo medio' : 'Bajo riesgo';
+    return `
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.04);border:0.5px solid #2a2a4a">
+        <span style="font-size:11px;color:#a1a1aa;min-width:90px">${p.fecha}</span>
+        <div style="flex:1;background:#2a2a4a;border-radius:6px;height:6px;overflow:hidden">
+          <div style="width:${Math.min(p.estimado/5*100,100)}%;height:100%;background:${color};border-radius:6px;transition:width 0.7s ease"></div>
+        </div>
+        <span style="font-size:11px;font-weight:500;color:${color};min-width:28px;text-align:right">~${p.estimado}</span>
+        <span style="font-size:10px;color:#71717a">${label}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+// ── PREFS Y CONFIGURACIÓN ──
 document.addEventListener('DOMContentLoaded', async () => {
   const isNative = window.Capacitor && window.Capacitor.isNativePlatform();
   document.getElementById('google-btn-native').style.display = isNative ? 'block' : 'none';
@@ -1440,6 +1671,8 @@ function setTheme(mode) {
   document.querySelectorAll('[id^="theme-"]').forEach(b => b.classList.remove('sel'));
   document.getElementById('theme-' + mode).classList.add('sel');
   showToast(`Tema ${mode === 'light' ? 'claro' : mode === 'dark' ? 'oscuro' : 'del sistema'} activado`, '🎨');
+  // Re-renderizar gráficas si están visibles
+  if (document.getElementById('screen-simulador').classList.contains('active')) renderSimulador();
 }
 
 function applyTheme(mode) {
@@ -1518,5 +1751,6 @@ function selChip(el, group) {
   el.classList.add('act');
 }
 </script>
+   
 </body>
 </html>
