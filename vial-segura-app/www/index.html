@@ -1444,17 +1444,19 @@ async function submitReport() {
       renderReports();
       goScreen('dashboard');
       setTimeout(() => {
-        if (map && userLat && userLng) {
-          map.setView([userLat, userLng], 17, { animate: true });
-          L.marker([userLat, userLng], {
-            icon: L.divIcon({
-              html: '<div style="background:#E24B4A;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3)"></div>',
-              iconSize: [14, 14], iconAnchor: [7, 7]
-            })
-          }).addTo(map).bindPopup('Tu reporte').openPopup();
-          setTimeout(() => map.setZoom(15), 3000);
-        }
-      }, 1300);
+  const activeMap = map || window.mapDesktop;
+  if (activeMap && userLat && userLng) {
+    activeMap.invalidateSize();
+    activeMap.setView([userLat, userLng], 17, { animate: true });
+    L.marker([userLat, userLng], {
+      icon: L.divIcon({
+        html: '<div style="background:#E24B4A;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3)"></div>',
+        iconSize: [14, 14], iconAnchor: [7, 7]
+      })
+    }).addTo(activeMap).bindPopup('Tu reporte').openPopup();
+    setTimeout(() => activeMap.setZoom(15), 3000);
+  }
+}, 1300);
     }, 1200);
   } catch {
     btn.classList.remove('loading');
