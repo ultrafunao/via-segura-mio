@@ -1390,9 +1390,7 @@ async function submitReport() {
   if (!localStorage.getItem('currentUser')) { goScreen('login'); return; }
   if (!userLat || !userLng) { showToast('Primero obtén tu ubicación', '📍'); return; }
 
-// Después de la validación de ubicación, agrega:
-const typeBtn = document.querySelector('.type-btn.sel');
-const isOtro = typeBtn && typeBtn.innerText.includes('Otro');
+const isOtro = document.querySelector('.type-btn.sel')?.innerText.includes('Otro');
 if (isOtro && !document.getElementById('desc-input').value.trim()) {
   showToast('La descripción es obligatoria para este tipo', '⚠️');
   return;
