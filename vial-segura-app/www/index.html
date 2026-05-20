@@ -9,6 +9,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
       --color-background-primary: #ffffff;
@@ -878,58 +879,96 @@
 <div class="screen" id="screen-simulador">
   <div class="topbar">
     <i class="ti ti-chart-infographic" style="font-size:18px;color:#FAC775"></i>
-    <span class="topbar-title">Simulador riesgo vs. tiempo</span>
+    <span class="topbar-title">Análisis de incidentes</span>
   </div>
   <div class="content">
+
+    <!-- CHIPS DE FILTRO -->
+    <div class="chip-row" style="margin-bottom:4px">
+      <span class="chip act" id="chip-7"  onclick="setSimPeriod(7,this)">7 días</span>
+      <span class="chip"     id="chip-30" onclick="setSimPeriod(30,this)">30 días</span>
+      <span class="chip"     id="chip-0"  onclick="setSimPeriod(0,this)">Todo</span>
+    </div>
+
+    <!-- STATS RESUMEN -->
+    <div class="stat-row" style="margin-bottom:10px">
+      <div class="stat">
+        <div class="stat-val" id="sim-stat-total" style="color:#185FA5">—</div>
+        <div class="stat-lbl">Reportes periodo</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="sim-stat-pico" style="color:#E26B4A">—</div>
+        <div class="stat-lbl">Hora más peligrosa</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="sim-stat-dia" style="color:#BA7517">—</div>
+        <div class="stat-lbl">Día más peligroso</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="sim-stat-tipo" style="color:#639922">—</div>
+        <div class="stat-lbl">Tipo más frecuente</div>
+      </div>
+    </div>
+
+    <!-- GRÁFICA: POR HORA -->
     <div class="card">
-      <div class="section-head">Velocidad estimada al cruzar</div>
-      <div style="display:flex;align-items:center;gap:10px;margin:6px 0">
-        <input type="range" min="10" max="80" value="45" step="1" id="vel-slider" oninput="updateSim()">
-        <span style="font-size:16px;font-weight:500;min-width:52px;text-align:right" id="vel-val">45 km/h</span>
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span><i class="ti ti-clock" style="color:#185FA5"></i> Distribución por hora del día</span>
+        <span id="sim-hora-insight" style="font-size:10px;color:#E24B4A;font-weight:500"></span>
       </div>
-      <div style="font-size:11px;color:var(--color-text-secondary)">Velocidad máxima permitida en zona: <b>30 km/h</b></div>
+      <canvas id="chart-hora" height="160"></canvas>
+      <div id="sim-hora-msg" style="margin-top:8px;padding:7px 10px;border-radius:8px;font-size:11px;background:#E6F1FB;color:#0C447C"></div>
     </div>
-    <div class="route-compare">
-      <div class="route-card danger">
-        <div class="route-title" style="color:#A32D2D"><i class="ti ti-x"></i> Ruta ilegal</div>
-        <div class="route-val" id="sim-time-ilegal">8 s</div>
-        <div class="route-sub">Tiempo ahorrado</div>
-      </div>
-      <div class="route-card safe">
-        <div class="route-title" style="color:#27500A"><i class="ti ti-check"></i> Ruta legal</div>
-        <div class="route-val" style="font-size:14px;color:#3B6D11">El Tizón</div>
-        <div class="route-sub">+2 min 10 s</div>
-      </div>
-    </div>
+
+    <!-- GRÁFICA: POR DÍA DE SEMANA -->
     <div class="card">
-      <div class="card-title">Nivel de riesgo de colisión frontal</div>
-      <div class="sim-row"><span class="sim-label">Probabilidad de incidente</span><span class="sim-val" id="sim-prob">68%</span></div>
-      <div class="risk-bar-wrap"><div class="risk-bar" id="sim-bar" style="width:68%;background:#E24B4A"></div></div>
-      <div class="sim-row" style="margin-top:8px"><span class="sim-label">Distancia de frenado</span><span class="sim-val" id="sim-dist">18 m</span></div>
-      <div class="sim-row"><span class="sim-label">Tiempo de reacción disponible</span><span class="sim-val" id="sim-reac">0.4 s</span></div>
-      <div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:#FCEBEB;border:0.5px solid #F09595;transition:background 0.4s,border-color 0.4s">
-        <div style="font-size:11px;color:#791F1F;font-weight:500" id="sim-msg">⚠ Riesgo alto: tiempo de reacción insuficiente para evitar colisión</div>
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span><i class="ti ti-calendar-week" style="color:#BA7517"></i> Incidentes por día de semana</span>
+        <span id="sim-dia-insight" style="font-size:10px;color:#E24B4A;font-weight:500"></span>
       </div>
+      <canvas id="chart-dia" height="140"></canvas>
+      <div id="sim-dia-msg" style="margin-top:8px;padding:7px 10px;border-radius:8px;font-size:11px;background:#FAEEDA;color:#633806"></div>
     </div>
+
+    <!-- GRÁFICA: TENDENCIA ACUMULADA -->
     <div class="card">
-      <div class="card-title">¿Vale la pena el riesgo?</div>
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
-        <div style="flex:1;text-align:center">
-          <div style="font-size:22px;font-weight:500;color:#E24B4A">$4.200.000</div>
-          <div style="font-size:10px;color:var(--color-text-secondary)">Costo promedio accidente</div>
-        </div>
-        <div style="color:var(--color-text-tertiary);font-size:18px">vs</div>
-        <div style="flex:1;text-align:center">
-          <div style="font-size:22px;font-weight:500;color:#639922" id="sim-costo-tiempo">8 s</div>
-          <div style="font-size:10px;color:var(--color-text-secondary)">Tiempo "ahorrado"</div>
-        </div>
+      <div class="card-title">
+        <i class="ti ti-trending-up" style="color:#639922"></i> Tendencia acumulada de reportes
+      </div>
+      <canvas id="chart-tendencia" height="140"></canvas>
+      <div id="sim-tend-msg" style="margin-top:8px;padding:7px 10px;border-radius:8px;font-size:11px;background:#EAF3DE;color:#27500A"></div>
+    </div>
+
+    <!-- GRÁFICA: POR TIPO -->
+    <div class="card">
+      <div class="card-title">
+        <i class="ti ti-chart-donut" style="color:#9333ea"></i> Tipos de incidente
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <canvas id="chart-tipo" width="130" height="130" style="flex-shrink:0"></canvas>
+        <div id="tipo-legend" style="flex:1;display:flex;flex-direction:column;gap:6px;font-size:11px"></div>
       </div>
     </div>
+
+    <!-- CORRELACIÓN CON HORARIOS USCO -->
+    <div class="card">
+      <div class="card-title"><i class="ti ti-school" style="color:#185FA5"></i> Correlación con horarios USCO</div>
+      <div id="sim-correlacion" style="display:flex;flex-direction:column;gap:6px;margin-top:4px"></div>
+      <div style="margin-top:8px;font-size:10px;color:var(--color-text-tertiary)">Basado en horarios de entrada/salida de clases: 6h, 10h, 12h, 16h, 18h</div>
+    </div>
+
+    <!-- PROYECCIÓN -->
+    <div class="card" style="background:linear-gradient(135deg,#1a1a2e,#16213e);border-color:#2a2a4a">
+      <div class="card-title" style="color:#5DCAA5"><i class="ti ti-crystal-ball"></i> Proyección — próximos 7 días</div>
+      <div id="sim-proyeccion" style="display:flex;flex-direction:column;gap:8px;margin-top:6px"></div>
+      <div style="margin-top:10px;font-size:10px;color:#71717a">Estimación basada en el promedio del periodo seleccionado.</div>
+    </div>
+
   </div>
   <div class="nav-tab">
     <button class="nav-btn" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
     <button class="nav-btn" onclick="goScreen('reporte')"><i class="ti ti-alert-circle"></i>Reportar</button>
-    <button class="nav-btn act"><i class="ti ti-chart-bar"></i>Simulador</button>
+    <button class="nav-btn act"><i class="ti ti-chart-bar"></i>Análisis</button>
     <button class="nav-btn" onclick="goScreen('config')"><i class="ti ti-settings"></i>Config</button>
   </div>
 </div>
