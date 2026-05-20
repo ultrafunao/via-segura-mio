@@ -72,127 +72,164 @@
     .route-card.danger .route-val{color:#E24B4A}
     .route-card.safe .route-val{color:#639922}
     .route-sub{font-size:10px;color:var(--color-text-secondary);margin-top:2px}
-    .hour-bar-row{display:flex;align-items:flex-end;gap:3px;height:48px;margin:8px 0 4px}
-    .hbar{border-radius:3px 3px 0 0;min-width:14px;flex:1;transition:background .2s}
-    .hour-labels{display:flex;gap:3px;margin-bottom:4px}
-    .hour-lbl{flex:1;text-align:center;font-size:9px;color:var(--color-text-tertiary)}
     .section-head{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px}
     .chip-row{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}
     .chip{padding:4px 10px;border-radius:20px;font-size:11px;border:0.5px solid var(--color-border-secondary);cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary)}
     .chip.act{background:#1a1a2e;color:#fff;border-color:#1a1a2e}
     .loc-badge{font-size:11px;color:var(--color-text-secondary);margin-top:6px;display:flex;align-items:center;gap:4px;padding:6px 8px;background:var(--color-background-secondary);border-radius:8px}
 
+    /* === ALERT CARD in right panel — uses CSS vars so theme works === */
+    .alert-card {
+      background: var(--color-background-primary);
+      border-radius: 8px;
+      padding: 8px 10px;
+      border: 0.5px solid var(--color-border-primary);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .alert-card-title {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .alert-card-time {
+      font-size: 10px;
+      color: var(--color-text-secondary);
+    }
+
     @media (min-width: 768px) {
-  body { overflow: auto; }
-  .phone {
-    height: auto;
-    min-height: 100vh;
-    flex-direction: row;
-    max-width: 100%;
-    font-size: 14px;
-  }
-  .screen { display: none !important; }
-  .screen.active { display: flex !important; flex-direction: row; flex: 1; overflow: visible; }
-  .nav-tab { display: none; }
+      body { overflow: auto; }
+      .phone {
+        height: auto;
+        min-height: 100vh;
+        flex-direction: row;
+        max-width: 100%;
+        font-size: 14px;
+      }
+      .screen { display: none !important; }
+      .screen.active { display: flex !important; flex-direction: row; flex: 1; overflow: visible; }
+      .nav-tab { display: none; }
 
-  /* Sidebar */
-  #desktop-sidebar {
-    display: flex;
-    flex-direction: column;
-    width: 220px;
-    min-height: 100vh;
-    background: #1a1a2e;
-    padding: 24px 16px;
-    gap: 6px;
-    flex-shrink: 0;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-  }
-  .sidebar-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 8px 20px;
-    border-bottom: 1px solid #2a2a4a;
-    margin-bottom: 8px;
-  }
-  .sidebar-logo-title { font-size: 15px; font-weight: 600; color: #fff; }
-  .sidebar-logo-sub { font-size: 10px; color: #5DCAA5; }
-  .sidebar-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: none;
-    background: transparent;
-    color: #a1a1aa;
-    font-size: 13px;
-    cursor: pointer;
-    text-align: left;
-    width: 100%;
-    transition: all .15s;
-  }
-  .sidebar-btn:hover { background: #2a2a4a; color: #fff; }
-  .sidebar-btn.act { background: #185FA5; color: #fff; }
-  .sidebar-btn i { font-size: 18px; }
-  .sidebar-bottom {
-    margin-top: auto;
-    padding-top: 16px;
-    border-top: 1px solid #2a2a4a;
-    font-size: 11px;
-    color: #71717a;
-    padding-left: 8px;
-  }
+      /* Sidebar */
+      #desktop-sidebar {
+        display: flex;
+        flex-direction: column;
+        width: 220px;
+        min-height: 100vh;
+        background: #1a1a2e;
+        padding: 24px 16px;
+        gap: 6px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+      }
+      .sidebar-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 8px 20px;
+        border-bottom: 1px solid #2a2a4a;
+        margin-bottom: 8px;
+      }
+      .sidebar-logo-title { font-size: 15px; font-weight: 600; color: #fff; }
+      .sidebar-logo-sub { font-size: 10px; color: #5DCAA5; }
+      .sidebar-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: none;
+        background: transparent;
+        color: #a1a1aa;
+        font-size: 13px;
+        cursor: pointer;
+        text-align: left;
+        width: 100%;
+        transition: all .15s;
+      }
+      .sidebar-btn:hover { background: #2a2a4a; color: #fff; }
+      .sidebar-btn.act { background: #185FA5; color: #fff; }
+      .sidebar-btn i { font-size: 18px; }
+      .sidebar-bottom {
+        margin-top: auto;
+        padding-top: 16px;
+        border-top: 1px solid #2a2a4a;
+        font-size: 11px;
+        color: #71717a;
+        padding-left: 8px;
+      }
 
-  /* Contenido principal desktop */
-  .screen.active > .topbar { display: none; }
-  .screen.active > .content {
-    flex: 1;
-    padding: 24px;
-    max-width: 680px;
-    overflow-y: auto;
-    height: 100vh;
-  }
+      /* Contenido principal desktop — FIX: fill space, no max-width gap */
+      .screen.active > .topbar { display: none; }
+      .screen.active > .content {
+        flex: 1;
+        padding: 24px;
+        /* REMOVED max-width: 680px — caused the black gap */
+        overflow-y: auto;
+        height: 100vh;
+        background: var(--color-background-secondary);
+      }
 
-  /* Panel derecho con mapa grande */
-  #desktop-right-panel {
-    display: flex;
-    flex-direction: column;
-    width: 380px;
-    min-height: 100vh;
-    background: #f4f4f5;
-    border-left: 1px solid #e4e4e7;
-    padding: 24px 16px;
-    flex-shrink: 0;
-  }
-  #desktop-right-panel #heatmap {
-    height: 320px !important;
-    border-radius: 12px;
-  }
+      /* Panel derecho — FIX: use CSS vars for theme support */
+      #desktop-right-panel {
+        display: flex;
+        flex-direction: column;
+        width: 340px;
+        min-height: 100vh;
+        background: var(--color-background-secondary);
+        border-left: 1px solid var(--color-border-primary);
+        padding: 24px 16px;
+        flex-shrink: 0;
+        overflow-y: auto;
+        height: 100vh;
+      }
+      #desktop-right-panel .panel-title {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 12px;
+      }
+      #desktop-right-panel .panel-legend {
+        font-size: 11px;
+        color: var(--color-text-secondary);
+        margin-bottom: 16px;
+        display: flex;
+        gap: 10px;
+      }
+      #desktop-right-panel .panel-subtitle {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 8px;
+      }
 
-  /* Stats en grid de 4 en desktop */
-  .stat-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      /* Stats en grid de 4 en desktop */
+      .stat-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
-  /* Mapa oculto del contenido principal en desktop (se muestra en panel derecho) */
-  .card:has(#heatmap) { display: none; }
+      /* Mapa oculto del contenido principal en desktop (se muestra en panel derecho) */
+      .card:has(#heatmap) { display: none; }
 
-  #heatmap { height: 320px; }
-}
+      #heatmap { height: 320px; }
+    }
 
-@media (max-width: 767px) {
-  #desktop-sidebar, #desktop-right-panel { display: none !important; }
-}
+    @media (max-width: 767px) {
+      #desktop-sidebar, #desktop-right-panel { display: none !important; }
+    }
 
-  .leaflet-tile { filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%); }
+    .leaflet-tile { filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%); }
   </style>
 </head>
 <body>
-    <div style="background:var(--color-background-secondary);height:100vh;display:flex;flex-direction:column">
+<div style="background:var(--color-background-secondary);min-height:100vh;display:flex;flex-direction:column">
 <div class="phone">
 
-<!-- SIDEBAR DESKTOP (oculto en móvil) -->
+<!-- SIDEBAR DESKTOP -->
 <div id="desktop-sidebar">
   <div class="sidebar-logo">
     <i class="ti ti-shield-check" style="font-size:24px;color:#5DCAA5"></i>
@@ -219,7 +256,7 @@
   </div>
 </div>
 
-  <!-- LOGIN -->
+<!-- LOGIN -->
 <div class="screen" id="screen-login">
   <div class="topbar">
     <i class="ti ti-lock" style="font-size:18px;color:#FAC775"></i>
@@ -231,42 +268,26 @@
       <div style="font-size:18px;font-weight:600;margin-top:10px;color:var(--color-text-primary)">Vía Segura</div>
       <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px">Inicia sesión para reportar incidentes</div>
     </div>
-
     <div class="card" style="padding:20px">
-      <!-- Botón Google centrado -->
-<div id="g_id_onload"
-  data-client_id="363836812726-gt4lsqip9iijbqc34br4aqaiqnsn7dfh.apps.googleusercontent.com"
-  data-callback="handleGoogleLogin"
-  data-auto_prompt="false">
-</div>
-
-<!-- Botón Google nativo (Android) -->
-<div id="google-btn-native" style="display:none;margin-bottom:16px">
-  <button onclick="doGoogleLoginNative()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--color-text-primary)">
-    <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.2l6.7-6.7C35.7 2.5 30.2 0 24 0 14.8 0 6.9 5.4 3 13.3l7.8 6C12.7 13 17.9 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17z"/><path fill="#FBBC05" d="M10.8 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7L2.5 13.3A23.9 23.9 0 0 0 0 24c0 3.8.9 7.4 2.5 10.6l8.3-5.9z"/><path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.5l-7.5-5.8c-2 1.4-4.6 2.2-7.7 2.2-6.1 0-11.3-3.5-13.2-8.7l-7.8 6C6.9 42.6 14.8 48 24 48z"/></svg>
-    Continuar con Google
-  </button>
-</div>
-
-<!-- Botón Google web (GSI SDK) -->
-<div id="google-btn-web" style="display:flex;justify-content:center;margin-bottom:16px">
-  <div class="g_id_signin"
-    data-type="standard"
-    data-size="large"
-    data-theme="outline"
-    data-text="continue_with"
-    data-shape="rectangular"
-    data-logo_alignment="left"
-    data-width="280">
-  </div>
-</div>
-
+      <div id="g_id_onload"
+        data-client_id="363836812726-gt4lsqip9iijbqc34br4aqaiqnsn7dfh.apps.googleusercontent.com"
+        data-callback="handleGoogleLogin"
+        data-auto_prompt="false">
+      </div>
+      <div id="google-btn-native" style="display:none;margin-bottom:16px">
+        <button onclick="doGoogleLoginNative()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--color-text-primary)">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.2l6.7-6.7C35.7 2.5 30.2 0 24 0 14.8 0 6.9 5.4 3 13.3l7.8 6C12.7 13 17.9 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17z"/><path fill="#FBBC05" d="M10.8 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7L2.5 13.3A23.9 23.9 0 0 0 0 24c0 3.8.9 7.4 2.5 10.6l8.3-5.9z"/><path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.5l-7.5-5.8c-2 1.4-4.6 2.2-7.7 2.2-6.1 0-11.3-3.5-13.2-8.7l-7.8 6C6.9 42.6 14.8 48 24 48z"/></svg>
+          Continuar con Google
+        </button>
+      </div>
+      <div id="google-btn-web" style="display:flex;justify-content:center;margin-bottom:16px">
+        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="continue_with" data-shape="rectangular" data-logo_alignment="left" data-width="280"></div>
+      </div>
       <div id="google-divider" style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
         <div style="flex:1;height:0.5px;background:var(--color-border-secondary)"></div>
         <span style="font-size:11px;color:var(--color-text-tertiary)">o continúa con email</span>
         <div style="flex:1;height:0.5px;background:var(--color-border-secondary)"></div>
       </div>
-
       <div style="position:relative;margin-bottom:10px">
         <i class="ti ti-mail" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--color-text-tertiary);font-size:15px"></i>
         <input type="email" class="form-input" id="login-email" placeholder="Correo electrónico" style="padding-left:32px">
@@ -275,16 +296,9 @@
         <i class="ti ti-lock" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--color-text-tertiary);font-size:15px"></i>
         <input type="password" class="form-input" id="login-pass" placeholder="Contraseña" style="padding-left:32px">
       </div>
-
-      <button class="submit-btn" onclick="doLogin()">
-        <i class="ti ti-login"></i> Iniciar Sesión
-      </button>
-      <button onclick="goScreen('registro')" style="background:transparent;border:1px solid var(--color-border-secondary);color:var(--color-text-secondary);width:100%;padding:10px;border-radius:8px;font-size:12px;cursor:pointer;margin-top:8px">
-        Crear cuenta nueva
-      </button>
-      <button onclick="goScreen('dashboard')" style="background:transparent;border:none;color:var(--color-text-tertiary);margin-top:12px;font-size:11px;cursor:pointer;width:100%;padding:8px">
-        Volver al Dashboard
-      </button>
+      <button class="submit-btn" onclick="doLogin()"><i class="ti ti-login"></i> Iniciar Sesión</button>
+      <button onclick="goScreen('registro')" style="background:transparent;border:1px solid var(--color-border-secondary);color:var(--color-text-secondary);width:100%;padding:10px;border-radius:8px;font-size:12px;cursor:pointer;margin-top:8px">Crear cuenta nueva</button>
+      <button onclick="goScreen('dashboard')" style="background:transparent;border:none;color:var(--color-text-tertiary);margin-top:12px;font-size:11px;cursor:pointer;width:100%;padding:8px">Volver al Dashboard</button>
     </div>
   </div>
 </div>
@@ -308,175 +322,174 @@
   </div>
 </div>
 
-  <!-- DASHBOARD -->
-  <div class="screen active" id="screen-dashboard">
-    <div class="topbar">
-      <i class="ti ti-shield-check" style="font-size:18px;color:#5DCAA5"></i>
-      <span class="topbar-title">Panel de movilidad</span>
-      <span class="badge badge-red" id="alert-badge">⚠ 0 alertas</span>
-    </div>
-    <div class="content">
-      <div class="stat-row">
-        <div class="stat">
-          <div class="stat-val" style="color:#E26B4A" id="stat-hoy">0</div>
-          <div class="stat-lbl">Incidentes hoy</div>
-        </div>
-        <div class="stat">
-          <div class="stat-val" style="color:#BA7517" id="stat-semana">0</div>
-          <div class="stat-lbl">Reportes semana</div>
-        </div>
-        <div class="stat">
-          <div class="stat-val" id="stat-total">0</div>
-          <div class="stat-lbl">Total reportes</div>
-        </div>
-        <div class="stat">
-          <div class="stat-val" style="color:#639922" id="stat-hora">--</div>
-          <div class="stat-lbl">Hora pico</div>
-        </div>
+<!-- DASHBOARD -->
+<div class="screen active" id="screen-dashboard">
+  <div class="topbar">
+    <i class="ti ti-shield-check" style="font-size:18px;color:#5DCAA5"></i>
+    <span class="topbar-title">Panel de movilidad</span>
+    <span class="badge badge-red" id="alert-badge">⚠ 0 alertas</span>
+  </div>
+  <div class="content">
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-val" style="color:#E26B4A" id="stat-hoy">0</div>
+        <div class="stat-lbl">Incidentes hoy</div>
       </div>
-      <div class="card">
-        <div class="card-title">Mapa de calor en tiempo real</div>
-        <div id="heatmap"></div>
-        <div style="display:flex;gap:8px;margin-top:4px">
-          <span style="font-size:10px;color:var(--color-text-secondary);display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;border-radius:50%;background:#E24B4A;display:inline-block"></span>Alto riesgo</span>
-          <span style="font-size:10px;color:var(--color-text-secondary);display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;border-radius:50%;background:#EF9F27;display:inline-block"></span>Medio</span>
-        </div>
+      <div class="stat">
+        <div class="stat-val" style="color:#BA7517" id="stat-semana">0</div>
+        <div class="stat-lbl">Reportes semana</div>
       </div>
-      <div class="card">
-        <div class="card-title" style="display:flex;justify-content:space-between">
-          <span>Últimos reportes</span>
-          <span id="user-status" style="font-size:10px;color:#185FA5;cursor:pointer" onclick="goScreen('login')">Ingresar</span>
-        </div>
-        <div id="reports-container"></div>
+      <div class="stat">
+        <div class="stat-val" id="stat-total">0</div>
+        <div class="stat-lbl">Total reportes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" style="color:#639922" id="stat-hora">--</div>
+        <div class="stat-lbl">Hora pico</div>
       </div>
     </div>
-    <div class="nav-tab">
-      <button class="nav-btn act" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
-      <button class="nav-btn" onclick="goScreen('reporte')"><i class="ti ti-alert-circle"></i>Reportar</button>
-      <button class="nav-btn" onclick="goScreen('simulador')"><i class="ti ti-chart-bar"></i>Simulador</button>
-      <button class="nav-btn" onclick="goScreen('config')"><i class="ti ti-settings"></i>Config</button>
+    <div class="card">
+      <div class="card-title">Mapa de calor en tiempo real</div>
+      <div id="heatmap"></div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <span style="font-size:10px;color:var(--color-text-secondary);display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;border-radius:50%;background:#E24B4A;display:inline-block"></span>Alto riesgo</span>
+        <span style="font-size:10px;color:var(--color-text-secondary);display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;border-radius:50%;background:#EF9F27;display:inline-block"></span>Medio</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="display:flex;justify-content:space-between">
+        <span>Últimos reportes</span>
+        <span id="user-status" style="font-size:10px;color:#185FA5;cursor:pointer" onclick="goScreen('login')">Ingresar</span>
+      </div>
+      <div id="reports-container"></div>
     </div>
   </div>
+  <div class="nav-tab">
+    <button class="nav-btn act" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
+    <button class="nav-btn" onclick="goScreen('reporte')"><i class="ti ti-alert-circle"></i>Reportar</button>
+    <button class="nav-btn" onclick="goScreen('simulador')"><i class="ti ti-chart-bar"></i>Simulador</button>
+    <button class="nav-btn" onclick="goScreen('config')"><i class="ti ti-settings"></i>Config</button>
+  </div>
+</div>
 
-  <!-- REPORTE -->
-  <div class="screen" id="screen-reporte">
-    <div class="topbar">
-      <i class="ti ti-alert-circle" style="font-size:18px;color:#F09595"></i>
-      <span class="topbar-title">Reportar incidente</span>
+<!-- REPORTE -->
+<div class="screen" id="screen-reporte">
+  <div class="topbar">
+    <i class="ti ti-alert-circle" style="font-size:18px;color:#F09595"></i>
+    <span class="topbar-title">Reportar incidente</span>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="section-head">¿Qué tipo de incidente?</div>
+      <div class="type-grid">
+        <button class="type-btn sel" onclick="selType(this)"><i class="ti ti-motorbike"></i><br>Cruce ilegal separador</button>
+        <button class="type-btn" onclick="selType(this)"><i class="ti ti-car-crash"></i><br>Casi-accidente</button>
+        <button class="type-btn" onclick="selType(this)"><i class="ti ti-walk"></i><br>Peatón en riesgo</button>
+        <button class="type-btn" onclick="selType(this)"><i class="ti ti-camera"></i><br>Otro / foto</button>
+      </div>
     </div>
-    <div class="content">
-      <div class="card">
-        <div class="section-head">¿Qué tipo de incidente?</div>
-        <div class="type-grid">
-          <button class="type-btn sel" onclick="selType(this)"><i class="ti ti-motorbike"></i><br>Cruce ilegal separador</button>
-          <button class="type-btn" onclick="selType(this)"><i class="ti ti-car-crash"></i><br>Casi-accidente</button>
-          <button class="type-btn" onclick="selType(this)"><i class="ti ti-walk"></i><br>Peatón en riesgo</button>
-          <button class="type-btn" onclick="selType(this)"><i class="ti ti-camera"></i><br>Otro / foto</button>
-        </div>
+    <div class="card">
+      <div class="section-head">Vehículo involucrado</div>
+      <div class="chip-row">
+        <span class="chip act" onclick="selChip(this,'veh')">Moto</span>
+        <span class="chip" onclick="selChip(this,'veh')">Carro</span>
+        <span class="chip" onclick="selChip(this,'veh')">Bus</span>
+        <span class="chip" onclick="selChip(this,'veh')">Bicicleta</span>
       </div>
-      <div class="card">
-        <div class="section-head">Vehículo involucrado</div>
-        <div class="chip-row">
-          <span class="chip act" onclick="selChip(this,'veh')">Moto</span>
-          <span class="chip" onclick="selChip(this,'veh')">Carro</span>
-          <span class="chip" onclick="selChip(this,'veh')">Bus</span>
-          <span class="chip" onclick="selChip(this,'veh')">Bicicleta</span>
-        </div>
-        <div class="section-head" style="margin-top:6px">Hora aproximada</div>
-        <div class="chip-row">
-          <span class="chip" onclick="selChip(this,'hora')">6–8 h</span>
-          <span class="chip act" onclick="selChip(this,'hora')">11–12 h</span>
-          <span class="chip" onclick="selChip(this,'hora')">17–19 h</span>
-          <span class="chip" onclick="selChip(this,'hora')">Ahora</span>
-        </div>
+      <div class="section-head" style="margin-top:6px">Hora aproximada</div>
+      <div class="chip-row">
+        <span class="chip" onclick="selChip(this,'hora')">6–8 h</span>
+        <span class="chip act" onclick="selChip(this,'hora')">11–12 h</span>
+        <span class="chip" onclick="selChip(this,'hora')">17–19 h</span>
+        <span class="chip" onclick="selChip(this,'hora')">Ahora</span>
       </div>
-      <div class="card">
-        <div class="section-head">Tu ubicación</div>
-        <div class="loc-badge" id="loc-display">
-          <i class="ti ti-map-pin" style="color:#185FA5"></i>
-          <span id="loc-text">Obteniendo ubicación...</span>
-        </div>
-        <button onclick="getLocation()" style="margin-top:8px;width:100%;padding:8px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:12px;cursor:pointer;color:var(--color-text-secondary)">
-          <i class="ti ti-refresh"></i> Actualizar ubicación
-        </button>
+    </div>
+    <div class="card">
+      <div class="section-head">Tu ubicación</div>
+      <div class="loc-badge" id="loc-display">
+        <i class="ti ti-map-pin" style="color:#185FA5"></i>
+        <span id="loc-text">Obteniendo ubicación...</span>
       </div>
-      <div class="card">
-        <label class="form-label">Descripción breve (opcional)</label>
-        <textarea class="form-input" id="desc-input" rows="2" placeholder="Ej: Moto cruzó el separador a alta velocidad..."></textarea>
-      </div>
-      <button class="submit-btn" onclick="submitReport()">
-        <i class="ti ti-send"></i> Enviar reporte
+      <button onclick="getLocation()" style="margin-top:8px;width:100%;padding:8px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:12px;cursor:pointer;color:var(--color-text-secondary)">
+        <i class="ti ti-refresh"></i> Actualizar ubicación
       </button>
     </div>
-    <div class="nav-tab">
-      <button class="nav-btn" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
-      <button class="nav-btn act"><i class="ti ti-alert-circle"></i>Reportar</button>
-      <button class="nav-btn" onclick="goScreen('simulador')"><i class="ti ti-chart-bar"></i>Simulador</button>
-      <button class="nav-btn" onclick="goScreen('config')"><i class="ti ti-settings"></i>Config</button>
+    <div class="card">
+      <label class="form-label">Descripción breve (opcional)</label>
+      <textarea class="form-input" id="desc-input" rows="2" placeholder="Ej: Moto cruzó el separador a alta velocidad..."></textarea>
     </div>
+    <button class="submit-btn" onclick="submitReport()"><i class="ti ti-send"></i> Enviar reporte</button>
   </div>
+  <div class="nav-tab">
+    <button class="nav-btn" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
+    <button class="nav-btn act"><i class="ti ti-alert-circle"></i>Reportar</button>
+    <button class="nav-btn" onclick="goScreen('simulador')"><i class="ti ti-chart-bar"></i>Simulador</button>
+    <button class="nav-btn" onclick="goScreen('config')"><i class="ti ti-settings"></i>Config</button>
+  </div>
+</div>
 
-  <!-- SIMULADOR -->
-  <div class="screen" id="screen-simulador">
-    <div class="topbar">
-      <i class="ti ti-chart-infographic" style="font-size:18px;color:#FAC775"></i>
-      <span class="topbar-title">Simulador riesgo vs. tiempo</span>
+<!-- SIMULADOR -->
+<div class="screen" id="screen-simulador">
+  <div class="topbar">
+    <i class="ti ti-chart-infographic" style="font-size:18px;color:#FAC775"></i>
+    <span class="topbar-title">Simulador riesgo vs. tiempo</span>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="section-head">Velocidad estimada al cruzar</div>
+      <div style="display:flex;align-items:center;gap:10px;margin:6px 0">
+        <input type="range" min="10" max="80" value="45" step="1" id="vel-slider" style="flex:1" oninput="updateSim()">
+        <span style="font-size:16px;font-weight:500;min-width:52px;text-align:right" id="vel-val">45 km/h</span>
+      </div>
+      <div style="font-size:11px;color:var(--color-text-secondary)">Velocidad máxima permitida en zona: <b>30 km/h</b></div>
     </div>
-    <div class="content">
-      <div class="card">
-        <div class="section-head">Velocidad estimada al cruzar</div>
-        <div style="display:flex;align-items:center;gap:10px;margin:6px 0">
-          <input type="range" min="10" max="80" value="45" step="1" id="vel-slider" style="flex:1" oninput="updateSim()">
-          <span style="font-size:16px;font-weight:500;min-width:52px;text-align:right" id="vel-val">45 km/h</span>
-        </div>
-        <div style="font-size:11px;color:var(--color-text-secondary)">Velocidad máxima permitida en zona: <b>30 km/h</b></div>
+    <div class="route-compare">
+      <div class="route-card danger">
+        <div class="route-title" style="color:#A32D2D"><i class="ti ti-x"></i> Ruta ilegal</div>
+        <div class="route-val" id="sim-time-ilegal">8 s</div>
+        <div class="route-sub">Tiempo ahorrado</div>
       </div>
-      <div class="route-compare">
-        <div class="route-card danger">
-          <div class="route-title" style="color:#A32D2D"><i class="ti ti-x"></i> Ruta ilegal</div>
-          <div class="route-val" id="sim-time-ilegal">8 s</div>
-          <div class="route-sub">Tiempo ahorrado</div>
-        </div>
-        <div class="route-card safe">
-          <div class="route-title" style="color:#27500A"><i class="ti ti-check"></i> Ruta legal</div>
-          <div class="route-val" style="font-size:14px;color:#3B6D11">El Tizón</div>
-          <div class="route-sub">+2 min 10 s</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">Nivel de riesgo de colisión frontal</div>
-        <div class="sim-row"><span class="sim-label">Probabilidad de incidente</span><span class="sim-val" id="sim-prob">68%</span></div>
-        <div class="risk-bar-wrap"><div class="risk-bar" id="sim-bar" style="width:68%;background:#E24B4A"></div></div>
-        <div class="sim-row" style="margin-top:8px"><span class="sim-label">Distancia de frenado</span><span class="sim-val" id="sim-dist">18 m</span></div>
-        <div class="sim-row"><span class="sim-label">Tiempo de reacción disponible</span><span class="sim-val" id="sim-reac">0.4 s</span></div>
-        <div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:#FCEBEB;border:0.5px solid #F09595">
-          <div style="font-size:11px;color:#791F1F;font-weight:500" id="sim-msg">⚠ Riesgo alto: tiempo de reacción insuficiente para evitar colisión</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">¿Vale la pena el riesgo?</div>
-        <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
-          <div style="flex:1;text-align:center">
-            <div style="font-size:22px;font-weight:500;color:#E24B4A">$4.200.000</div>
-            <div style="font-size:10px;color:var(--color-text-secondary)">Costo promedio accidente</div>
-          </div>
-          <div style="color:var(--color-text-tertiary);font-size:18px">vs</div>
-          <div style="flex:1;text-align:center">
-            <div style="font-size:22px;font-weight:500;color:#639922" id="sim-costo-tiempo">8 s</div>
-            <div style="font-size:10px;color:var(--color-text-secondary)">Tiempo "ahorrado"</div>
-          </div>
-        </div>
+      <div class="route-card safe">
+        <div class="route-title" style="color:#27500A"><i class="ti ti-check"></i> Ruta legal</div>
+        <div class="route-val" style="font-size:14px;color:#3B6D11">El Tizón</div>
+        <div class="route-sub">+2 min 10 s</div>
       </div>
     </div>
-    <div class="nav-tab">
-      <button class="nav-btn" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
-      <button class="nav-btn" onclick="goScreen('reporte')"><i class="ti ti-alert-circle"></i>Reportar</button>
-      <button class="nav-btn act"><i class="ti ti-chart-bar"></i>Simulador</button>
-      <button class="nav-btn" onclick="goScreen('config')"><i class="ti ti-settings"></i>Config</button>
+    <div class="card">
+      <div class="card-title">Nivel de riesgo de colisión frontal</div>
+      <div class="sim-row"><span class="sim-label">Probabilidad de incidente</span><span class="sim-val" id="sim-prob">68%</span></div>
+      <div class="risk-bar-wrap"><div class="risk-bar" id="sim-bar" style="width:68%;background:#E24B4A"></div></div>
+      <div class="sim-row" style="margin-top:8px"><span class="sim-label">Distancia de frenado</span><span class="sim-val" id="sim-dist">18 m</span></div>
+      <div class="sim-row"><span class="sim-label">Tiempo de reacción disponible</span><span class="sim-val" id="sim-reac">0.4 s</span></div>
+      <div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:#FCEBEB;border:0.5px solid #F09595">
+        <div style="font-size:11px;color:#791F1F;font-weight:500" id="sim-msg">⚠ Riesgo alto: tiempo de reacción insuficiente para evitar colisión</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">¿Vale la pena el riesgo?</div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
+        <div style="flex:1;text-align:center">
+          <div style="font-size:22px;font-weight:500;color:#E24B4A">$4.200.000</div>
+          <div style="font-size:10px;color:var(--color-text-secondary)">Costo promedio accidente</div>
+        </div>
+        <div style="color:var(--color-text-tertiary);font-size:18px">vs</div>
+        <div style="flex:1;text-align:center">
+          <div style="font-size:22px;font-weight:500;color:#639922" id="sim-costo-tiempo">8 s</div>
+          <div style="font-size:10px;color:var(--color-text-secondary)">Tiempo "ahorrado"</div>
+        </div>
+      </div>
     </div>
   </div>
-  
-  <div class="screen" id="screen-config">
+  <div class="nav-tab">
+    <button class="nav-btn" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
+    <button class="nav-btn" onclick="goScreen('reporte')"><i class="ti ti-alert-circle"></i>Reportar</button>
+    <button class="nav-btn act"><i class="ti ti-chart-bar"></i>Simulador</button>
+    <button class="nav-btn" onclick="goScreen('config')"><i class="ti ti-settings"></i>Config</button>
+  </div>
+</div>
+
+<!-- CONFIG -->
+<div class="screen" id="screen-config">
   <div class="topbar">
     <i class="ti ti-settings" style="font-size:18px;color:#FAC775"></i>
     <span class="topbar-title">Configuración</span>
@@ -515,9 +528,9 @@
     <div class="card">
       <div class="section-head">Intervalo de actualización</div>
       <div class="chip-row" style="margin-top:6px">
-        <span class="chip" id="interval-30" onclick="setInterval2(30000)">30 seg</span>
-        <span class="chip" id="interval-60" onclick="setInterval2(60000)">1 min</span>
-        <span class="chip" id="interval-300" onclick="setInterval2(300000)">5 min</span>
+        <span class="chip" id="interval-30000" onclick="setInterval2(30000)">30 seg</span>
+        <span class="chip" id="interval-60000" onclick="setInterval2(60000)">1 min</span>
+        <span class="chip" id="interval-300000" onclick="setInterval2(300000)">5 min</span>
       </div>
     </div>
     <div class="card">
@@ -543,121 +556,82 @@
     <button class="nav-btn" onclick="goScreen('simulador')"><i class="ti ti-chart-bar"></i>Simulador</button>
     <button class="nav-btn act"><i class="ti ti-settings"></i>Config</button>
   </div>
-  </div>
+</div>
 
-<!-- PANEL DERECHO DESKTOP -->
+<!-- PANEL DERECHO DESKTOP — now fully themed with CSS vars -->
 <div id="desktop-right-panel">
-  <div style="font-size:12px;font-weight:500;color:#18181b;margin-bottom:12px">Mapa en tiempo real</div>
+  <div class="panel-title">Mapa en tiempo real</div>
   <div id="heatmap-desktop" style="height:320px;border-radius:12px;overflow:hidden;margin-bottom:12px"></div>
-  <div style="font-size:11px;color:#71717a;margin-bottom:16px;display:flex;gap:10px">
+  <div class="panel-legend">
     <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E24B4A;display:inline-block"></span>Alto riesgo</span>
     <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#EF9F27;display:inline-block"></span>Medio</span>
   </div>
-  <div style="font-size:12px;font-weight:500;color:#18181b;margin-bottom:8px">Alertas recientes</div>
+  <div class="panel-subtitle">Alertas recientes</div>
   <div id="desktop-reports" style="display:flex;flex-direction:column;gap:6px"></div>
 </div>
 
 </div>
 </div>
-    <script>
+
+<script>
 const API_URL = 'https://via-segura-mio.vercel.app/api/reports';
 let map, heatLayer;
 let userLat = null, userLng = null;
 
-// Inicializar mapa de calor
 function initMap() {
   const isDesktop = window.innerWidth >= 768;
-
   if (!isDesktop) {
-    // Solo mobile
     map = L.map('heatmap').setView([2.9273, -75.2819], 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
-    }).addTo(map);
-    heatLayer = L.heatLayer([], {
-      radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8,
-      gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' }
-    }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
+    heatLayer = L.heatLayer([], { radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8, gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' } }).addTo(map);
     return;
   }
-
-  // Desktop: inicializar solo el mapa derecho
   const desktopEl = document.getElementById('heatmap-desktop');
   if (!desktopEl) return;
-
-  // Crear mapa SIN heatLayer todavía
-  window.mapDesktop = L.map('heatmap-desktop', {
-    zoomControl: true,
-    attributionControl: false
-  }).setView([2.9273, -75.2819], 13);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap'
-  }).addTo(window.mapDesktop);
-
-  // Agregar heatLayer SOLO después de que el mapa tenga dimensiones reales
+  window.mapDesktop = L.map('heatmap-desktop', { zoomControl: true, attributionControl: false }).setView([2.9273, -75.2819], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(window.mapDesktop);
   window.mapDesktop.whenReady(() => {
     setTimeout(() => {
       window.mapDesktop.invalidateSize();
-      window.heatLayerDesktop = L.heatLayer([], {
-        radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8,
-        gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' }
-      }).addTo(window.mapDesktop);
-
-      // Si ya hay datos cargados, aplicarlos
-      if (window._pendingHeatPoints) {
-        window.heatLayerDesktop.setLatLngs(window._pendingHeatPoints);
-      }
+      window.heatLayerDesktop = L.heatLayer([], { radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8, gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' } }).addTo(window.mapDesktop);
+      if (window._pendingHeatPoints) window.heatLayerDesktop.setLatLngs(window._pendingHeatPoints);
     }, 200);
   });
 }
 
-// Actualizar mapa de calor con reportes reales
 function updateHeatmap(reports) {
-  const points = reports
-    .filter(r => r.lat && r.lng)
-    .map(r => [parseFloat(r.lat), parseFloat(r.lng), 1.0]);
-
-  // Mobile
+  const points = reports.filter(r => r.lat && r.lng).map(r => [parseFloat(r.lat), parseFloat(r.lng), 1.0]);
   if (heatLayer) heatLayer.setLatLngs(points);
-
-  // Desktop — guardar puntos por si el layer aún no está listo
   window._pendingHeatPoints = points;
-  if (window.heatLayerDesktop) {
-    window.heatLayerDesktop.setLatLngs(points);
-  }
+  if (window.heatLayerDesktop) window.heatLayerDesktop.setLatLngs(points);
 
-  // Panel derecho desktop
   const dr = document.getElementById('desktop-reports');
   if (dr) {
     dr.innerHTML = reports.slice(0,5).map(r => `
-      <div style="background:#fff;border-radius:8px;padding:8px 10px;border:0.5px solid #e4e4e7;display:flex;gap:8px;align-items:center">
+      <div class="alert-card">
         <div style="width:28px;height:28px;border-radius:6px;background:${r.bg||'#FCEBEB'};display:flex;align-items:center;justify-content:center;flex-shrink:0">
           <i class="ti ${r.icon||'ti-alert-triangle'}" style="color:${r.color||'#E24B4A'};font-size:13px"></i>
         </div>
         <div style="flex:1;min-width:0">
-          <div style="font-size:11px;font-weight:500;color:#18181b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.title}</div>
-          <div style="font-size:10px;color:#71717a">${timeAgo(r.created_at)}</div>
+          <div class="alert-card-title">${r.title}</div>
+          <div class="alert-card-time">${timeAgo(r.created_at)}</div>
         </div>
       </div>
     `).join('');
   }
 }
 
-// Obtener ubicación del usuario
 function getLocation() {
   const locText = document.getElementById('loc-text');
   locText.textContent = 'Obteniendo ubicación...';
   if (window.Capacitor && window.Capacitor.isNativePlatform()) {
     window.Capacitor.Plugins.Geolocation.getCurrentPosition().then(pos => {
-      userLat = pos.coords.latitude;
-      userLng = pos.coords.longitude;
+      userLat = pos.coords.latitude; userLng = pos.coords.longitude;
       locText.textContent = `${userLat.toFixed(5)}, ${userLng.toFixed(5)}`;
     }).catch(() => locText.textContent = 'No se pudo obtener ubicación');
   } else {
     navigator.geolocation.getCurrentPosition(pos => {
-      userLat = pos.coords.latitude;
-      userLng = pos.coords.longitude;
+      userLat = pos.coords.latitude; userLng = pos.coords.longitude;
       locText.textContent = `${userLat.toFixed(5)}, ${userLng.toFixed(5)}`;
     }, () => {
       userLat = 2.9273; userLng = -75.2819;
@@ -672,102 +646,65 @@ async function doRegister() {
   const pass = document.getElementById('reg-pass').value;
   if (!email || !pass) { alert('Email y contraseña son obligatorios'); return; }
   try {
-    const res = await fetch('https://via-segura-mio.vercel.app/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password: pass, name })
-    });
+    const res = await fetch('https://via-segura-mio.vercel.app/api/auth/register', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email,password:pass,name}) });
     const data = await res.json();
     if (!res.ok) { alert(data.error); return; }
     alert('¡Cuenta creada! Ahora inicia sesión.');
     goScreen('login');
-  } catch {
-    alert('Error conectando al servidor');
-  }
+  } catch { alert('Error conectando al servidor'); }
 }
 
 async function handleGoogleLogin(response) {
   const payload = JSON.parse(atob(response.credential.split('.')[1]));
   try {
-    const res = await fetch('https://via-segura-mio.vercel.app/api/auth/google', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: payload.email, name: payload.name })
-    });
+    const res = await fetch('https://via-segura-mio.vercel.app/api/auth/google', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:payload.email,name:payload.name}) });
     const data = await res.json();
     if (!res.ok) { alert(data.error); return; }
     localStorage.setItem('currentUser', data.email);
     localStorage.setItem('userName', data.name);
     localStorage.setItem('userRole', data.role || 'user');
-    updateUserStatus();
-    goScreen('dashboard');
-  } catch {
-    alert('Error conectando al servidor');
-  }
+    updateUserStatus(); goScreen('dashboard');
+  } catch { alert('Error conectando al servidor'); }
 }
 
-// AGREGAR función para Google nativo:
 async function doGoogleLoginNative() {
   try {
     const { SocialLogin } = window.Capacitor.Plugins;
     await SocialLogin.initialize({ google: { webClientId: '363836812726-gt4lsqip9iijbqc34br4aqaiqnsn7dfh.apps.googleusercontent.com' } });
-    const result = await SocialLogin.login({ provider: 'google', options: {} });
+    const result = await SocialLogin.login({ provider:'google', options:{} });
     const { email, name } = result.result.profile;
-    const res = await fetch('https://via-segura-mio.vercel.app/api/auth/google', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, name })
-    });
+    const res = await fetch('https://via-segura-mio.vercel.app/api/auth/google', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email,name}) });
     const data = await res.json();
     if (!res.ok) { alert(data.error); return; }
-    localStorage.setItem('currentUser', data.email);
-    localStorage.setItem('userName', data.name);
-    localStorage.setItem('userRole', data.role || 'user');
-    updateUserStatus();
-    goScreen('dashboard');
-  } catch(e) {
-    alert('Error con Google: ' + e.message);
-  }
+    localStorage.setItem('currentUser', data.email); localStorage.setItem('userName', data.name); localStorage.setItem('userRole', data.role||'user');
+    updateUserStatus(); goScreen('dashboard');
+  } catch(e) { alert('Error con Google: ' + e.message); }
 }
 
-// Calcular estadísticas
 function updateStats(reports) {
   const now = new Date();
-  const hoy = reports.filter(r => {
-    const d = new Date(r.created_at);
-    return d.toDateString() === now.toDateString();
-  });
-  const semana = reports.filter(r => {
-    const d = new Date(r.created_at);
-    return (now - d) < 7 * 24 * 60 * 60 * 1000;
-  });
+  const hoy = reports.filter(r => new Date(r.created_at).toDateString() === now.toDateString());
+  const semana = reports.filter(r => (now - new Date(r.created_at)) < 7*24*60*60*1000);
   document.getElementById('stat-hoy').textContent = hoy.length;
   document.getElementById('stat-semana').textContent = semana.length;
   document.getElementById('stat-total').textContent = reports.length;
   document.getElementById('alert-badge').textContent = `⚠ ${hoy.length} alertas`;
-  // Hora pico
   const horas = reports.map(r => new Date(r.created_at).getHours());
   if (horas.length > 0) {
-    const freq = {};
-    horas.forEach(h => freq[h] = (freq[h] || 0) + 1);
-    const pico = Object.entries(freq).sort((a,b) => b[1]-a[1])[0][0];
+    const freq = {}; horas.forEach(h => freq[h]=(freq[h]||0)+1);
+    const pico = Object.entries(freq).sort((a,b)=>b[1]-a[1])[0][0];
     document.getElementById('stat-hora').textContent = `${pico}h`;
   }
 }
 
-// Renderizar reportes
 async function renderReports() {
   const container = document.getElementById('reports-container');
   try {
     const res = await fetch(API_URL);
     if (!res.ok) throw new Error();
     const reports = await res.json();
-    updateStats(reports);
-    updateHeatmap(reports);
-    if (reports.length === 0) {
-      container.innerHTML = `<div style="padding:10px;font-size:11px;text-align:center;color:var(--color-text-secondary)">No hay reportes aún.</div>`;
-      return;
-    }
+    updateStats(reports); updateHeatmap(reports);
+    if (reports.length === 0) { container.innerHTML = `<div style="padding:10px;font-size:11px;text-align:center;color:var(--color-text-secondary)">No hay reportes aún.</div>`; return; }
     container.innerHTML = reports.slice(0,10).map(r => `
       <div class="incident-item">
         <div class="inc-icon" style="background:${r.bg||'#FCEBEB'}"><i class="ti ${r.icon||'ti-alert-triangle'}" style="color:${r.color||'#E24B4A'};font-size:16px"></i></div>
@@ -791,33 +728,21 @@ function timeAgo(dateStr) {
   return `Hace ${Math.floor(diff/86400)} días`;
 }
 
-// Login
 async function doLogin() {
   const email = document.getElementById('login-email').value;
   const pass = document.getElementById('login-pass').value;
   if (!email || !pass) { alert('Ingresa correo y contraseña'); return; }
   try {
-    const res = await fetch('https://via-segura-mio.vercel.app/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password: pass })
-    });
+    const res = await fetch('https://via-segura-mio.vercel.app/api/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email,password:pass}) });
     const data = await res.json();
     if (!res.ok) { alert(data.error); return; }
-    localStorage.setItem('currentUser', data.email);
-    localStorage.setItem('userName', data.name);
-    localStorage.setItem('userRole', data.role || 'user');
-    updateUserStatus();
-    goScreen('dashboard');
-  } catch {
-    alert('Error conectando al servidor');
-  }
+    localStorage.setItem('currentUser', data.email); localStorage.setItem('userName', data.name); localStorage.setItem('userRole', data.role||'user');
+    updateUserStatus(); goScreen('dashboard');
+  } catch { alert('Error conectando al servidor'); }
 }
 
 function doLogout() {
-  localStorage.removeItem('currentUser');
-  localStorage.removeItem('userName');
-  localStorage.removeItem('userRole');
+  localStorage.removeItem('currentUser'); localStorage.removeItem('userName'); localStorage.removeItem('userRole');
   updateUserStatus();
 }
 
@@ -827,35 +752,19 @@ function updateUserStatus() {
   const user = localStorage.getItem('currentUser');
   const name = localStorage.getItem('userName');
   const role = localStorage.getItem('userRole');
-
   const adminCard = document.getElementById('admin-card');
   if (adminCard) adminCard.style.display = (role === 'admin') ? 'block' : 'none';
-
-  if (user) {
-    el.textContent = name ? `${name.split(' ')[0]} ›` : 'Mi perfil ›';
-    el.onclick = () => goScreen('config');
-  } else {
-    el.textContent = 'Ingresar';
-    el.onclick = () => goScreen('login');
-  }
-
+  if (user) { el.textContent = name ? `${name.split(' ')[0]} ›` : 'Mi perfil ›'; el.onclick = () => goScreen('config'); }
+  else { el.textContent = 'Ingresar'; el.onclick = () => goScreen('login'); }
   const profileName = document.getElementById('profile-name');
   const profileEmail = document.getElementById('profile-email');
   const profileBtn = document.getElementById('profile-btn');
   if (profileName && profileEmail && profileBtn) {
-    if (user) {
-      profileName.textContent = name || 'Usuario';
-      profileEmail.textContent = user;
-      profileBtn.style.display = 'block';
-    } else {
-      profileName.textContent = '—';
-      profileEmail.textContent = 'No has iniciado sesión';
-      profileBtn.style.display = 'none';
-    }
+    if (user) { profileName.textContent = name||'Usuario'; profileEmail.textContent = user; profileBtn.style.display='block'; }
+    else { profileName.textContent='—'; profileEmail.textContent='No has iniciado sesión'; profileBtn.style.display='none'; }
   }
 }
 
-// Enviar reporte
 async function submitReport() {
   if (!localStorage.getItem('currentUser')) { goScreen('login'); return; }
   if (!userLat || !userLng) { alert('Primero obtén tu ubicación'); return; }
@@ -863,27 +772,14 @@ async function submitReport() {
   const vehBtn = document.querySelector('.chip-row .chip.act[onclick*="veh"]');
   const typeText = typeBtn ? typeBtn.innerText.trim() : 'Reporte general';
   const vehText = vehBtn ? vehBtn.innerText.trim() : 'Vehículo';
-  const report = {
-    title: typeText, sub: `${vehText} · Reporte Ciudadano`,
-    time: 'Reciente', icon: 'ti-alert-triangle',
-    color: '#E24B4A', bg: '#FCEBEB',
-    lat: userLat, lng: userLng,
-    user_email: localStorage.getItem('currentUser')
-  };
+  const report = { title:typeText, sub:`${vehText} · Reporte Ciudadano`, time:'Reciente', icon:'ti-alert-triangle', color:'#E24B4A', bg:'#FCEBEB', lat:userLat, lng:userLng, user_email:localStorage.getItem('currentUser') };
   try {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(report)
-    });
+    const res = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(report) });
     if (!res.ok) throw new Error();
     alert('¡Reporte enviado!');
     document.getElementById('desc-input').value = '';
-    renderReports();
-    goScreen('dashboard');
-  } catch {
-    alert('Error enviando reporte. Verifica tu conexión.');
-  }
+    renderReports(); goScreen('dashboard');
+  } catch { alert('Error enviando reporte. Verifica tu conexión.'); }
 }
 
 function goScreen(id) {
@@ -892,8 +788,6 @@ function goScreen(id) {
   document.getElementById('screen-' + id).classList.add('active');
   if (id === 'reporte') getLocation();
   if (id === 'dashboard') setTimeout(() => map && map.invalidateSize(), 100);
-
-  // Actualizar sidebar desktop
   document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('act'));
   const sb = document.getElementById('sb-' + id);
   if (sb) sb.classList.add('act');
@@ -919,45 +813,32 @@ function updateSim() {
   document.getElementById('sim-msg').style.color = prob>70?'#791F1F':prob>45?'#633806':'#27500A';
 }
 
-// Inicializar
-
 document.addEventListener('DOMContentLoaded', async () => {
   const isNative = window.Capacitor && window.Capacitor.isNativePlatform();
-
-  // Mostrar botón Google correcto según plataforma
   document.getElementById('google-btn-native').style.display = isNative ? 'block' : 'none';
   document.getElementById('google-btn-web').style.display = isNative ? 'none' : 'flex';
-
   if (isNative) {
     const { LocalNotifications } = window.Capacitor.Plugins;
     const perm = await LocalNotifications.checkPermissions();
-    if (perm.display !== 'granted') {
-      await LocalNotifications.requestPermissions();
-    }
+    if (perm.display !== 'granted') await LocalNotifications.requestPermissions();
   }
-  initMap();
-  getLocation();
-  updateUserStatus();
-  renderReports();
-  loadPrefs();
+  initMap(); getLocation(); updateUserStatus(); renderReports(); loadPrefs();
 });
 
-// Tema
 function setTheme(mode) {
-  localStorage.setItem('theme', mode);
-  applyTheme(mode);
+  localStorage.setItem('theme', mode); applyTheme(mode);
   document.querySelectorAll('[id^="theme-"]').forEach(b => b.classList.remove('sel'));
   document.getElementById('theme-' + mode).classList.add('sel');
 }
 
 function applyTheme(mode) {
-  if (mode === 'system') {
-    mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
+  if (mode === 'system') mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   const root = document.documentElement;
   if (mode === 'dark') {
     root.style.setProperty('--color-background-primary', '#18181b');
     root.style.setProperty('--color-background-secondary', '#09090b');
+    root.style.setProperty('--color-border-primary', '#3f3f46');
+    root.style.setProperty('--color-border-secondary', '#3f3f46');
     root.style.setProperty('--color-border-tertiary', '#27272a');
     root.style.setProperty('--color-text-primary', '#fafafa');
     root.style.setProperty('--color-text-secondary', '#a1a1aa');
@@ -965,6 +846,8 @@ function applyTheme(mode) {
   } else {
     root.style.setProperty('--color-background-primary', '#ffffff');
     root.style.setProperty('--color-background-secondary', '#f4f4f5');
+    root.style.setProperty('--color-border-primary', '#e4e4e7');
+    root.style.setProperty('--color-border-secondary', '#e4e4e7');
     root.style.setProperty('--color-border-tertiary', '#f4f4f5');
     root.style.setProperty('--color-text-primary', '#18181b');
     root.style.setProperty('--color-text-secondary', '#71717a');
@@ -972,19 +855,16 @@ function applyTheme(mode) {
   }
 }
 
-// Notificaciones
-function toggleNotif(el) {
-  localStorage.setItem('notifEnabled', el.checked);
-}
+function toggleNotif(el) { localStorage.setItem('notifEnabled', el.checked); }
 
-// Intervalo
 let refreshInterval;
 function setInterval2(ms) {
   localStorage.setItem('refreshInterval', ms);
   clearInterval(refreshInterval);
   refreshInterval = setInterval(doRefresh, ms);
   document.querySelectorAll('[id^="interval-"]').forEach(b => b.classList.remove('act'));
-  document.getElementById('interval-' + ms).classList.add('act');
+  const el = document.getElementById('interval-' + ms);
+  if (el) el.classList.add('act');
 }
 
 async function doRefresh() {
@@ -997,29 +877,20 @@ async function doRefresh() {
   if (notifEnabled && newCount > prevCount && prevCount > 0) {
     if (window.Capacitor && window.Capacitor.isNativePlatform()) {
       const { LocalNotifications } = window.Capacitor.Plugins;
-      await LocalNotifications.schedule({ notifications: [{
-        id: Math.floor(Math.random() * 100000),
-        title: '⚠ Vía Segura',
-        body: 'Nuevo reporte en la zona USCO',
-        schedule: { at: new Date(Date.now() + 100) }
-      }]});
+      await LocalNotifications.schedule({ notifications: [{ id:Math.floor(Math.random()*100000), title:'⚠ Vía Segura', body:'Nuevo reporte en la zona USCO', schedule:{at:new Date(Date.now()+100)} }]});
     }
   }
   localStorage.setItem('lastReportCount', newCount);
 }
 
-// Cargar preferencias guardadas
 function loadPrefs() {
   const theme = localStorage.getItem('theme') || 'system';
   applyTheme(theme);
   document.getElementById('theme-' + theme)?.classList.add('sel');
-
   const notif = localStorage.getItem('notifEnabled') !== 'false';
   document.getElementById('notif-toggle').checked = notif;
-
   const interval = parseInt(localStorage.getItem('refreshInterval') || '30000');
   setInterval2(interval);
-  document.getElementById('interval-' + interval)?.classList.add('act');
 }
 
 function selType(btn) {
@@ -1031,1043 +902,6 @@ function selChip(el, group) {
   document.querySelectorAll(`.chip[onclick*="'${group}'"]`).forEach(c => c.classList.remove('act'));
   el.classList.add('act');
 }
-
-</script>
-</body>
-</html>
-<html lang="es">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Vía Segura USCO</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <style>
-    :root {
-      --color-background-primary: #ffffff;
-      --color-background-secondary: #f4f4f5;
-      --color-border-primary: #e4e4e7;
-      --color-border-secondary: #e4e4e7;
-      --color-border-tertiary: #f4f4f5;
-      --color-text-primary: #18181b;
-      --color-text-secondary: #71717a;
-      --color-text-tertiary: #a1a1aa;
-    }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin:0; padding:0; background:var(--color-background-secondary); }
-    *{box-sizing:border-box;margin:0;padding:0}
-    .phone{width:100%;height:100vh;display:flex;flex-direction:column;background:var(--color-background-primary);overflow:hidden;font-size:13px}
-    .status-bar{background:#1a1a2e;color:#fff;padding:10px 20px 6px;display:flex;justify-content:space-between;align-items:center;font-size:11px}
-    .screen{display:none;flex-direction:column;flex:1;overflow-y:auto}
-    .screen.active{display:flex}
-    .topbar{background:#1a1a2e;color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px}
-    .topbar-title{font-size:14px;font-weight:500;flex:1}
-    .nav-tab{display:flex;border-top:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
-    .nav-btn{flex:1;padding:8px 4px 10px;border:none;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:var(--color-text-secondary)}
-    .nav-btn.act{color:#185FA5}
-    .nav-btn i{font-size:20px}
-    .content{flex:1;padding:14px;overflow-y:auto;background:var(--color-background-secondary)}
-    .card{background:var(--color-background-primary);border-radius:12px;border:0.5px solid var(--color-border-tertiary);padding:12px 14px;margin-bottom:10px}
-    .card-title{font-size:12px;color:var(--color-text-secondary);margin-bottom:6px}
-    .stat-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:10px}
-    .stat{background:var(--color-background-primary);border-radius:8px;border:0.5px solid var(--color-border-tertiary);padding:10px 12px}
-    .stat-val{font-size:22px;font-weight:500;color:var(--color-text-primary)}
-    .stat-lbl{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
-    .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:500}
-    .badge-red{background:#FCEBEB;color:#A32D2D}
-    .badge-amber{background:#FAEEDA;color:#633806}
-    .badge-green{background:#EAF3DE;color:#27500A}
-    .badge-blue{background:#E6F1FB;color:#0C447C}
-    #heatmap{height:220px;border-radius:8px;overflow:hidden;margin-bottom:8px}
-    .incident-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
-    .incident-item:last-child{border-bottom:none}
-    .inc-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
-    .inc-info{flex:1}
-    .inc-title{font-size:12px;font-weight:500;color:var(--color-text-primary)}
-    .inc-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
-    .inc-time{font-size:10px;color:var(--color-text-tertiary)}
-    .form-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;margin-top:10px;display:block}
-    .form-input{width:100%;padding:8px 10px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:13px;color:var(--color-text-primary)}
-    .type-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:6px 0}
-    .type-btn{padding:8px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:11px;cursor:pointer;text-align:center;color:var(--color-text-secondary);transition:all .15s}
-    .type-btn.sel{border-color:#185FA5;background:#E6F1FB;color:#0C447C}
-    .submit-btn{width:100%;padding:12px;border-radius:10px;border:none;background:#1a1a2e;color:#fff;font-size:13px;font-weight:500;cursor:pointer;margin-top:10px}
-    .risk-bar-wrap{background:var(--color-background-secondary);border-radius:6px;height:10px;margin:6px 0}
-    .risk-bar{height:10px;border-radius:6px;transition:width .4s}
-    .sim-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-    .sim-label{font-size:12px;color:var(--color-text-secondary)}
-    .sim-val{font-size:12px;font-weight:500;color:var(--color-text-primary)}
-    .route-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0}
-    .route-card{border-radius:8px;padding:10px;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
-    .route-card.danger{border-color:#E24B4A;background:#FCEBEB}
-    .route-card.safe{border-color:#639922;background:#EAF3DE}
-    .route-title{font-size:11px;font-weight:500;margin-bottom:4px}
-    .route-val{font-size:20px;font-weight:500}
-    .route-card.danger .route-val{color:#E24B4A}
-    .route-card.safe .route-val{color:#639922}
-    .route-sub{font-size:10px;color:var(--color-text-secondary);margin-top:2px}
-    .hour-bar-row{display:flex;align-items:flex-end;gap:3px;height:48px;margin:8px 0 4px}
-    .hbar{border-radius:3px 3px 0 0;min-width:14px;flex:1;transition:background .2s}
-    .hour-labels{display:flex;gap:3px;margin-bottom:4px}
-    .hour-lbl{flex:1;text-align:center;font-size:9px;color:var(--color-text-tertiary)}
-    .section-head{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px}
-    .chip-row{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}
-    .chip{padding:4px 10px;border-radius:20px;font-size:11px;border:0.5px solid var(--color-border-secondary);cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary)}
-    .chip.act{background:#1a1a2e;color:#fff;border-color:#1a1a2e}
-    .loc-badge{font-size:11px;color:var(--color-text-secondary);margin-top:6px;display:flex;align-items:center;gap:4px;padding:6px 8px;background:var(--color-background-secondary);border-radius:8px}
-
-    @media (min-width: 768px) {
-  body { overflow: auto; }
-  .phone {
-    height: auto;
-    min-height: 100vh;
-    flex-direction: row;
-    max-width: 100%;
-    font-size: 14px;
-  }
-  .screen { display: none !important; }
-  .screen.active { display: flex !important; flex-direction: row; flex: 1; overflow: visible; }
-  .nav-tab { display: none; }
-
-  /* Sidebar */
-  #desktop-sidebar {
-    display: flex;
-    flex-direction: column;
-    width: 220px;
-    min-height: 100vh;
-    background: #1a1a2e;
-    padding: 24px 16px;
-    gap: 6px;
-    flex-shrink: 0;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-  }
-  .sidebar-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 8px 20px;
-    border-bottom: 1px solid #2a2a4a;
-    margin-bottom: 8px;
-  }
-  .sidebar-logo-title { font-size: 15px; font-weight: 600; color: #fff; }
-  .sidebar-logo-sub { font-size: 10px; color: #5DCAA5; }
-  .sidebar-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: none;
-    background: transparent;
-    color: #a1a1aa;
-    font-size: 13px;
-    cursor: pointer;
-    text-align: left;
-    width: 100%;
-    transition: all .15s;
-  }
-  .sidebar-btn:hover { background: #2a2a4a; color: #fff; }
-  .sidebar-btn.act { background: #185FA5; color: #fff; }
-  .sidebar-btn i { font-size: 18px; }
-  .sidebar-bottom {
-    margin-top: auto;
-    padding-top: 16px;
-    border-top: 1px solid #2a2a4a;
-    font-size: 11px;
-    color: #71717a;
-    padding-left: 8px;
-  }
-
-  /* Contenido principal desktop */
-  .screen.active > .topbar { display: none; }
-  .screen.active > .content {
-    flex: 1;
-    padding: 24px;
-    max-width: 680px;
-    overflow-y: auto;
-    height: 100vh;
-  }
-
-  /* Panel derecho con mapa grande */
-  #desktop-right-panel {
-    display: flex;
-    flex-direction: column;
-    width: 380px;
-    min-height: 100vh;
-    background: #f4f4f5;
-    border-left: 1px solid #e4e4e7;
-    padding: 24px 16px;
-    flex-shrink: 0;
-  }
-  #desktop-right-panel #heatmap {
-    height: 320px !important;
-    border-radius: 12px;
-  }
-
-  /* Stats en grid de 4 en desktop */
-  .stat-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-
-  /* Mapa oculto del contenido principal en desktop (se muestra en panel derecho) */
-  .card:has(#heatmap) { display: none; }
-
-  #heatmap { height: 320px; }
-}
-
-@media (max-width: 767px) {
-  #desktop-sidebar, #desktop-right-panel { display: none !important; }
-}
-
-  .leaflet-tile { filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%); }
-  </style>
-</head>
-<body>
-    <div style="background:var(--color-background-secondary);height:100vh;display:flex;flex-direction:column">
-<div class="phone">
-
-<!-- SIDEBAR DESKTOP (oculto en móvil) -->
-<div id="desktop-sidebar">
-  <div class="sidebar-logo">
-    <i class="ti ti-shield-check" style="font-size:24px;color:#5DCAA5"></i>
-    <div>
-      <div class="sidebar-logo-title">Vía Segura</div>
-      <div class="sidebar-logo-sub">USCO · Neiva</div>
-    </div>
-  </div>
-  <button class="sidebar-btn act" id="sb-dashboard" onclick="goScreen('dashboard')">
-    <i class="ti ti-layout-dashboard"></i> Dashboard
-  </button>
-  <button class="sidebar-btn" id="sb-reporte" onclick="goScreen('reporte')">
-    <i class="ti ti-alert-circle"></i> Reportar
-  </button>
-  <button class="sidebar-btn" id="sb-simulador" onclick="goScreen('simulador')">
-    <i class="ti ti-chart-bar"></i> Simulador
-  </button>
-  <button class="sidebar-btn" id="sb-config" onclick="goScreen('config')">
-    <i class="ti ti-settings"></i> Config
-  </button>
-  <div class="sidebar-bottom">
-    <div id="sb-user-status" style="cursor:pointer" onclick="goScreen('login')">Ingresar →</div>
-    <div style="margin-top:8px">v1.0.0</div>
-  </div>
-</div>
-
-  <!-- LOGIN -->
-<div class="screen" id="screen-login">
-  <div class="topbar">
-    <i class="ti ti-lock" style="font-size:18px;color:#FAC775"></i>
-    <span class="topbar-title">Autenticación Requerida</span>
-  </div>
-  <div class="content" style="display:flex;flex-direction:column;justify-content:center;min-height:100%">
-    <div style="text-align:center;margin-bottom:24px">
-      <i class="ti ti-shield-lock" style="font-size:52px;color:#185FA5"></i>
-      <div style="font-size:18px;font-weight:600;margin-top:10px;color:var(--color-text-primary)">Vía Segura</div>
-      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px">Inicia sesión para reportar incidentes</div>
-    </div>
-
-    <div class="card" style="padding:20px">
-      <!-- Botón Google centrado -->
-<div id="g_id_onload"
-  data-client_id="363836812726-gt4lsqip9iijbqc34br4aqaiqnsn7dfh.apps.googleusercontent.com"
-  data-callback="handleGoogleLogin"
-  data-auto_prompt="false">
-</div>
-
-<!-- Botón Google nativo (Android) -->
-<div id="google-btn-native" style="display:none;margin-bottom:16px">
-  <button onclick="doGoogleLoginNative()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--color-text-primary)">
-    <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.2l6.7-6.7C35.7 2.5 30.2 0 24 0 14.8 0 6.9 5.4 3 13.3l7.8 6C12.7 13 17.9 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17z"/><path fill="#FBBC05" d="M10.8 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7L2.5 13.3A23.9 23.9 0 0 0 0 24c0 3.8.9 7.4 2.5 10.6l8.3-5.9z"/><path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.5l-7.5-5.8c-2 1.4-4.6 2.2-7.7 2.2-6.1 0-11.3-3.5-13.2-8.7l-7.8 6C6.9 42.6 14.8 48 24 48z"/></svg>
-    Continuar con Google
-  </button>
-</div>
-
-<!-- Botón Google web (GSI SDK) -->
-<div id="google-btn-web" style="display:flex;justify-content:center;margin-bottom:16px">
-  <div class="g_id_signin"
-    data-type="standard"
-    data-size="large"
-    data-theme="outline"
-    data-text="continue_with"
-    data-shape="rectangular"
-    data-logo_alignment="left"
-    data-width="280">
-  </div>
-</div>
-
-      <div id="google-divider" style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-        <div style="flex:1;height:0.5px;background:var(--color-border-secondary)"></div>
-        <span style="font-size:11px;color:var(--color-text-tertiary)">o continúa con email</span>
-        <div style="flex:1;height:0.5px;background:var(--color-border-secondary)"></div>
-      </div>
-
-      <div style="position:relative;margin-bottom:10px">
-        <i class="ti ti-mail" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--color-text-tertiary);font-size:15px"></i>
-        <input type="email" class="form-input" id="login-email" placeholder="Correo electrónico" style="padding-left:32px">
-      </div>
-      <div style="position:relative;margin-bottom:20px">
-        <i class="ti ti-lock" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--color-text-tertiary);font-size:15px"></i>
-        <input type="password" class="form-input" id="login-pass" placeholder="Contraseña" style="padding-left:32px">
-      </div>
-
-      <button class="submit-btn" onclick="doLogin()">
-        <i class="ti ti-login"></i> Iniciar Sesión
-      </button>
-      <button onclick="goScreen('registro')" style="background:transparent;border:1px solid var(--color-border-secondary);color:var(--color-text-secondary);width:100%;padding:10px;border-radius:8px;font-size:12px;cursor:pointer;margin-top:8px">
-        Crear cuenta nueva
-      </button>
-      <button onclick="goScreen('dashboard')" style="background:transparent;border:none;color:var(--color-text-tertiary);margin-top:12px;font-size:11px;cursor:pointer;width:100%;padding:8px">
-        Volver al Dashboard
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- REGISTRO -->
-<div class="screen" id="screen-registro">
-  <div class="topbar">
-    <i class="ti ti-user-plus" style="font-size:18px;color:#5DCAA5"></i>
-    <span class="topbar-title">Crear cuenta</span>
-  </div>
-  <div class="content" style="display:flex;flex-direction:column;justify-content:center">
-    <div class="card" style="text-align:center;padding:24px 16px">
-      <i class="ti ti-user-circle" style="font-size:48px;color:#185FA5;margin-bottom:12px"></i>
-      <div style="font-size:16px;font-weight:500;margin-bottom:20px">Registro en Vía Segura</div>
-      <input type="text" class="form-input" id="reg-name" placeholder="Nombre completo" style="margin-bottom:10px">
-      <input type="email" class="form-input" id="reg-email" placeholder="Correo electrónico" style="margin-bottom:10px">
-      <input type="password" class="form-input" id="reg-pass" placeholder="Contraseña" style="margin-bottom:20px">
-      <button class="submit-btn" onclick="doRegister()">Crear cuenta</button>
-      <button onclick="goScreen('login')" style="background:transparent;border:none;color:var(--color-text-secondary);margin-top:15px;font-size:12px;cursor:pointer;width:100%;padding:10px">Ya tengo cuenta</button>
-    </div>
-  </div>
-</div>
-
-  <!-- DASHBOARD -->
-  <div class="screen active" id="screen-dashboard">
-    <div class="topbar">
-      <i class="ti ti-shield-check" style="font-size:18px;color:#5DCAA5"></i>
-      <span class="topbar-title">Panel de movilidad</span>
-      <span class="badge badge-red" id="alert-badge">⚠ 0 alertas</span>
-    </div>
-    <div class="content">
-      <div class="stat-row">
-        <div class="stat">
-          <div class="stat-val" style="color:#E26B4A" id="stat-hoy">0</div>
-          <div class="stat-lbl">Incidentes hoy</div>
-        </div>
-        <div class="stat">
-          <div class="stat-val" style="color:#BA7517" id="stat-semana">0</div>
-          <div class="stat-lbl">Reportes semana</div>
-        </div>
-        <div class="stat">
-          <div class="stat-val" id="stat-total">0</div>
-          <div class="stat-lbl">Total reportes</div>
-        </div>
-        <div class="stat">
-          <div class="stat-val" style="color:#639922" id="stat-hora">--</div>
-          <div class="stat-lbl">Hora pico</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">Mapa de calor en tiempo real</div>
-        <div id="heatmap"></div>
-        <div style="display:flex;gap:8px;margin-top:4px">
-          <span style="font-size:10px;color:var(--color-text-secondary);display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;border-radius:50%;background:#E24B4A;display:inline-block"></span>Alto riesgo</span>
-          <span style="font-size:10px;color:var(--color-text-secondary);display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;border-radius:50%;background:#EF9F27;display:inline-block"></span>Medio</span>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title" style="display:flex;justify-content:space-between">
-          <span>Últimos reportes</span>
-          <span id="user-status" style="font-size:10px;color:#185FA5;cursor:pointer" onclick="goScreen('login')">Ingresar</span>
-        </div>
-        <div id="reports-container"></div>
-      </div>
-    </div>
-    <div class="nav-tab">
-      <button class="nav-btn act" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
-      <button class="nav-btn" onclick="goScreen('reporte')"><i class="ti ti-alert-circle"></i>Reportar</button>
-      <button class="nav-btn" onclick="goScreen('simulador')"><i class="ti ti-chart-bar"></i>Simulador</button>
-      <button class="nav-btn" onclick="goScreen('config')"><i class="ti ti-settings"></i>Config</button>
-    </div>
-  </div>
-
-  <!-- REPORTE -->
-  <div class="screen" id="screen-reporte">
-    <div class="topbar">
-      <i class="ti ti-alert-circle" style="font-size:18px;color:#F09595"></i>
-      <span class="topbar-title">Reportar incidente</span>
-    </div>
-    <div class="content">
-      <div class="card">
-        <div class="section-head">¿Qué tipo de incidente?</div>
-        <div class="type-grid">
-          <button class="type-btn sel" onclick="selType(this)"><i class="ti ti-motorbike"></i><br>Cruce ilegal separador</button>
-          <button class="type-btn" onclick="selType(this)"><i class="ti ti-car-crash"></i><br>Casi-accidente</button>
-          <button class="type-btn" onclick="selType(this)"><i class="ti ti-walk"></i><br>Peatón en riesgo</button>
-          <button class="type-btn" onclick="selType(this)"><i class="ti ti-camera"></i><br>Otro / foto</button>
-        </div>
-      </div>
-      <div class="card">
-        <div class="section-head">Vehículo involucrado</div>
-        <div class="chip-row">
-          <span class="chip act" onclick="selChip(this,'veh')">Moto</span>
-          <span class="chip" onclick="selChip(this,'veh')">Carro</span>
-          <span class="chip" onclick="selChip(this,'veh')">Bus</span>
-          <span class="chip" onclick="selChip(this,'veh')">Bicicleta</span>
-        </div>
-        <div class="section-head" style="margin-top:6px">Hora aproximada</div>
-        <div class="chip-row">
-          <span class="chip" onclick="selChip(this,'hora')">6–8 h</span>
-          <span class="chip act" onclick="selChip(this,'hora')">11–12 h</span>
-          <span class="chip" onclick="selChip(this,'hora')">17–19 h</span>
-          <span class="chip" onclick="selChip(this,'hora')">Ahora</span>
-        </div>
-      </div>
-      <div class="card">
-        <div class="section-head">Tu ubicación</div>
-        <div class="loc-badge" id="loc-display">
-          <i class="ti ti-map-pin" style="color:#185FA5"></i>
-          <span id="loc-text">Obteniendo ubicación...</span>
-        </div>
-        <button onclick="getLocation()" style="margin-top:8px;width:100%;padding:8px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:12px;cursor:pointer;color:var(--color-text-secondary)">
-          <i class="ti ti-refresh"></i> Actualizar ubicación
-        </button>
-      </div>
-      <div class="card">
-        <label class="form-label">Descripción breve (opcional)</label>
-        <textarea class="form-input" id="desc-input" rows="2" placeholder="Ej: Moto cruzó el separador a alta velocidad..."></textarea>
-      </div>
-      <button class="submit-btn" onclick="submitReport()">
-        <i class="ti ti-send"></i> Enviar reporte
-      </button>
-    </div>
-    <div class="nav-tab">
-      <button class="nav-btn" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
-      <button class="nav-btn act"><i class="ti ti-alert-circle"></i>Reportar</button>
-      <button class="nav-btn" onclick="goScreen('simulador')"><i class="ti ti-chart-bar"></i>Simulador</button>
-      <button class="nav-btn" onclick="goScreen('config')"><i class="ti ti-settings"></i>Config</button>
-    </div>
-  </div>
-
-  <!-- SIMULADOR -->
-  <div class="screen" id="screen-simulador">
-    <div class="topbar">
-      <i class="ti ti-chart-infographic" style="font-size:18px;color:#FAC775"></i>
-      <span class="topbar-title">Simulador riesgo vs. tiempo</span>
-    </div>
-    <div class="content">
-      <div class="card">
-        <div class="section-head">Velocidad estimada al cruzar</div>
-        <div style="display:flex;align-items:center;gap:10px;margin:6px 0">
-          <input type="range" min="10" max="80" value="45" step="1" id="vel-slider" style="flex:1" oninput="updateSim()">
-          <span style="font-size:16px;font-weight:500;min-width:52px;text-align:right" id="vel-val">45 km/h</span>
-        </div>
-        <div style="font-size:11px;color:var(--color-text-secondary)">Velocidad máxima permitida en zona: <b>30 km/h</b></div>
-      </div>
-      <div class="route-compare">
-        <div class="route-card danger">
-          <div class="route-title" style="color:#A32D2D"><i class="ti ti-x"></i> Ruta ilegal</div>
-          <div class="route-val" id="sim-time-ilegal">8 s</div>
-          <div class="route-sub">Tiempo ahorrado</div>
-        </div>
-        <div class="route-card safe">
-          <div class="route-title" style="color:#27500A"><i class="ti ti-check"></i> Ruta legal</div>
-          <div class="route-val" style="font-size:14px;color:#3B6D11">El Tizón</div>
-          <div class="route-sub">+2 min 10 s</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">Nivel de riesgo de colisión frontal</div>
-        <div class="sim-row"><span class="sim-label">Probabilidad de incidente</span><span class="sim-val" id="sim-prob">68%</span></div>
-        <div class="risk-bar-wrap"><div class="risk-bar" id="sim-bar" style="width:68%;background:#E24B4A"></div></div>
-        <div class="sim-row" style="margin-top:8px"><span class="sim-label">Distancia de frenado</span><span class="sim-val" id="sim-dist">18 m</span></div>
-        <div class="sim-row"><span class="sim-label">Tiempo de reacción disponible</span><span class="sim-val" id="sim-reac">0.4 s</span></div>
-        <div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:#FCEBEB;border:0.5px solid #F09595">
-          <div style="font-size:11px;color:#791F1F;font-weight:500" id="sim-msg">⚠ Riesgo alto: tiempo de reacción insuficiente para evitar colisión</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">¿Vale la pena el riesgo?</div>
-        <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
-          <div style="flex:1;text-align:center">
-            <div style="font-size:22px;font-weight:500;color:#E24B4A">$4.200.000</div>
-            <div style="font-size:10px;color:var(--color-text-secondary)">Costo promedio accidente</div>
-          </div>
-          <div style="color:var(--color-text-tertiary);font-size:18px">vs</div>
-          <div style="flex:1;text-align:center">
-            <div style="font-size:22px;font-weight:500;color:#639922" id="sim-costo-tiempo">8 s</div>
-            <div style="font-size:10px;color:var(--color-text-secondary)">Tiempo "ahorrado"</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="nav-tab">
-      <button class="nav-btn" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
-      <button class="nav-btn" onclick="goScreen('reporte')"><i class="ti ti-alert-circle"></i>Reportar</button>
-      <button class="nav-btn act"><i class="ti ti-chart-bar"></i>Simulador</button>
-      <button class="nav-btn" onclick="goScreen('config')"><i class="ti ti-settings"></i>Config</button>
-    </div>
-  </div>
-  
-  <div class="screen" id="screen-config">
-  <div class="topbar">
-    <i class="ti ti-settings" style="font-size:18px;color:#FAC775"></i>
-    <span class="topbar-title">Configuración</span>
-  </div>
-  <div class="content">
-    <div class="card" id="profile-card">
-      <div class="section-head">Mi cuenta</div>
-      <div style="display:flex;align-items:center;gap:12px;margin-top:8px">
-        <div style="width:40px;height:40px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <i class="ti ti-user" style="font-size:20px;color:#5DCAA5"></i>
-        </div>
-        <div style="flex:1;min-width:0">
-          <div id="profile-name" style="font-size:13px;font-weight:500;color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">—</div>
-          <div id="profile-email" style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">No has iniciado sesión</div>
-        </div>
-      </div>
-      <button id="profile-btn" onclick="doLogout()" style="width:100%;padding:10px;border-radius:8px;border:1px solid #E24B4A;background:transparent;color:#E24B4A;font-size:12px;cursor:pointer;margin-top:12px">
-        <i class="ti ti-logout"></i> Cerrar sesión
-      </button>
-    </div>
-    <div class="card">
-      <div class="section-head">Apariencia</div>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
-        <button class="type-btn" id="theme-light" onclick="setTheme('light')"><i class="ti ti-sun"></i> Claro</button>
-        <button class="type-btn" id="theme-dark" onclick="setTheme('dark')"><i class="ti ti-moon"></i> Oscuro</button>
-        <button class="type-btn" id="theme-system" onclick="setTheme('system')"><i class="ti ti-device-mobile"></i> Seguir sistema</button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="section-head">Notificaciones</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0">
-        <span style="font-size:12px;color:var(--color-text-secondary)">Alertas de nuevos reportes</span>
-        <input type="checkbox" id="notif-toggle" onchange="toggleNotif(this)" style="width:18px;height:18px;cursor:pointer">
-      </div>
-    </div>
-    <div class="card">
-      <div class="section-head">Intervalo de actualización</div>
-      <div class="chip-row" style="margin-top:6px">
-        <span class="chip" id="interval-30" onclick="setInterval2(30000)">30 seg</span>
-        <span class="chip" id="interval-60" onclick="setInterval2(60000)">1 min</span>
-        <span class="chip" id="interval-300" onclick="setInterval2(300000)">5 min</span>
-      </div>
-    </div>
-    <div class="card">
-      <div class="section-head">Acerca de</div>
-      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.8">
-        <div><b>Vía Segura USCO</b> v1.0.0</div>
-        <div>Universidad Surcolombiana</div>
-        <div>Neiva, Huila — 2026</div>
-        <div style="margin-top:6px">Proyecto de seguridad vial desarrollado para monitorear incidentes en la Av. Pastrana.</div>
-      </div>
-    </div>
-    <div class="card" id="admin-card" style="display:none">
-      <div class="section-head">Panel Administrador</div>
-      <button onclick="window.open('https://via-segura-mio.vercel.app/admin.html','_blank')"
-        style="width:100%;padding:10px;border-radius:8px;border:1px solid #185FA5;background:#E6F1FB;color:#0C447C;font-size:12px;cursor:pointer;margin-top:6px">
-        <i class="ti ti-shield-lock"></i> Ir al panel admin
-      </button>
-    </div>
-  </div>
-  <div class="nav-tab">
-    <button class="nav-btn" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
-    <button class="nav-btn" onclick="goScreen('reporte')"><i class="ti ti-alert-circle"></i>Reportar</button>
-    <button class="nav-btn" onclick="goScreen('simulador')"><i class="ti ti-chart-bar"></i>Simulador</button>
-    <button class="nav-btn act"><i class="ti ti-settings"></i>Config</button>
-  </div>
-  </div>
-
-<!-- PANEL DERECHO DESKTOP -->
-<div id="desktop-right-panel">
-  <div style="font-size:12px;font-weight:500;color:#18181b;margin-bottom:12px">Mapa en tiempo real</div>
-  <div id="heatmap-desktop" style="height:320px;border-radius:12px;overflow:hidden;margin-bottom:12px"></div>
-  <div style="font-size:11px;color:#71717a;margin-bottom:16px;display:flex;gap:10px">
-    <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E24B4A;display:inline-block"></span>Alto riesgo</span>
-    <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#EF9F27;display:inline-block"></span>Medio</span>
-  </div>
-  <div style="font-size:12px;font-weight:500;color:#18181b;margin-bottom:8px">Alertas recientes</div>
-  <div id="desktop-reports" style="display:flex;flex-direction:column;gap:6px"></div>
-</div>
-
-</div>
-</div>
-    <script>
-const API_URL = 'https://via-segura-mio.vercel.app/api/reports';
-let map, heatLayer;
-let userLat = null, userLng = null;
-
-// Inicializar mapa de calor
-function initMap() {
-  const isDesktop = window.innerWidth >= 768;
-
-  if (!isDesktop) {
-    // Solo mobile
-    map = L.map('heatmap').setView([2.9273, -75.2819], 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
-    }).addTo(map);
-    heatLayer = L.heatLayer([], {
-      radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8,
-      gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' }
-    }).addTo(map);
-    return;
-  }
-
-  // Desktop: inicializar solo el mapa derecho
-  const desktopEl = document.getElementById('heatmap-desktop');
-  if (!desktopEl) return;
-
-  // Crear mapa SIN heatLayer todavía
-  window.mapDesktop = L.map('heatmap-desktop', {
-    zoomControl: true,
-    attributionControl: false
-  }).setView([2.9273, -75.2819], 13);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap'
-  }).addTo(window.mapDesktop);
-
-  // Agregar heatLayer SOLO después de que el mapa tenga dimensiones reales
-  window.mapDesktop.whenReady(() => {
-    setTimeout(() => {
-      window.mapDesktop.invalidateSize();
-      window.heatLayerDesktop = L.heatLayer([], {
-        radius: 50, blur: 15, maxZoom: 17, minOpacity: 0.8,
-        gradient: { 0.4: '#EF9F27', 0.65: '#E24B4A', 1: '#791F1F' }
-      }).addTo(window.mapDesktop);
-
-      // Si ya hay datos cargados, aplicarlos
-      if (window._pendingHeatPoints) {
-        window.heatLayerDesktop.setLatLngs(window._pendingHeatPoints);
-      }
-    }, 200);
-  });
-}
-
-// Actualizar mapa de calor con reportes reales
-function updateHeatmap(reports) {
-  const points = reports
-    .filter(r => r.lat && r.lng)
-    .map(r => [parseFloat(r.lat), parseFloat(r.lng), 1.0]);
-
-  // Mobile
-  if (heatLayer) heatLayer.setLatLngs(points);
-
-  // Desktop — guardar puntos por si el layer aún no está listo
-  window._pendingHeatPoints = points;
-  if (window.heatLayerDesktop) {
-    window.heatLayerDesktop.setLatLngs(points);
-  }
-
-  // Panel derecho desktop
-  const dr = document.getElementById('desktop-reports');
-  if (dr) {
-    dr.innerHTML = reports.slice(0,5).map(r => `
-      <div style="background:#fff;border-radius:8px;padding:8px 10px;border:0.5px solid #e4e4e7;display:flex;gap:8px;align-items:center">
-        <div style="width:28px;height:28px;border-radius:6px;background:${r.bg||'#FCEBEB'};display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <i class="ti ${r.icon||'ti-alert-triangle'}" style="color:${r.color||'#E24B4A'};font-size:13px"></i>
-        </div>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:11px;font-weight:500;color:#18181b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.title}</div>
-          <div style="font-size:10px;color:#71717a">${timeAgo(r.created_at)}</div>
-        </div>
-      </div>
-    `).join('');
-  }
-}
-
-// Obtener ubicación del usuario
-function getLocation() {
-  const locText = document.getElementById('loc-text');
-  locText.textContent = 'Obteniendo ubicación...';
-  if (window.Capacitor && window.Capacitor.isNativePlatform()) {
-    window.Capacitor.Plugins.Geolocation.getCurrentPosition().then(pos => {
-      userLat = pos.coords.latitude;
-      userLng = pos.coords.longitude;
-      locText.textContent = `${userLat.toFixed(5)}, ${userLng.toFixed(5)}`;
-    }).catch(() => locText.textContent = 'No se pudo obtener ubicación');
-  } else {
-    navigator.geolocation.getCurrentPosition(pos => {
-      userLat = pos.coords.latitude;
-      userLng = pos.coords.longitude;
-      locText.textContent = `${userLat.toFixed(5)}, ${userLng.toFixed(5)}`;
-    }, () => {
-      userLat = 2.9273; userLng = -75.2819;
-      locText.textContent = 'Usando ubicación por defecto (USCO)';
-    });
-  }
-}
-
-async function doRegister() {
-  const name = document.getElementById('reg-name').value;
-  const email = document.getElementById('reg-email').value;
-  const pass = document.getElementById('reg-pass').value;
-  if (!email || !pass) { alert('Email y contraseña son obligatorios'); return; }
-  try {
-    const res = await fetch('https://via-segura-mio.vercel.app/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password: pass, name })
-    });
-    const data = await res.json();
-    if (!res.ok) { alert(data.error); return; }
-    alert('¡Cuenta creada! Ahora inicia sesión.');
-    goScreen('login');
-  } catch {
-    alert('Error conectando al servidor');
-  }
-}
-
-async function handleGoogleLogin(response) {
-  const payload = JSON.parse(atob(response.credential.split('.')[1]));
-  try {
-    const res = await fetch('https://via-segura-mio.vercel.app/api/auth/google', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: payload.email, name: payload.name })
-    });
-    const data = await res.json();
-    if (!res.ok) { alert(data.error); return; }
-    localStorage.setItem('currentUser', data.email);
-    localStorage.setItem('userName', data.name);
-    localStorage.setItem('userRole', data.role || 'user');
-    updateUserStatus();
-    goScreen('dashboard');
-  } catch {
-    alert('Error conectando al servidor');
-  }
-}
-
-// AGREGAR función para Google nativo:
-async function doGoogleLoginNative() {
-  try {
-    const { SocialLogin } = window.Capacitor.Plugins;
-    await SocialLogin.initialize({ google: { webClientId: '363836812726-gt4lsqip9iijbqc34br4aqaiqnsn7dfh.apps.googleusercontent.com' } });
-    const result = await SocialLogin.login({ provider: 'google', options: {} });
-    const { email, name } = result.result.profile;
-    const res = await fetch('https://via-segura-mio.vercel.app/api/auth/google', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, name })
-    });
-    const data = await res.json();
-    if (!res.ok) { alert(data.error); return; }
-    localStorage.setItem('currentUser', data.email);
-    localStorage.setItem('userName', data.name);
-    localStorage.setItem('userRole', data.role || 'user');
-    updateUserStatus();
-    goScreen('dashboard');
-  } catch(e) {
-    alert('Error con Google: ' + e.message);
-  }
-}
-
-// Calcular estadísticas
-function updateStats(reports) {
-  const now = new Date();
-  const hoy = reports.filter(r => {
-    const d = new Date(r.created_at);
-    return d.toDateString() === now.toDateString();
-  });
-  const semana = reports.filter(r => {
-    const d = new Date(r.created_at);
-    return (now - d) < 7 * 24 * 60 * 60 * 1000;
-  });
-  document.getElementById('stat-hoy').textContent = hoy.length;
-  document.getElementById('stat-semana').textContent = semana.length;
-  document.getElementById('stat-total').textContent = reports.length;
-  document.getElementById('alert-badge').textContent = `⚠ ${hoy.length} alertas`;
-  // Hora pico
-  const horas = reports.map(r => new Date(r.created_at).getHours());
-  if (horas.length > 0) {
-    const freq = {};
-    horas.forEach(h => freq[h] = (freq[h] || 0) + 1);
-    const pico = Object.entries(freq).sort((a,b) => b[1]-a[1])[0][0];
-    document.getElementById('stat-hora').textContent = `${pico}h`;
-  }
-}
-
-// Renderizar reportes
-async function renderReports() {
-  const container = document.getElementById('reports-container');
-  try {
-    const res = await fetch(API_URL);
-    if (!res.ok) throw new Error();
-    const reports = await res.json();
-    updateStats(reports);
-    updateHeatmap(reports);
-    if (reports.length === 0) {
-      container.innerHTML = `<div style="padding:10px;font-size:11px;text-align:center;color:var(--color-text-secondary)">No hay reportes aún.</div>`;
-      return;
-    }
-    container.innerHTML = reports.slice(0,10).map(r => `
-      <div class="incident-item">
-        <div class="inc-icon" style="background:${r.bg||'#FCEBEB'}"><i class="ti ${r.icon||'ti-alert-triangle'}" style="color:${r.color||'#E24B4A'};font-size:16px"></i></div>
-        <div class="inc-info">
-          <div class="inc-title">${r.title}</div>
-          <div class="inc-sub">${r.sub}</div>
-          <div class="inc-time">${timeAgo(r.created_at)}</div>
-        </div>
-      </div>
-    `).join('');
-  } catch {
-    container.innerHTML = `<div style="padding:10px;font-size:11px;text-align:center;color:#E24B4A;background:#FCEBEB;border-radius:8px">No se pudo conectar al servidor.</div>`;
-  }
-}
-
-function timeAgo(dateStr) {
-  const diff = (new Date() - new Date(dateStr)) / 1000;
-  if (diff < 60) return 'Hace un momento';
-  if (diff < 3600) return `Hace ${Math.floor(diff/60)} min`;
-  if (diff < 86400) return `Hace ${Math.floor(diff/3600)} h`;
-  return `Hace ${Math.floor(diff/86400)} días`;
-}
-
-// Login
-async function doLogin() {
-  const email = document.getElementById('login-email').value;
-  const pass = document.getElementById('login-pass').value;
-  if (!email || !pass) { alert('Ingresa correo y contraseña'); return; }
-  try {
-    const res = await fetch('https://via-segura-mio.vercel.app/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password: pass })
-    });
-    const data = await res.json();
-    if (!res.ok) { alert(data.error); return; }
-    localStorage.setItem('currentUser', data.email);
-    localStorage.setItem('userName', data.name);
-    localStorage.setItem('userRole', data.role || 'user');
-    updateUserStatus();
-    goScreen('dashboard');
-  } catch {
-    alert('Error conectando al servidor');
-  }
-}
-
-function doLogout() {
-  localStorage.removeItem('currentUser');
-  localStorage.removeItem('userName');
-  localStorage.removeItem('userRole');
-  updateUserStatus();
-}
-
-function updateUserStatus() {
-  const el = document.getElementById('user-status');
-  if (!el) return;
-  const user = localStorage.getItem('currentUser');
-  const name = localStorage.getItem('userName');
-  const role = localStorage.getItem('userRole');
-
-  const adminCard = document.getElementById('admin-card');
-  if (adminCard) adminCard.style.display = (role === 'admin') ? 'block' : 'none';
-
-  if (user) {
-    el.textContent = name ? `${name.split(' ')[0]} ›` : 'Mi perfil ›';
-    el.onclick = () => goScreen('config');
-  } else {
-    el.textContent = 'Ingresar';
-    el.onclick = () => goScreen('login');
-  }
-
-  const profileName = document.getElementById('profile-name');
-  const profileEmail = document.getElementById('profile-email');
-  const profileBtn = document.getElementById('profile-btn');
-  if (profileName && profileEmail && profileBtn) {
-    if (user) {
-      profileName.textContent = name || 'Usuario';
-      profileEmail.textContent = user;
-      profileBtn.style.display = 'block';
-    } else {
-      profileName.textContent = '—';
-      profileEmail.textContent = 'No has iniciado sesión';
-      profileBtn.style.display = 'none';
-    }
-  }
-}
-
-// Enviar reporte
-async function submitReport() {
-  if (!localStorage.getItem('currentUser')) { goScreen('login'); return; }
-  if (!userLat || !userLng) { alert('Primero obtén tu ubicación'); return; }
-  const typeBtn = document.querySelector('.type-btn.sel');
-  const vehBtn = document.querySelector('.chip-row .chip.act[onclick*="veh"]');
-  const typeText = typeBtn ? typeBtn.innerText.trim() : 'Reporte general';
-  const vehText = vehBtn ? vehBtn.innerText.trim() : 'Vehículo';
-  const report = {
-    title: typeText, sub: `${vehText} · Reporte Ciudadano`,
-    time: 'Reciente', icon: 'ti-alert-triangle',
-    color: '#E24B4A', bg: '#FCEBEB',
-    lat: userLat, lng: userLng,
-    user_email: localStorage.getItem('currentUser')
-  };
-  try {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(report)
-    });
-    if (!res.ok) throw new Error();
-    alert('¡Reporte enviado!');
-    document.getElementById('desc-input').value = '';
-    renderReports();
-    goScreen('dashboard');
-  } catch {
-    alert('Error enviando reporte. Verifica tu conexión.');
-  }
-}
-
-function goScreen(id) {
-  if (id === 'reporte' && !localStorage.getItem('currentUser')) { id = 'login'; }
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen-' + id).classList.add('active');
-  if (id === 'reporte') getLocation();
-  if (id === 'dashboard') setTimeout(() => map && map.invalidateSize(), 100);
-
-  // Actualizar sidebar desktop
-  document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('act'));
-  const sb = document.getElementById('sb-' + id);
-  if (sb) sb.classList.add('act');
-}
-
-function updateSim() {
-  const v = parseInt(document.getElementById('vel-slider').value);
-  document.getElementById('vel-val').textContent = v + ' km/h';
-  const prob = Math.min(95, Math.round(30 + (v/80)*65));
-  const dist = Math.round((v/3.6)*(v/3.6)/(2*7));
-  const reac = Math.max(0.1, (2.5-v/40)).toFixed(1);
-  const saved = Math.max(3, Math.round(14-(v/80)*10));
-  document.getElementById('sim-prob').textContent = prob + '%';
-  document.getElementById('sim-bar').style.width = prob + '%';
-  document.getElementById('sim-bar').style.background = prob>70?'#E24B4A':prob>45?'#EF9F27':'#639922';
-  document.getElementById('sim-dist').textContent = dist + ' m';
-  document.getElementById('sim-reac').textContent = reac + ' s';
-  document.getElementById('sim-time-ilegal').textContent = saved + ' s';
-  document.getElementById('sim-costo-tiempo').textContent = saved + ' s';
-  const msg = prob>70?'⚠ Riesgo alto: tiempo de reacción insuficiente':prob>45?'⚠ Riesgo medio: maniobra imprudente en zona escolar':'Riesgo bajo a esta velocidad';
-  document.getElementById('sim-msg').textContent = msg;
-  document.getElementById('sim-msg').parentElement.style.background = prob>70?'#FCEBEB':prob>45?'#FAEEDA':'#EAF3DE';
-  document.getElementById('sim-msg').style.color = prob>70?'#791F1F':prob>45?'#633806':'#27500A';
-}
-
-// Inicializar
-
-document.addEventListener('DOMContentLoaded', async () => {
-  const isNative = window.Capacitor && window.Capacitor.isNativePlatform();
-
-  // Mostrar botón Google correcto según plataforma
-  document.getElementById('google-btn-native').style.display = isNative ? 'block' : 'none';
-  document.getElementById('google-btn-web').style.display = isNative ? 'none' : 'flex';
-
-  if (isNative) {
-    const { LocalNotifications } = window.Capacitor.Plugins;
-    const perm = await LocalNotifications.checkPermissions();
-    if (perm.display !== 'granted') {
-      await LocalNotifications.requestPermissions();
-    }
-  }
-  initMap();
-  getLocation();
-  updateUserStatus();
-  renderReports();
-  loadPrefs();
-});
-
-// Tema
-function setTheme(mode) {
-  localStorage.setItem('theme', mode);
-  applyTheme(mode);
-  document.querySelectorAll('[id^="theme-"]').forEach(b => b.classList.remove('sel'));
-  document.getElementById('theme-' + mode).classList.add('sel');
-}
-
-function applyTheme(mode) {
-  if (mode === 'system') {
-    mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-  const root = document.documentElement;
-  if (mode === 'dark') {
-    root.style.setProperty('--color-background-primary', '#18181b');
-    root.style.setProperty('--color-background-secondary', '#09090b');
-    root.style.setProperty('--color-border-tertiary', '#27272a');
-    root.style.setProperty('--color-text-primary', '#fafafa');
-    root.style.setProperty('--color-text-secondary', '#a1a1aa');
-    root.style.setProperty('--color-text-tertiary', '#71717a');
-  } else {
-    root.style.setProperty('--color-background-primary', '#ffffff');
-    root.style.setProperty('--color-background-secondary', '#f4f4f5');
-    root.style.setProperty('--color-border-tertiary', '#f4f4f5');
-    root.style.setProperty('--color-text-primary', '#18181b');
-    root.style.setProperty('--color-text-secondary', '#71717a');
-    root.style.setProperty('--color-text-tertiary', '#a1a1aa');
-  }
-}
-
-// Notificaciones
-function toggleNotif(el) {
-  localStorage.setItem('notifEnabled', el.checked);
-}
-
-// Intervalo
-let refreshInterval;
-function setInterval2(ms) {
-  localStorage.setItem('refreshInterval', ms);
-  clearInterval(refreshInterval);
-  refreshInterval = setInterval(doRefresh, ms);
-  document.querySelectorAll('[id^="interval-"]').forEach(b => b.classList.remove('act'));
-  document.getElementById('interval-' + ms).classList.add('act');
-}
-
-async function doRefresh() {
-  const notifEnabled = localStorage.getItem('notifEnabled') !== 'false';
-  const prevCount = parseInt(localStorage.getItem('lastReportCount') || '0');
-  const res = await fetch(API_URL);
-  const data = await res.json();
-  const newCount = data.length;
-  await renderReports();
-  if (notifEnabled && newCount > prevCount && prevCount > 0) {
-    if (window.Capacitor && window.Capacitor.isNativePlatform()) {
-      const { LocalNotifications } = window.Capacitor.Plugins;
-      await LocalNotifications.schedule({ notifications: [{
-        id: Math.floor(Math.random() * 100000),
-        title: '⚠ Vía Segura',
-        body: 'Nuevo reporte en la zona USCO',
-        schedule: { at: new Date(Date.now() + 100) }
-      }]});
-    }
-  }
-  localStorage.setItem('lastReportCount', newCount);
-}
-
-// Cargar preferencias guardadas
-function loadPrefs() {
-  const theme = localStorage.getItem('theme') || 'system';
-  applyTheme(theme);
-  document.getElementById('theme-' + theme)?.classList.add('sel');
-
-  const notif = localStorage.getItem('notifEnabled') !== 'false';
-  document.getElementById('notif-toggle').checked = notif;
-
-  const interval = parseInt(localStorage.getItem('refreshInterval') || '30000');
-  setInterval2(interval);
-  document.getElementById('interval-' + interval)?.classList.add('act');
-}
-
-function selType(btn) {
-  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('sel'));
-  btn.classList.add('sel');
-}
-
-function selChip(el, group) {
-  document.querySelectorAll(`.chip[onclick*="'${group}'"]`).forEach(c => c.classList.remove('act'));
-  el.classList.add('act');
-}
-
 </script>
 </body>
 </html>
