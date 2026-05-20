@@ -861,23 +861,25 @@
         <i class="ti ti-refresh"></i> Actualizar ubicación
       </button>
     </div>
-    <div class="card">
-  <label class="form-label">Descripción breve (opcional)</label>
+<div class="card">
+  <label class="form-label">Descripción breve <span id="desc-required" style="display:none;color:#E24B4A">*obligatoria</span></label>
   <textarea class="form-input" id="desc-input" rows="2" 
     placeholder="Ej: Moto cruzó el separador a alta velocidad..."></textarea>
   
-  <label class="form-label">Foto (opcional)</label>
-  <input type="file" id="foto-input" accept="image/*" capture="environment"
-    style="display:none" onchange="previewFoto(this)">
-  <button onclick="document.getElementById('foto-input').click()"
-    style="width:100%;padding:10px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:12px;cursor:pointer;color:var(--color-text-secondary);margin-top:6px">
-    <i class="ti ti-camera"></i> Adjuntar foto
-  </button>
-  <div id="foto-preview" style="margin-top:8px;display:none">
-    <img id="foto-img" style="width:100%;border-radius:8px;max-height:200px;object-fit:cover">
-    <button onclick="removeFoto()" style="width:100%;padding:6px;border-radius:8px;border:1px solid #E24B4A;background:transparent;color:#E24B4A;font-size:11px;cursor:pointer;margin-top:4px">
-      <i class="ti ti-x"></i> Quitar foto
+  <div id="foto-section" style="display:none">
+    <label class="form-label">Foto <span style="color:#E24B4A">*obligatoria</span></label>
+    <input type="file" id="foto-input" accept="image/*" capture="environment"
+      style="display:none" onchange="previewFoto(this)">
+    <button onclick="document.getElementById('foto-input').click()"
+      style="width:100%;padding:10px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:12px;cursor:pointer;color:var(--color-text-secondary);margin-top:6px">
+      <i class="ti ti-camera"></i> Adjuntar foto
     </button>
+    <div id="foto-preview" style="margin-top:8px;display:none">
+      <img id="foto-img" style="width:100%;border-radius:8px;max-height:200px;object-fit:cover">
+      <button onclick="removeFoto()" style="width:100%;padding:6px;border-radius:8px;border:1px solid #E24B4A;background:transparent;color:#E24B4A;font-size:11px;cursor:pointer;margin-top:4px">
+        <i class="ti ti-x"></i> Quitar foto
+      </button>
+    </div>
   </div>
 </div>
     <button class="submit-btn ripple-container" id="report-btn" onclick="submitReport()"><i class="ti ti-send"></i> Enviar reporte</button>
@@ -1388,6 +1390,14 @@ async function submitReport() {
   if (!localStorage.getItem('currentUser')) { goScreen('login'); return; }
   if (!userLat || !userLng) { showToast('Primero obtén tu ubicación', '📍'); return; }
 
+// Después de la validación de ubicación, agrega:
+const typeBtn = document.querySelector('.type-btn.sel');
+const isOtro = typeBtn && typeBtn.innerText.includes('Otro');
+if (isOtro && !document.getElementById('desc-input').value.trim()) {
+  showToast('La descripción es obligatoria para este tipo', '⚠️');
+  return;
+}
+
   const btn = document.getElementById('report-btn');
   btn.classList.add('loading');
   btn.innerHTML = '<div class="spinner"></div> Subiendo...';
@@ -1824,6 +1834,12 @@ function loadPrefs() {
 function selType(btn) {
   document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('sel'));
   btn.classList.add('sel');
+  const isOtro = btn.innerText.includes('Otro');
+  document.getElementById('foto-section').style.display = isOtro ? 'block' : 'none';
+  document.getElementById('desc-required').style.display = isOtro ? 'inline' : 'none';
+  document.getElementById('desc-input').placeholder = isOtro
+    ? 'Describe qué ocurrió (obligatorio)...'
+    : 'Ej: Moto cruzó el separador a alta velocidad...';
 }
 
 function selChip(el, group) {
