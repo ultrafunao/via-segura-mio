@@ -19,203 +19,575 @@
       --color-text-primary: #18181b;
       --color-text-secondary: #71717a;
       --color-text-tertiary: #a1a1aa;
-    }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin:0; padding:0; background:var(--color-background-secondary); }
-    *{box-sizing:border-box;margin:0;padding:0}
-    .phone{width:100%;height:100vh;display:flex;flex-direction:column;background:var(--color-background-primary);overflow:hidden;font-size:13px}
-    .status-bar{background:#1a1a2e;color:#fff;padding:10px 20px 6px;display:flex;justify-content:space-between;align-items:center;font-size:11px}
-    .screen{display:none;flex-direction:column;flex:1;overflow-y:auto}
-    .screen.active{display:flex}
-    .topbar{background:#1a1a2e;color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px}
-    .topbar-title{font-size:14px;font-weight:500;flex:1}
-    .nav-tab{display:flex;border-top:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
-    .nav-btn{flex:1;padding:8px 4px 10px;border:none;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:var(--color-text-secondary)}
-    .nav-btn.act{color:#185FA5}
-    .nav-btn i{font-size:20px}
-    .content{flex:1;padding:14px;overflow-y:auto;background:var(--color-background-secondary)}
-    .card{background:var(--color-background-primary);border-radius:12px;border:0.5px solid var(--color-border-tertiary);padding:12px 14px;margin-bottom:10px}
-    .card-title{font-size:12px;color:var(--color-text-secondary);margin-bottom:6px}
-    .stat-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:10px}
-    .stat{background:var(--color-background-primary);border-radius:8px;border:0.5px solid var(--color-border-tertiary);padding:10px 12px}
-    .stat-val{font-size:22px;font-weight:500;color:var(--color-text-primary)}
-    .stat-lbl{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
-    .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:500}
-    .badge-red{background:#FCEBEB;color:#A32D2D}
-    .badge-amber{background:#FAEEDA;color:#633806}
-    .badge-green{background:#EAF3DE;color:#27500A}
-    .badge-blue{background:#E6F1FB;color:#0C447C}
-    #heatmap{height:220px;border-radius:8px;overflow:hidden;margin-bottom:8px}
-    .incident-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
-    .incident-item:last-child{border-bottom:none}
-    .inc-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
-    .inc-info{flex:1}
-    .inc-title{font-size:12px;font-weight:500;color:var(--color-text-primary)}
-    .inc-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
-    .inc-time{font-size:10px;color:var(--color-text-tertiary)}
-    .form-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;margin-top:10px;display:block}
-    .form-input{width:100%;padding:8px 10px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:13px;color:var(--color-text-primary)}
-    .type-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:6px 0}
-    .type-btn{padding:8px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:11px;cursor:pointer;text-align:center;color:var(--color-text-secondary);transition:all .15s}
-    .type-btn.sel{border-color:#185FA5;background:#E6F1FB;color:#0C447C}
-    .submit-btn{width:100%;padding:12px;border-radius:10px;border:none;background:#1a1a2e;color:#fff;font-size:13px;font-weight:500;cursor:pointer;margin-top:10px}
-    .risk-bar-wrap{background:var(--color-background-secondary);border-radius:6px;height:10px;margin:6px 0}
-    .risk-bar{height:10px;border-radius:6px;transition:width .4s}
-    .sim-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-    .sim-label{font-size:12px;color:var(--color-text-secondary)}
-    .sim-val{font-size:12px;font-weight:500;color:var(--color-text-primary)}
-    .route-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0}
-    .route-card{border-radius:8px;padding:10px;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
-    .route-card.danger{border-color:#E24B4A;background:#FCEBEB}
-    .route-card.safe{border-color:#639922;background:#EAF3DE}
-    .route-title{font-size:11px;font-weight:500;margin-bottom:4px}
-    .route-val{font-size:20px;font-weight:500}
-    .route-card.danger .route-val{color:#E24B4A}
-    .route-card.safe .route-val{color:#639922}
-    .route-sub{font-size:10px;color:var(--color-text-secondary);margin-top:2px}
-    .section-head{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px}
-    .chip-row{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}
-    .chip{padding:4px 10px;border-radius:20px;font-size:11px;border:0.5px solid var(--color-border-secondary);cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary)}
-    .chip.act{background:#1a1a2e;color:#fff;border-color:#1a1a2e}
-    .loc-badge{font-size:11px;color:var(--color-text-secondary);margin-top:6px;display:flex;align-items:center;gap:4px;padding:6px 8px;background:var(--color-background-secondary);border-radius:8px}
+      --accent: #185FA5;
+      --accent-light: #E6F1FB;
+      --danger: #E24B4A;
+      --success: #639922;
+      --warn: #EF9F27;
+      --nav-bg: #1a1a2e;
 
-    /* === ALERT CARD in right panel — uses CSS vars so theme works === */
+      /* Animation tokens */
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-out: cubic-bezier(0, 0, 0.2, 1);
+      --ease-in: cubic-bezier(0.4, 0, 1, 1);
+      --dur-fast: 150ms;
+      --dur-mid: 250ms;
+      --dur-slow: 400ms;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── SPLASH ── */
+    #splash {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #1a1a2e;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 16px;
+      transition: opacity 0.5s var(--ease-smooth), transform 0.5s var(--ease-smooth);
+    }
+    #splash.hidden { opacity: 0; transform: scale(1.04); pointer-events: none; }
+    .splash-icon {
+      font-size: 56px; color: #5DCAA5;
+      animation: splashPop 0.6s var(--ease-bounce) 0.2s both;
+    }
+    .splash-title {
+      font-size: 22px; font-weight: 700; color: #fff;
+      animation: splashFadeUp 0.5s var(--ease-out) 0.4s both;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .splash-sub {
+      font-size: 12px; color: #5DCAA5;
+      animation: splashFadeUp 0.5s var(--ease-out) 0.55s both;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .splash-bar {
+      width: 120px; height: 3px; background: #2a2a4a; border-radius: 99px; overflow: hidden;
+      animation: splashFadeUp 0.5s var(--ease-out) 0.65s both;
+    }
+    .splash-bar-fill {
+      height: 100%; background: linear-gradient(90deg, #5DCAA5, #185FA5);
+      border-radius: 99px;
+      animation: splashProgress 1.4s var(--ease-smooth) 0.7s both;
+    }
+    @keyframes splashPop {
+      from { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+    @keyframes splashFadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes splashProgress {
+      from { width: 0%; } to { width: 100%; }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: var(--color-background-secondary);
+    }
+
+    .phone {
+      width: 100%; height: 100vh;
+      display: flex; flex-direction: column;
+      background: var(--color-background-primary);
+      overflow: hidden; font-size: 13px;
+    }
+    .status-bar {
+      background: var(--nav-bg); color: #fff;
+      padding: 10px 20px 6px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 11px;
+    }
+
+    /* ── SCREEN TRANSITIONS ── */
+    .screen {
+      display: none; flex-direction: column; flex: 1; overflow-y: auto;
+      will-change: transform, opacity;
+    }
+    .screen.active {
+      display: flex;
+      animation: screenEnter var(--dur-slow) var(--ease-out) both;
+    }
+    .screen.exit {
+      display: flex;
+      animation: screenExit var(--dur-mid) var(--ease-in) both;
+      pointer-events: none;
+    }
+    @keyframes screenEnter {
+      from { opacity: 0; transform: translateY(18px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes screenExit {
+      from { opacity: 1; transform: translateY(0) scale(1); }
+      to   { opacity: 0; transform: translateY(-10px) scale(0.97); }
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--nav-bg); color: #fff;
+      padding: 12px 16px;
+      display: flex; align-items: center; gap: 10px;
+      animation: slideDown 0.35s var(--ease-out) both;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-100%); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .topbar-title { font-size: 14px; font-weight: 500; flex: 1; }
+
+    /* ── NAV ── */
+    .nav-tab {
+      display: flex;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      background: var(--color-background-primary);
+      animation: slideUp 0.35s var(--ease-out) both;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(100%); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .nav-btn {
+      flex: 1; padding: 8px 4px 10px;
+      border: none; background: transparent; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      font-size: 10px; color: var(--color-text-secondary);
+      transition: color var(--dur-fast) var(--ease-smooth), transform var(--dur-fast) var(--ease-bounce);
+      position: relative; overflow: hidden;
+    }
+    .nav-btn.act { color: var(--accent); }
+    .nav-btn i { font-size: 20px; transition: transform var(--dur-mid) var(--ease-bounce); }
+    .nav-btn.act i { transform: translateY(-2px) scale(1.15); }
+    .nav-btn::after {
+      content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 0; height: 2px; background: var(--accent); border-radius: 2px 2px 0 0;
+      transition: width var(--dur-mid) var(--ease-bounce);
+    }
+    .nav-btn.act::after { width: 24px; }
+    .nav-btn:active { transform: scale(0.9); }
+
+    /* Ripple */
+    .ripple-container { position: relative; overflow: hidden; }
+    .ripple {
+      position: absolute; border-radius: 50%;
+      background: rgba(24, 95, 165, 0.15);
+      transform: scale(0); animation: ripple 0.5s linear;
+      pointer-events: none;
+    }
+    @keyframes ripple {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    .content {
+      flex: 1; padding: 14px; overflow-y: auto;
+      background: var(--color-background-secondary);
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--color-background-primary);
+      border-radius: 12px; border: 0.5px solid var(--color-border-tertiary);
+      padding: 12px 14px; margin-bottom: 10px;
+      animation: cardEnter var(--dur-slow) var(--ease-out) both;
+      transition: box-shadow var(--dur-mid) var(--ease-smooth),
+                  transform var(--dur-mid) var(--ease-smooth);
+    }
+    .card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      transform: translateY(-1px);
+    }
+    @keyframes cardEnter {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    /* Staggered card delays */
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.10s; }
+    .card:nth-child(3) { animation-delay: 0.15s; }
+    .card:nth-child(4) { animation-delay: 0.20s; }
+    .card:nth-child(5) { animation-delay: 0.25s; }
+
+    .card-title { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 6px; }
+
+    /* ── STATS ── */
+    .stat-row { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin-bottom: 10px; }
+    .stat {
+      background: var(--color-background-primary);
+      border-radius: 8px; border: 0.5px solid var(--color-border-tertiary);
+      padding: 10px 12px;
+      animation: statPop var(--dur-slow) var(--ease-bounce) both;
+      transition: transform var(--dur-mid) var(--ease-bounce), box-shadow var(--dur-mid);
+    }
+    .stat:hover { transform: scale(1.03); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+    .stat:nth-child(1) { animation-delay: 0.1s; }
+    .stat:nth-child(2) { animation-delay: 0.18s; }
+    .stat:nth-child(3) { animation-delay: 0.26s; }
+    .stat:nth-child(4) { animation-delay: 0.34s; }
+    @keyframes statPop {
+      from { opacity: 0; transform: scale(0.88) translateY(10px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .stat-val {
+      font-size: 22px; font-weight: 500; color: var(--color-text-primary);
+      /* counter animation is handled in JS */
+    }
+    .stat-lbl { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+
+    /* ── BADGES ── */
+    .badge {
+      display: inline-block; padding: 2px 8px;
+      border-radius: 20px; font-size: 10px; font-weight: 500;
+    }
+    .badge-red   { background: #FCEBEB; color: #A32D2D; }
+    .badge-amber { background: #FAEEDA; color: #633806; }
+    .badge-green { background: #EAF3DE; color: #27500A; }
+    .badge-blue  { background: #E6F1FB; color: #0C447C; }
+
+    /* Alert badge pulse */
+    #alert-badge {
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(226,75,74,0.4); }
+      50%       { box-shadow: 0 0 0 6px rgba(226,75,74,0); }
+    }
+
+    /* ── HEATMAP ── */
+    #heatmap { height: 220px; border-radius: 8px; overflow: hidden; margin-bottom: 8px; }
+
+    /* ── INCIDENT LIST ── */
+    .incident-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary);
+      animation: incidentSlide 0.4s var(--ease-out) both;
+      transition: background var(--dur-fast);
+    }
+    .incident-item:last-child { border-bottom: none; }
+    .incident-item:nth-child(1) { animation-delay: 0.05s; }
+    .incident-item:nth-child(2) { animation-delay: 0.10s; }
+    .incident-item:nth-child(3) { animation-delay: 0.15s; }
+    .incident-item:nth-child(4) { animation-delay: 0.20s; }
+    .incident-item:nth-child(5) { animation-delay: 0.25s; }
+    @keyframes incidentSlide {
+      from { opacity: 0; transform: translateX(-14px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .inc-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 16px;
+      transition: transform var(--dur-mid) var(--ease-bounce);
+    }
+    .incident-item:hover .inc-icon { transform: scale(1.15) rotate(-5deg); }
+    .inc-info { flex: 1; }
+    .inc-title { font-size: 12px; font-weight: 500; color: var(--color-text-primary); }
+    .inc-sub   { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+    .inc-time  { font-size: 10px; color: var(--color-text-tertiary); }
+
+    /* ── SKELETON LOADER ── */
+    .skeleton {
+      border-radius: 6px; background: linear-gradient(90deg,
+        var(--color-border-tertiary) 25%,
+        var(--color-border-secondary) 50%,
+        var(--color-border-tertiary) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    @keyframes shimmer {
+      from { background-position: 200% 0; }
+      to   { background-position: -200% 0; }
+    }
+
+    /* ── FORM ── */
+    .form-label {
+      font-size: 12px; color: var(--color-text-secondary);
+      margin-bottom: 4px; margin-top: 10px; display: block;
+    }
+    .form-input {
+      width: 100%; padding: 8px 10px;
+      border-radius: 8px; border: 0.5px solid var(--color-border-secondary);
+      background: var(--color-background-primary);
+      font-size: 13px; color: var(--color-text-primary);
+      transition: border-color var(--dur-fast) var(--ease-smooth),
+                  box-shadow var(--dur-fast) var(--ease-smooth),
+                  transform var(--dur-fast) var(--ease-smooth);
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(24,95,165,0.12);
+      transform: translateY(-1px);
+    }
+
+    /* ── TYPE GRID BUTTONS ── */
+    .type-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; margin: 6px 0; }
+    .type-btn {
+      padding: 8px; border-radius: 8px;
+      border: 0.5px solid var(--color-border-secondary);
+      background: var(--color-background-primary);
+      font-size: 11px; cursor: pointer; text-align: center;
+      color: var(--color-text-secondary);
+      transition: all var(--dur-mid) var(--ease-bounce);
+      position: relative; overflow: hidden;
+    }
+    .type-btn:hover {
+      border-color: var(--accent); background: var(--accent-light);
+      color: #0C447C; transform: scale(1.03);
+    }
+    .type-btn:active { transform: scale(0.95); }
+    .type-btn.sel {
+      border-color: var(--accent); background: var(--accent-light);
+      color: #0C447C;
+      animation: selPop var(--dur-mid) var(--ease-bounce);
+    }
+    @keyframes selPop {
+      0%  { transform: scale(1); }
+      40% { transform: scale(0.92); }
+      100%{ transform: scale(1); }
+    }
+
+    /* ── SUBMIT BUTTON ── */
+    .submit-btn {
+      width: 100%; padding: 12px;
+      border-radius: 10px; border: none;
+      background: var(--nav-bg); color: #fff;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; margin-top: 10px;
+      position: relative; overflow: hidden;
+      transition: transform var(--dur-fast) var(--ease-bounce),
+                  box-shadow var(--dur-fast) var(--ease-smooth),
+                  background var(--dur-fast);
+    }
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(26,26,46,0.3);
+    }
+    .submit-btn:active { transform: scale(0.97) translateY(0); }
+    .submit-btn.loading { pointer-events: none; opacity: 0.75; }
+    .submit-btn.loading::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+      background-size: 200% 100%;
+      animation: btnShimmer 1s infinite;
+    }
+    @keyframes btnShimmer {
+      from { background-position: -200% 0; }
+      to   { background-position: 200% 0; }
+    }
+    .submit-btn.success { background: var(--success); }
+    .submit-btn.success::before { content: '✓ '; }
+
+    /* ── RISK BAR ── */
+    .risk-bar-wrap { background: var(--color-background-secondary); border-radius: 6px; height: 10px; margin: 6px 0; }
+    .risk-bar {
+      height: 10px; border-radius: 6px;
+      transition: width 0.6s var(--ease-smooth), background 0.4s var(--ease-smooth);
+    }
+
+    /* ── SIMULATOR ── */
+    .sim-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .sim-label { font-size: 12px; color: var(--color-text-secondary); }
+    .sim-val   { font-size: 12px; font-weight: 500; color: var(--color-text-primary); }
+
+    .route-compare { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin: 8px 0; }
+    .route-card {
+      border-radius: 8px; padding: 10px;
+      border: 0.5px solid var(--color-border-tertiary);
+      background: var(--color-background-primary);
+      transition: transform var(--dur-mid) var(--ease-bounce), box-shadow var(--dur-mid);
+    }
+    .route-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+    .route-card.danger { border-color: var(--danger); background: #FCEBEB; }
+    .route-card.safe   { border-color: var(--success); background: #EAF3DE; }
+    .route-title  { font-size: 11px; font-weight: 500; margin-bottom: 4px; }
+    .route-val    { font-size: 20px; font-weight: 500; }
+    .route-card.danger .route-val { color: var(--danger); }
+    .route-card.safe   .route-val { color: var(--success); }
+    .route-sub { font-size: 10px; color: var(--color-text-secondary); margin-top: 2px; }
+
+    .section-head { font-size: 12px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+
+    /* ── CHIPS ── */
+    .chip-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 4px 0 8px; }
+    .chip {
+      padding: 4px 10px; border-radius: 20px; font-size: 11px;
+      border: 0.5px solid var(--color-border-secondary);
+      cursor: pointer; background: var(--color-background-primary);
+      color: var(--color-text-secondary);
+      transition: all var(--dur-mid) var(--ease-bounce);
+    }
+    .chip:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+    .chip:active { transform: scale(0.93); }
+    .chip.act {
+      background: var(--nav-bg); color: #fff; border-color: var(--nav-bg);
+      animation: chipSelect var(--dur-mid) var(--ease-bounce);
+    }
+    @keyframes chipSelect {
+      0%   { transform: scale(1); }
+      35%  { transform: scale(0.88); }
+      100% { transform: scale(1); }
+    }
+
+    .loc-badge {
+      font-size: 11px; color: var(--color-text-secondary); margin-top: 6px;
+      display: flex; align-items: center; gap: 4px;
+      padding: 6px 8px; background: var(--color-background-secondary); border-radius: 8px;
+    }
+
+    /* ── SLIDER ── */
+    input[type="range"] {
+      -webkit-appearance: none; height: 4px; border-radius: 99px;
+      background: var(--color-border-secondary); outline: none; flex: 1;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px;
+      border-radius: 50%; background: var(--nav-bg);
+      cursor: pointer; border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      transition: transform var(--dur-fast) var(--ease-bounce);
+    }
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.25); }
+    input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.1); }
+
+    /* ── ALERT CARD ── */
     .alert-card {
       background: var(--color-background-primary);
-      border-radius: 8px;
-      padding: 8px 10px;
+      border-radius: 8px; padding: 8px 10px;
       border: 0.5px solid var(--color-border-primary);
-      display: flex;
-      gap: 8px;
-      align-items: center;
+      display: flex; gap: 8px; align-items: center;
+      transition: transform var(--dur-mid) var(--ease-bounce), box-shadow var(--dur-mid);
     }
-    .alert-card-title {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--color-text-primary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .alert-card:hover { transform: translateX(4px); box-shadow: 0 4px 14px rgba(0,0,0,0.07); }
+    .alert-card-title { font-size: 11px; font-weight: 500; color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .alert-card-time  { font-size: 10px; color: var(--color-text-secondary); }
+
+    /* ── TOAST NOTIFICATION ── */
+    #toast {
+      position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: #18181b; color: #fff; padding: 10px 18px; border-radius: 24px;
+      font-size: 12px; font-weight: 500; z-index: 999; white-space: nowrap;
+      transition: transform 0.35s var(--ease-bounce), opacity 0.35s;
+      opacity: 0; pointer-events: none;
+      display: flex; align-items: center; gap: 6px;
     }
-    .alert-card-time {
-      font-size: 10px;
-      color: var(--color-text-secondary);
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
     }
 
+    /* ── SPINNER ── */
+    .spinner {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 2.5px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── LOCATION PULSE DOT ── */
+    .loc-pulse {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+      animation: locPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes locPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(24,95,165,0.5); }
+      50%       { box-shadow: 0 0 0 6px rgba(24,95,165,0); }
+    }
+
+    /* ── COUNTER ANIMATION ── */
+    .stat-val.counting { transition: color 0.3s; }
+
+    /* ── DESKTOP SIDEBAR ── */
     @media (min-width: 768px) {
       body { overflow: auto; }
       .phone {
-        height: auto;
-        min-height: 100vh;
-        flex-direction: row;
-        max-width: 100%;
-        font-size: 14px;
+        height: auto; min-height: 100vh;
+        flex-direction: row; max-width: 100%; font-size: 14px;
       }
       .screen { display: none !important; }
       .screen.active { display: flex !important; flex-direction: row; flex: 1; overflow: visible; }
       .nav-tab { display: none; }
 
-      /* Sidebar */
       #desktop-sidebar {
-        display: flex;
-        flex-direction: column;
-        width: 220px;
-        min-height: 100vh;
-        background: #1a1a2e;
-        padding: 24px 16px;
-        gap: 6px;
-        flex-shrink: 0;
-        position: sticky;
-        top: 0;
-        height: 100vh;
+        display: flex; flex-direction: column;
+        width: 220px; min-height: 100vh;
+        background: var(--nav-bg); padding: 24px 16px;
+        gap: 6px; flex-shrink: 0;
+        position: sticky; top: 0; height: 100vh;
+        animation: sidebarIn 0.5s var(--ease-out) both;
+      }
+      @keyframes sidebarIn {
+        from { transform: translateX(-100%); opacity: 0; }
+        to   { transform: translateX(0); opacity: 1; }
       }
       .sidebar-logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 0 8px 20px;
-        border-bottom: 1px solid #2a2a4a;
-        margin-bottom: 8px;
+        display: flex; align-items: center; gap: 10px;
+        padding: 0 8px 20px; border-bottom: 1px solid #2a2a4a; margin-bottom: 8px;
       }
       .sidebar-logo-title { font-size: 15px; font-weight: 600; color: #fff; }
-      .sidebar-logo-sub { font-size: 10px; color: #5DCAA5; }
+      .sidebar-logo-sub   { font-size: 10px; color: #5DCAA5; }
       .sidebar-btn {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 12px;
-        border-radius: 8px;
-        border: none;
-        background: transparent;
-        color: #a1a1aa;
-        font-size: 13px;
-        cursor: pointer;
-        text-align: left;
-        width: 100%;
-        transition: all .15s;
+        display: flex; align-items: center; gap: 10px;
+        padding: 10px 12px; border-radius: 8px;
+        border: none; background: transparent; color: #a1a1aa;
+        font-size: 13px; cursor: pointer; text-align: left; width: 100%;
+        transition: all var(--dur-mid) var(--ease-smooth);
+        position: relative; overflow: hidden;
       }
-      .sidebar-btn:hover { background: #2a2a4a; color: #fff; }
-      .sidebar-btn.act { background: #185FA5; color: #fff; }
+      .sidebar-btn::before {
+        content: ''; position: absolute;
+        left: 0; top: 50%; transform: translateY(-50%);
+        width: 3px; height: 0; border-radius: 0 3px 3px 0;
+        background: #5DCAA5;
+        transition: height var(--dur-mid) var(--ease-bounce);
+      }
+      .sidebar-btn:hover { background: #2a2a4a; color: #fff; transform: translateX(3px); }
+      .sidebar-btn.act { background: var(--accent); color: #fff; }
+      .sidebar-btn.act::before { height: 60%; }
       .sidebar-btn i { font-size: 18px; }
       .sidebar-bottom {
-        margin-top: auto;
-        padding-top: 16px;
+        margin-top: auto; padding-top: 16px;
         border-top: 1px solid #2a2a4a;
-        font-size: 11px;
-        color: #71717a;
-        padding-left: 8px;
+        font-size: 11px; color: #71717a; padding-left: 8px;
       }
 
-      /* Contenido principal desktop — FIX: fill space, no max-width gap */
-      .screen.active > .topbar { display: none; }
+      .screen.active > .topbar  { display: none; }
       .screen.active > .content {
-        flex: 1;
-        padding: 24px;
-        /* REMOVED max-width: 680px — caused the black gap */
-        overflow-y: auto;
-        height: 100vh;
-        background: var(--color-background-secondary);
+        flex: 1; padding: 24px; overflow-y: auto;
+        height: 100vh; background: var(--color-background-secondary);
       }
 
-      /* Panel derecho — FIX: use CSS vars for theme support */
       #desktop-right-panel {
-        display: flex;
-        flex-direction: column;
-        width: 340px;
-        min-height: 100vh;
+        display: flex; flex-direction: column;
+        width: 340px; min-height: 100vh;
         background: var(--color-background-secondary);
         border-left: 1px solid var(--color-border-primary);
-        padding: 24px 16px;
-        flex-shrink: 0;
-        overflow-y: auto;
-        height: 100vh;
+        padding: 24px 16px; flex-shrink: 0;
+        overflow-y: auto; height: 100vh;
+        animation: rightPanelIn 0.5s var(--ease-out) 0.15s both;
+      }
+      @keyframes rightPanelIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to   { transform: translateX(0); opacity: 1; }
       }
       #desktop-right-panel .panel-title {
-        font-size: 12px;
-        font-weight: 500;
-        color: var(--color-text-primary);
-        margin-bottom: 12px;
+        font-size: 12px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px;
       }
       #desktop-right-panel .panel-legend {
-        font-size: 11px;
-        color: var(--color-text-secondary);
-        margin-bottom: 16px;
-        display: flex;
-        gap: 10px;
+        font-size: 11px; color: var(--color-text-secondary); margin-bottom: 16px; display: flex; gap: 10px;
       }
       #desktop-right-panel .panel-subtitle {
-        font-size: 12px;
-        font-weight: 500;
-        color: var(--color-text-primary);
-        margin-bottom: 8px;
+        font-size: 12px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px;
       }
 
-      /* Stats en grid de 4 en desktop */
       .stat-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-
-      /* Mapa oculto del contenido principal en desktop (se muestra en panel derecho) */
       .card:has(#heatmap) { display: none; }
-
       #heatmap { height: 320px; }
+
+      #toast { bottom: 24px; }
     }
 
     @media (max-width: 767px) {
@@ -223,16 +595,67 @@
     }
 
     .leaflet-tile { filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%); }
+
+    /* ── CONFIG THEME BTNS ── */
+    .theme-option {
+      transition: all var(--dur-mid) var(--ease-bounce);
+    }
+    .theme-option:hover { transform: scale(1.02); }
+    .theme-option.sel {
+      border-color: var(--accent) !important;
+      background: var(--accent-light) !important;
+      color: #0C447C !important;
+    }
+
+    /* ── NEW REPORT INDICATOR ── */
+    .new-dot {
+      display: inline-block; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--danger);
+      animation: newDotPop 0.4s var(--ease-bounce);
+    }
+    @keyframes newDotPop {
+      from { transform: scale(0); }
+      to   { transform: scale(1); }
+    }
+
+    /* ── LOGO ICON SPIN ON LOAD ── */
+    .sidebar-logo-icon {
+      animation: logoSpin 0.8s var(--ease-bounce) 0.3s both;
+    }
+    @keyframes logoSpin {
+      from { transform: rotate(-180deg) scale(0); opacity: 0; }
+      to   { transform: rotate(0deg) scale(1); opacity: 1; }
+    }
+
+    /* ── CHECKBOX TOGGLE ── */
+    input[type="checkbox"] {
+      width: 18px; height: 18px; cursor: pointer;
+      accent-color: var(--accent);
+      transition: transform var(--dur-fast) var(--ease-bounce);
+    }
+    input[type="checkbox"]:checked { transform: scale(1.15); }
   </style>
 </head>
 <body>
+
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <i class="ti ti-shield-check splash-icon"></i>
+  <div class="splash-title">Vía Segura</div>
+  <div class="splash-sub">USCO · Neiva</div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
 <div style="background:var(--color-background-secondary);min-height:100vh;display:flex;flex-direction:column">
 <div class="phone">
 
 <!-- SIDEBAR DESKTOP -->
 <div id="desktop-sidebar">
   <div class="sidebar-logo">
-    <i class="ti ti-shield-check" style="font-size:24px;color:#5DCAA5"></i>
+    <i class="ti ti-shield-check sidebar-logo-icon" style="font-size:24px;color:#5DCAA5"></i>
     <div>
       <div class="sidebar-logo-title">Vía Segura</div>
       <div class="sidebar-logo-sub">USCO · Neiva</div>
@@ -263,19 +686,19 @@
     <span class="topbar-title">Autenticación Requerida</span>
   </div>
   <div class="content" style="display:flex;flex-direction:column;justify-content:center;min-height:100%">
-    <div style="text-align:center;margin-bottom:24px">
+    <div style="text-align:center;margin-bottom:24px;animation:splashFadeUp 0.5s var(--ease-out) 0.1s both">
       <i class="ti ti-shield-lock" style="font-size:52px;color:#185FA5"></i>
       <div style="font-size:18px;font-weight:600;margin-top:10px;color:var(--color-text-primary)">Vía Segura</div>
       <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px">Inicia sesión para reportar incidentes</div>
     </div>
-    <div class="card" style="padding:20px">
+    <div class="card" style="padding:20px;animation-delay:0.2s">
       <div id="g_id_onload"
         data-client_id="363836812726-gt4lsqip9iijbqc34br4aqaiqnsn7dfh.apps.googleusercontent.com"
         data-callback="handleGoogleLogin"
         data-auto_prompt="false">
       </div>
       <div id="google-btn-native" style="display:none;margin-bottom:16px">
-        <button onclick="doGoogleLoginNative()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--color-text-primary)">
+        <button onclick="doGoogleLoginNative()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--color-text-primary);transition:all 0.2s">
           <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.2l6.7-6.7C35.7 2.5 30.2 0 24 0 14.8 0 6.9 5.4 3 13.3l7.8 6C12.7 13 17.9 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17z"/><path fill="#FBBC05" d="M10.8 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7L2.5 13.3A23.9 23.9 0 0 0 0 24c0 3.8.9 7.4 2.5 10.6l8.3-5.9z"/><path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.5l-7.5-5.8c-2 1.4-4.6 2.2-7.7 2.2-6.1 0-11.3-3.5-13.2-8.7l-7.8 6C6.9 42.6 14.8 48 24 48z"/></svg>
           Continuar con Google
         </button>
@@ -283,7 +706,7 @@
       <div id="google-btn-web" style="display:flex;justify-content:center;margin-bottom:16px">
         <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="continue_with" data-shape="rectangular" data-logo_alignment="left" data-width="280"></div>
       </div>
-      <div id="google-divider" style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
         <div style="flex:1;height:0.5px;background:var(--color-border-secondary)"></div>
         <span style="font-size:11px;color:var(--color-text-tertiary)">o continúa con email</span>
         <div style="flex:1;height:0.5px;background:var(--color-border-secondary)"></div>
@@ -296,9 +719,9 @@
         <i class="ti ti-lock" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--color-text-tertiary);font-size:15px"></i>
         <input type="password" class="form-input" id="login-pass" placeholder="Contraseña" style="padding-left:32px">
       </div>
-      <button class="submit-btn" onclick="doLogin()"><i class="ti ti-login"></i> Iniciar Sesión</button>
-      <button onclick="goScreen('registro')" style="background:transparent;border:1px solid var(--color-border-secondary);color:var(--color-text-secondary);width:100%;padding:10px;border-radius:8px;font-size:12px;cursor:pointer;margin-top:8px">Crear cuenta nueva</button>
-      <button onclick="goScreen('dashboard')" style="background:transparent;border:none;color:var(--color-text-tertiary);margin-top:12px;font-size:11px;cursor:pointer;width:100%;padding:8px">Volver al Dashboard</button>
+      <button class="submit-btn ripple-container" id="login-btn" onclick="doLogin()"><i class="ti ti-login"></i> Iniciar Sesión</button>
+      <button onclick="goScreen('registro')" style="background:transparent;border:1px solid var(--color-border-secondary);color:var(--color-text-secondary);width:100%;padding:10px;border-radius:8px;font-size:12px;cursor:pointer;margin-top:8px;transition:all 0.2s">Crear cuenta nueva</button>
+      <button onclick="goScreen('dashboard')" style="background:transparent;border:none;color:var(--color-text-tertiary);margin-top:12px;font-size:11px;cursor:pointer;width:100%;padding:8px;transition:opacity 0.2s">Volver al Dashboard</button>
     </div>
   </div>
 </div>
@@ -311,13 +734,13 @@
   </div>
   <div class="content" style="display:flex;flex-direction:column;justify-content:center">
     <div class="card" style="text-align:center;padding:24px 16px">
-      <i class="ti ti-user-circle" style="font-size:48px;color:#185FA5;margin-bottom:12px"></i>
+      <i class="ti ti-user-circle" style="font-size:48px;color:#185FA5;margin-bottom:12px;display:block;animation:splashFadeUp 0.5s var(--ease-out) both"></i>
       <div style="font-size:16px;font-weight:500;margin-bottom:20px">Registro en Vía Segura</div>
       <input type="text" class="form-input" id="reg-name" placeholder="Nombre completo" style="margin-bottom:10px">
       <input type="email" class="form-input" id="reg-email" placeholder="Correo electrónico" style="margin-bottom:10px">
       <input type="password" class="form-input" id="reg-pass" placeholder="Contraseña" style="margin-bottom:20px">
-      <button class="submit-btn" onclick="doRegister()">Crear cuenta</button>
-      <button onclick="goScreen('login')" style="background:transparent;border:none;color:var(--color-text-secondary);margin-top:15px;font-size:12px;cursor:pointer;width:100%;padding:10px">Ya tengo cuenta</button>
+      <button class="submit-btn ripple-container" onclick="doRegister()">Crear cuenta</button>
+      <button onclick="goScreen('login')" style="background:transparent;border:none;color:var(--color-text-secondary);margin-top:15px;font-size:12px;cursor:pointer;width:100%;padding:10px;transition:opacity 0.2s">Ya tengo cuenta</button>
     </div>
   </div>
 </div>
@@ -359,9 +782,32 @@
     <div class="card">
       <div class="card-title" style="display:flex;justify-content:space-between">
         <span>Últimos reportes</span>
-        <span id="user-status" style="font-size:10px;color:#185FA5;cursor:pointer" onclick="goScreen('login')">Ingresar</span>
+        <span id="user-status" style="font-size:10px;color:#185FA5;cursor:pointer;transition:opacity 0.2s" onclick="goScreen('login')">Ingresar</span>
       </div>
-      <div id="reports-container"></div>
+      <div id="reports-container">
+        <!-- Skeleton loaders -->
+        <div style="display:flex;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+          <div class="skeleton" style="width:34px;height:34px;border-radius:8px;flex-shrink:0"></div>
+          <div style="flex:1">
+            <div class="skeleton" style="height:12px;width:70%;margin-bottom:6px"></div>
+            <div class="skeleton" style="height:10px;width:45%"></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+          <div class="skeleton" style="width:34px;height:34px;border-radius:8px;flex-shrink:0"></div>
+          <div style="flex:1">
+            <div class="skeleton" style="height:12px;width:55%;margin-bottom:6px"></div>
+            <div class="skeleton" style="height:10px;width:38%"></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;padding:10px 0">
+          <div class="skeleton" style="width:34px;height:34px;border-radius:8px;flex-shrink:0"></div>
+          <div style="flex:1">
+            <div class="skeleton" style="height:12px;width:62%;margin-bottom:6px"></div>
+            <div class="skeleton" style="height:10px;width:30%"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="nav-tab">
@@ -407,10 +853,10 @@
     <div class="card">
       <div class="section-head">Tu ubicación</div>
       <div class="loc-badge" id="loc-display">
-        <i class="ti ti-map-pin" style="color:#185FA5"></i>
+        <span class="loc-pulse" id="loc-pulse"></span>
         <span id="loc-text">Obteniendo ubicación...</span>
       </div>
-      <button onclick="getLocation()" style="margin-top:8px;width:100%;padding:8px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:12px;cursor:pointer;color:var(--color-text-secondary)">
+      <button onclick="getLocation()" style="margin-top:8px;width:100%;padding:8px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:12px;cursor:pointer;color:var(--color-text-secondary);transition:all 0.2s">
         <i class="ti ti-refresh"></i> Actualizar ubicación
       </button>
     </div>
@@ -418,7 +864,7 @@
       <label class="form-label">Descripción breve (opcional)</label>
       <textarea class="form-input" id="desc-input" rows="2" placeholder="Ej: Moto cruzó el separador a alta velocidad..."></textarea>
     </div>
-    <button class="submit-btn" onclick="submitReport()"><i class="ti ti-send"></i> Enviar reporte</button>
+    <button class="submit-btn ripple-container" id="report-btn" onclick="submitReport()"><i class="ti ti-send"></i> Enviar reporte</button>
   </div>
   <div class="nav-tab">
     <button class="nav-btn" onclick="goScreen('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
@@ -438,7 +884,7 @@
     <div class="card">
       <div class="section-head">Velocidad estimada al cruzar</div>
       <div style="display:flex;align-items:center;gap:10px;margin:6px 0">
-        <input type="range" min="10" max="80" value="45" step="1" id="vel-slider" style="flex:1" oninput="updateSim()">
+        <input type="range" min="10" max="80" value="45" step="1" id="vel-slider" oninput="updateSim()">
         <span style="font-size:16px;font-weight:500;min-width:52px;text-align:right" id="vel-val">45 km/h</span>
       </div>
       <div style="font-size:11px;color:var(--color-text-secondary)">Velocidad máxima permitida en zona: <b>30 km/h</b></div>
@@ -461,7 +907,7 @@
       <div class="risk-bar-wrap"><div class="risk-bar" id="sim-bar" style="width:68%;background:#E24B4A"></div></div>
       <div class="sim-row" style="margin-top:8px"><span class="sim-label">Distancia de frenado</span><span class="sim-val" id="sim-dist">18 m</span></div>
       <div class="sim-row"><span class="sim-label">Tiempo de reacción disponible</span><span class="sim-val" id="sim-reac">0.4 s</span></div>
-      <div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:#FCEBEB;border:0.5px solid #F09595">
+      <div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:#FCEBEB;border:0.5px solid #F09595;transition:background 0.4s,border-color 0.4s">
         <div style="font-size:11px;color:#791F1F;font-weight:500" id="sim-msg">⚠ Riesgo alto: tiempo de reacción insuficiente para evitar colisión</div>
       </div>
     </div>
@@ -498,7 +944,7 @@
     <div class="card" id="profile-card">
       <div class="section-head">Mi cuenta</div>
       <div style="display:flex;align-items:center;gap:12px;margin-top:8px">
-        <div style="width:40px;height:40px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <div style="width:40px;height:40px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.3s var(--ease-bounce)" onmouseenter="this.style.transform='scale(1.12)'" onmouseleave="this.style.transform='scale(1)'">
           <i class="ti ti-user" style="font-size:20px;color:#5DCAA5"></i>
         </div>
         <div style="flex:1;min-width:0">
@@ -506,23 +952,23 @@
           <div id="profile-email" style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">No has iniciado sesión</div>
         </div>
       </div>
-      <button id="profile-btn" onclick="doLogout()" style="width:100%;padding:10px;border-radius:8px;border:1px solid #E24B4A;background:transparent;color:#E24B4A;font-size:12px;cursor:pointer;margin-top:12px">
+      <button id="profile-btn" onclick="doLogout()" style="width:100%;padding:10px;border-radius:8px;border:1px solid #E24B4A;background:transparent;color:#E24B4A;font-size:12px;cursor:pointer;margin-top:12px;transition:all 0.2s;display:none">
         <i class="ti ti-logout"></i> Cerrar sesión
       </button>
     </div>
     <div class="card">
       <div class="section-head">Apariencia</div>
       <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
-        <button class="type-btn" id="theme-light" onclick="setTheme('light')"><i class="ti ti-sun"></i> Claro</button>
-        <button class="type-btn" id="theme-dark" onclick="setTheme('dark')"><i class="ti ti-moon"></i> Oscuro</button>
-        <button class="type-btn" id="theme-system" onclick="setTheme('system')"><i class="ti ti-device-mobile"></i> Seguir sistema</button>
+        <button class="type-btn theme-option" id="theme-light" onclick="setTheme('light')"><i class="ti ti-sun"></i> Claro</button>
+        <button class="type-btn theme-option" id="theme-dark" onclick="setTheme('dark')"><i class="ti ti-moon"></i> Oscuro</button>
+        <button class="type-btn theme-option" id="theme-system" onclick="setTheme('system')"><i class="ti ti-device-mobile"></i> Seguir sistema</button>
       </div>
     </div>
     <div class="card">
       <div class="section-head">Notificaciones</div>
       <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0">
         <span style="font-size:12px;color:var(--color-text-secondary)">Alertas de nuevos reportes</span>
-        <input type="checkbox" id="notif-toggle" onchange="toggleNotif(this)" style="width:18px;height:18px;cursor:pointer">
+        <input type="checkbox" id="notif-toggle" onchange="toggleNotif(this)">
       </div>
     </div>
     <div class="card">
@@ -545,7 +991,7 @@
     <div class="card" id="admin-card" style="display:none">
       <div class="section-head">Panel Administrador</div>
       <button onclick="window.open('https://via-segura-mio.vercel.app/admin.html','_blank')"
-        style="width:100%;padding:10px;border-radius:8px;border:1px solid #185FA5;background:#E6F1FB;color:#0C447C;font-size:12px;cursor:pointer;margin-top:6px">
+        style="width:100%;padding:10px;border-radius:8px;border:1px solid #185FA5;background:#E6F1FB;color:#0C447C;font-size:12px;cursor:pointer;margin-top:6px;transition:all 0.2s">
         <i class="ti ti-shield-lock"></i> Ir al panel admin
       </button>
     </div>
@@ -558,7 +1004,7 @@
   </div>
 </div>
 
-<!-- PANEL DERECHO DESKTOP — now fully themed with CSS vars -->
+<!-- PANEL DERECHO DESKTOP -->
 <div id="desktop-right-panel">
   <div class="panel-title">Mapa en tiempo real</div>
   <div id="heatmap-desktop" style="height:320px;border-radius:12px;overflow:hidden;margin-bottom:12px"></div>
@@ -567,7 +1013,12 @@
     <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#EF9F27;display:inline-block"></span>Medio</span>
   </div>
   <div class="panel-subtitle">Alertas recientes</div>
-  <div id="desktop-reports" style="display:flex;flex-direction:column;gap:6px"></div>
+  <div id="desktop-reports" style="display:flex;flex-direction:column;gap:6px">
+    <!-- Skeleton -->
+    <div class="skeleton" style="height:48px;border-radius:8px"></div>
+    <div class="skeleton" style="height:48px;border-radius:8px"></div>
+    <div class="skeleton" style="height:48px;border-radius:8px"></div>
+  </div>
 </div>
 
 </div>
@@ -578,6 +1029,52 @@ const API_URL = 'https://via-segura-mio.vercel.app/api/reports';
 let map, heatLayer;
 let userLat = null, userLng = null;
 
+// ── SPLASH ──
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('splash').classList.add('hidden');
+    setTimeout(() => document.getElementById('splash').remove(), 600);
+  }, 2000);
+});
+
+// ── TOAST ──
+function showToast(msg, icon = '✓', duration = 2800) {
+  const el = document.getElementById('toast');
+  el.innerHTML = `<span>${icon}</span> ${msg}`;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), duration);
+}
+
+// ── RIPPLE ──
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.ripple-container');
+  if (!btn) return;
+  const r = document.createElement('div');
+  r.className = 'ripple';
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+  btn.appendChild(r);
+  r.addEventListener('animationend', () => r.remove());
+});
+
+// ── ANIMATED COUNTER ──
+function animateCounter(el, target) {
+  const start = parseInt(el.textContent) || 0;
+  if (start === target) return;
+  const dur = 600, step = 16;
+  let cur = start;
+  const inc = (target - start) / (dur / step);
+  const timer = setInterval(() => {
+    cur += inc;
+    if ((inc > 0 && cur >= target) || (inc < 0 && cur <= target)) {
+      el.textContent = target; clearInterval(timer); return;
+    }
+    el.textContent = Math.round(cur);
+  }, step);
+}
+
+// ── MAP ──
 function initMap() {
   const isDesktop = window.innerWidth >= 768;
   if (!isDesktop) {
@@ -607,9 +1104,9 @@ function updateHeatmap(reports) {
 
   const dr = document.getElementById('desktop-reports');
   if (dr) {
-    dr.innerHTML = reports.slice(0,5).map(r => `
-      <div class="alert-card">
-        <div style="width:28px;height:28px;border-radius:6px;background:${r.bg||'#FCEBEB'};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+    dr.innerHTML = reports.slice(0,5).map((r,i) => `
+      <div class="alert-card" style="animation:incidentSlide 0.4s var(--ease-out) ${i*0.07}s both">
+        <div style="width:28px;height:28px;border-radius:6px;background:${r.bg||'#FCEBEB'};display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.2s var(--ease-bounce)">
           <i class="ti ${r.icon||'ti-alert-triangle'}" style="color:${r.color||'#E24B4A'};font-size:13px"></i>
         </div>
         <div style="flex:1;min-width:0">
@@ -623,20 +1120,31 @@ function updateHeatmap(reports) {
 
 function getLocation() {
   const locText = document.getElementById('loc-text');
+  const pulse = document.getElementById('loc-pulse');
   locText.textContent = 'Obteniendo ubicación...';
+  if (pulse) pulse.style.background = 'var(--warn)';
+
+  const onSuccess = (lat, lng) => {
+    userLat = lat; userLng = lng;
+    locText.textContent = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+    if (pulse) { pulse.style.background = 'var(--success)'; }
+    showToast('Ubicación obtenida', '📍');
+  };
+  const onError = () => {
+    userLat = 2.9273; userLng = -75.2819;
+    locText.textContent = 'Usando ubicación por defecto (USCO)';
+    if (pulse) pulse.style.background = 'var(--warn)';
+  };
+
   if (window.Capacitor && window.Capacitor.isNativePlatform()) {
-    window.Capacitor.Plugins.Geolocation.getCurrentPosition().then(pos => {
-      userLat = pos.coords.latitude; userLng = pos.coords.longitude;
-      locText.textContent = `${userLat.toFixed(5)}, ${userLng.toFixed(5)}`;
-    }).catch(() => locText.textContent = 'No se pudo obtener ubicación');
+    window.Capacitor.Plugins.Geolocation.getCurrentPosition()
+      .then(pos => onSuccess(pos.coords.latitude, pos.coords.longitude))
+      .catch(onError);
   } else {
-    navigator.geolocation.getCurrentPosition(pos => {
-      userLat = pos.coords.latitude; userLng = pos.coords.longitude;
-      locText.textContent = `${userLat.toFixed(5)}, ${userLng.toFixed(5)}`;
-    }, () => {
-      userLat = 2.9273; userLng = -75.2819;
-      locText.textContent = 'Usando ubicación por defecto (USCO)';
-    });
+    navigator.geolocation.getCurrentPosition(
+      pos => onSuccess(pos.coords.latitude, pos.coords.longitude),
+      onError
+    );
   }
 }
 
@@ -644,14 +1152,14 @@ async function doRegister() {
   const name = document.getElementById('reg-name').value;
   const email = document.getElementById('reg-email').value;
   const pass = document.getElementById('reg-pass').value;
-  if (!email || !pass) { alert('Email y contraseña son obligatorios'); return; }
+  if (!email || !pass) { showToast('Email y contraseña son obligatorios', '⚠️'); return; }
   try {
     const res = await fetch('https://via-segura-mio.vercel.app/api/auth/register', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email,password:pass,name}) });
     const data = await res.json();
-    if (!res.ok) { alert(data.error); return; }
-    alert('¡Cuenta creada! Ahora inicia sesión.');
+    if (!res.ok) { showToast(data.error, '❌'); return; }
+    showToast('¡Cuenta creada!', '✓');
     goScreen('login');
-  } catch { alert('Error conectando al servidor'); }
+  } catch { showToast('Error conectando al servidor', '❌'); }
 }
 
 async function handleGoogleLogin(response) {
@@ -659,12 +1167,13 @@ async function handleGoogleLogin(response) {
   try {
     const res = await fetch('https://via-segura-mio.vercel.app/api/auth/google', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:payload.email,name:payload.name}) });
     const data = await res.json();
-    if (!res.ok) { alert(data.error); return; }
+    if (!res.ok) { showToast(data.error, '❌'); return; }
     localStorage.setItem('currentUser', data.email);
     localStorage.setItem('userName', data.name);
     localStorage.setItem('userRole', data.role || 'user');
     updateUserStatus(); goScreen('dashboard');
-  } catch { alert('Error conectando al servidor'); }
+    showToast(`Bienvenido, ${data.name.split(' ')[0]}`, '👋');
+  } catch { showToast('Error conectando al servidor', '❌'); }
 }
 
 async function doGoogleLoginNative() {
@@ -675,20 +1184,23 @@ async function doGoogleLoginNative() {
     const { email, name } = result.result.profile;
     const res = await fetch('https://via-segura-mio.vercel.app/api/auth/google', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email,name}) });
     const data = await res.json();
-    if (!res.ok) { alert(data.error); return; }
+    if (!res.ok) { showToast(data.error, '❌'); return; }
     localStorage.setItem('currentUser', data.email); localStorage.setItem('userName', data.name); localStorage.setItem('userRole', data.role||'user');
     updateUserStatus(); goScreen('dashboard');
-  } catch(e) { alert('Error con Google: ' + e.message); }
+    showToast(`Bienvenido, ${data.name.split(' ')[0]}`, '👋');
+  } catch(e) { showToast('Error con Google: ' + e.message, '❌'); }
 }
 
 function updateStats(reports) {
   const now = new Date();
   const hoy = reports.filter(r => new Date(r.created_at).toDateString() === now.toDateString());
   const semana = reports.filter(r => (now - new Date(r.created_at)) < 7*24*60*60*1000);
-  document.getElementById('stat-hoy').textContent = hoy.length;
-  document.getElementById('stat-semana').textContent = semana.length;
-  document.getElementById('stat-total').textContent = reports.length;
+
+  animateCounter(document.getElementById('stat-hoy'), hoy.length);
+  animateCounter(document.getElementById('stat-semana'), semana.length);
+  animateCounter(document.getElementById('stat-total'), reports.length);
   document.getElementById('alert-badge').textContent = `⚠ ${hoy.length} alertas`;
+
   const horas = reports.map(r => new Date(r.created_at).getHours());
   if (horas.length > 0) {
     const freq = {}; horas.forEach(h => freq[h]=(freq[h]||0)+1);
@@ -704,9 +1216,12 @@ async function renderReports() {
     if (!res.ok) throw new Error();
     const reports = await res.json();
     updateStats(reports); updateHeatmap(reports);
-    if (reports.length === 0) { container.innerHTML = `<div style="padding:10px;font-size:11px;text-align:center;color:var(--color-text-secondary)">No hay reportes aún.</div>`; return; }
-    container.innerHTML = reports.slice(0,10).map(r => `
-      <div class="incident-item">
+    if (reports.length === 0) {
+      container.innerHTML = `<div style="padding:10px;font-size:11px;text-align:center;color:var(--color-text-secondary)">No hay reportes aún.</div>`;
+      return;
+    }
+    container.innerHTML = reports.slice(0,10).map((r,i) => `
+      <div class="incident-item" style="animation-delay:${i*0.05}s">
         <div class="inc-icon" style="background:${r.bg||'#FCEBEB'}"><i class="ti ${r.icon||'ti-alert-triangle'}" style="color:${r.color||'#E24B4A'};font-size:16px"></i></div>
         <div class="inc-info">
           <div class="inc-title">${r.title}</div>
@@ -716,7 +1231,7 @@ async function renderReports() {
       </div>
     `).join('');
   } catch {
-    container.innerHTML = `<div style="padding:10px;font-size:11px;text-align:center;color:#E24B4A;background:#FCEBEB;border-radius:8px">No se pudo conectar al servidor.</div>`;
+    container.innerHTML = `<div style="padding:10px;font-size:11px;text-align:center;color:#E24B4A;background:#FCEBEB;border-radius:8px;animation:cardEnter 0.4s var(--ease-out)">No se pudo conectar al servidor.</div>`;
   }
 }
 
@@ -729,21 +1244,44 @@ function timeAgo(dateStr) {
 }
 
 async function doLogin() {
+  const btn = document.getElementById('login-btn');
   const email = document.getElementById('login-email').value;
   const pass = document.getElementById('login-pass').value;
-  if (!email || !pass) { alert('Ingresa correo y contraseña'); return; }
+  if (!email || !pass) { showToast('Ingresa correo y contraseña', '⚠️'); return; }
+
+  btn.classList.add('loading');
+  btn.innerHTML = '<div class="spinner"></div>';
+
   try {
     const res = await fetch('https://via-segura-mio.vercel.app/api/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email,password:pass}) });
     const data = await res.json();
-    if (!res.ok) { alert(data.error); return; }
+    if (!res.ok) {
+      btn.classList.remove('loading');
+      btn.innerHTML = '<i class="ti ti-login"></i> Iniciar Sesión';
+      showToast(data.error, '❌'); return;
+    }
+    btn.classList.remove('loading');
+    btn.classList.add('success');
+    btn.innerHTML = '<i class="ti ti-check"></i> ¡Sesión iniciada!';
     localStorage.setItem('currentUser', data.email); localStorage.setItem('userName', data.name); localStorage.setItem('userRole', data.role||'user');
-    updateUserStatus(); goScreen('dashboard');
-  } catch { alert('Error conectando al servidor'); }
+    updateUserStatus();
+    setTimeout(() => {
+      btn.classList.remove('success');
+      btn.innerHTML = '<i class="ti ti-login"></i> Iniciar Sesión';
+      goScreen('dashboard');
+      showToast(`Bienvenido, ${data.name?.split(' ')[0] || 'Usuario'}`, '👋');
+    }, 800);
+  } catch {
+    btn.classList.remove('loading');
+    btn.innerHTML = '<i class="ti ti-login"></i> Iniciar Sesión';
+    showToast('Error conectando al servidor', '❌');
+  }
 }
 
 function doLogout() {
   localStorage.removeItem('currentUser'); localStorage.removeItem('userName'); localStorage.removeItem('userRole');
   updateUserStatus();
+  showToast('Sesión cerrada', '👋');
 }
 
 function updateUserStatus() {
@@ -767,30 +1305,59 @@ function updateUserStatus() {
 
 async function submitReport() {
   if (!localStorage.getItem('currentUser')) { goScreen('login'); return; }
-  if (!userLat || !userLng) { alert('Primero obtén tu ubicación'); return; }
+  if (!userLat || !userLng) { showToast('Primero obtén tu ubicación', '📍'); return; }
+
+  const btn = document.getElementById('report-btn');
   const typeBtn = document.querySelector('.type-btn.sel');
   const vehBtn = document.querySelector('.chip-row .chip.act[onclick*="veh"]');
   const typeText = typeBtn ? typeBtn.innerText.trim() : 'Reporte general';
   const vehText = vehBtn ? vehBtn.innerText.trim() : 'Vehículo';
   const report = { title:typeText, sub:`${vehText} · Reporte Ciudadano`, time:'Reciente', icon:'ti-alert-triangle', color:'#E24B4A', bg:'#FCEBEB', lat:userLat, lng:userLng, user_email:localStorage.getItem('currentUser') };
+
+  btn.classList.add('loading');
+  btn.innerHTML = '<div class="spinner"></div> Enviando...';
+
   try {
     const res = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(report) });
     if (!res.ok) throw new Error();
-    alert('¡Reporte enviado!');
+    btn.classList.remove('loading');
+    btn.classList.add('success');
+    btn.innerHTML = '<i class="ti ti-check"></i> ¡Enviado!';
+    showToast('Reporte enviado', '✓');
     document.getElementById('desc-input').value = '';
-    renderReports(); goScreen('dashboard');
-  } catch { alert('Error enviando reporte. Verifica tu conexión.'); }
+    setTimeout(() => {
+      btn.classList.remove('success');
+      btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
+      renderReports(); goScreen('dashboard');
+    }, 1200);
+  } catch {
+    btn.classList.remove('loading');
+    btn.innerHTML = '<i class="ti ti-send"></i> Enviar reporte';
+    showToast('Error enviando reporte', '❌');
+  }
 }
 
 function goScreen(id) {
   if (id === 'reporte' && !localStorage.getItem('currentUser')) { id = 'login'; }
+
+  const current = document.querySelector('.screen.active');
+  if (current && current.id !== 'screen-' + id) {
+    current.classList.add('exit');
+    setTimeout(() => current.classList.remove('exit'), 250);
+  }
+
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
+
   if (id === 'reporte') getLocation();
   if (id === 'dashboard') setTimeout(() => map && map.invalidateSize(), 100);
+
   document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('act'));
   const sb = document.getElementById('sb-' + id);
   if (sb) sb.classList.add('act');
+
+  // Update mobile nav buttons
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('act'));
 }
 
 function updateSim() {
@@ -801,16 +1368,20 @@ function updateSim() {
   const reac = Math.max(0.1, (2.5-v/40)).toFixed(1);
   const saved = Math.max(3, Math.round(14-(v/80)*10));
   document.getElementById('sim-prob').textContent = prob + '%';
-  document.getElementById('sim-bar').style.width = prob + '%';
-  document.getElementById('sim-bar').style.background = prob>70?'#E24B4A':prob>45?'#EF9F27':'#639922';
+  const bar = document.getElementById('sim-bar');
+  bar.style.width = prob + '%';
+  bar.style.background = prob>70?'#E24B4A':prob>45?'#EF9F27':'#639922';
   document.getElementById('sim-dist').textContent = dist + ' m';
   document.getElementById('sim-reac').textContent = reac + ' s';
   document.getElementById('sim-time-ilegal').textContent = saved + ' s';
   document.getElementById('sim-costo-tiempo').textContent = saved + ' s';
-  const msg = prob>70?'⚠ Riesgo alto: tiempo de reacción insuficiente':prob>45?'⚠ Riesgo medio: maniobra imprudente en zona escolar':'Riesgo bajo a esta velocidad';
-  document.getElementById('sim-msg').textContent = msg;
-  document.getElementById('sim-msg').parentElement.style.background = prob>70?'#FCEBEB':prob>45?'#FAEEDA':'#EAF3DE';
-  document.getElementById('sim-msg').style.color = prob>70?'#791F1F':prob>45?'#633806':'#27500A';
+  const msgEl = document.getElementById('sim-msg');
+  const msgWrap = msgEl.parentElement;
+  const msg = prob>70?'⚠ Riesgo alto: tiempo de reacción insuficiente':prob>45?'⚠ Riesgo medio: maniobra imprudente en zona escolar':'✓ Riesgo bajo a esta velocidad';
+  msgEl.textContent = msg;
+  msgWrap.style.background = prob>70?'#FCEBEB':prob>45?'#FAEEDA':'#EAF3DE';
+  msgWrap.style.borderColor = prob>70?'#F09595':prob>45?'#F0C080':'#90C060';
+  msgEl.style.color = prob>70?'#791F1F':prob>45?'#633806':'#27500A';
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -829,6 +1400,7 @@ function setTheme(mode) {
   localStorage.setItem('theme', mode); applyTheme(mode);
   document.querySelectorAll('[id^="theme-"]').forEach(b => b.classList.remove('sel'));
   document.getElementById('theme-' + mode).classList.add('sel');
+  showToast(`Tema ${mode === 'light' ? 'claro' : mode === 'dark' ? 'oscuro' : 'del sistema'} activado`, '🎨');
 }
 
 function applyTheme(mode) {
@@ -855,7 +1427,10 @@ function applyTheme(mode) {
   }
 }
 
-function toggleNotif(el) { localStorage.setItem('notifEnabled', el.checked); }
+function toggleNotif(el) {
+  localStorage.setItem('notifEnabled', el.checked);
+  showToast(el.checked ? 'Notificaciones activadas' : 'Notificaciones desactivadas', el.checked ? '🔔' : '🔕');
+}
 
 let refreshInterval;
 function setInterval2(ms) {
@@ -875,6 +1450,7 @@ async function doRefresh() {
   const newCount = data.length;
   await renderReports();
   if (notifEnabled && newCount > prevCount && prevCount > 0) {
+    showToast('Nuevo reporte en la zona', '⚠️');
     if (window.Capacitor && window.Capacitor.isNativePlatform()) {
       const { LocalNotifications } = window.Capacitor.Plugins;
       await LocalNotifications.schedule({ notifications: [{ id:Math.floor(Math.random()*100000), title:'⚠ Vía Segura', body:'Nuevo reporte en la zona USCO', schedule:{at:new Date(Date.now()+100)} }]});
