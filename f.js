@@ -110,10 +110,10 @@ app.get('/api/reports', async (req, res) => {
 
 app.post('/api/reports', async (req, res) => {
   try {
-    const { title, sub, time, icon, color, bg, lat, lng, user_email } = req.body;
+    const { title, sub, time, icon, color, bg, lat, lng, user_email, foto_url, descripcion } = req.body;
     const result = await pool.query(
-      'INSERT INTO reports(title, sub, time, icon, color, bg, lat, lng, user_email) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *',
-      [title, sub, time, icon, color, bg, lat, lng, user_email || null]
+      'INSERT INTO reports(title, sub, time, icon, color, bg, lat, lng, user_email, foto_url, descripcion) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *',
+      [title, sub, time, icon, color, bg, lat, lng, user_email || null, foto_url || null, descripcion || null]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
